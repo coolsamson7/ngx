@@ -1,0 +1,29 @@
+{
+  "name": "my-nx-workspace",
+  "private": true,
+  "scripts": {
+    "start:shell": "nx serve shell",
+    "build:shell": "nx build shell",
+    "start:portal": "nx serve portal",
+    "build:portal": "nx build portal"
+  },
+  "dependencies": {
+    "@angular/core": "^21.0.0",
+    "@angular/common": "^21.0.0",
+    "@angular/platform-browser": "^21.0.0",
+    "@angular/platform-browser-dynamic": "^21.0.0",
+    "@angular/router": "^21.0.0",
+    "tslib": "^2.6.0"
+  },
+  "devDependencies": {
+    "@nrwl/angular": "^17.5.0",
+    "@nrwl/workspace": "^17.5.0",
+    "@angular-devkit/build-angular": "^21.0.0",
+    "@angular-architects/module-federation": "^15.1.0",
+    "typescript": "~5.2.0",
+    "nx": "^17.5.0",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  }
+}

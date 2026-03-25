@@ -1,0 +1,11 @@
+{
+  "root": "libs/common",
+  "sourceRoot": "libs/common/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "options": { "tsConfig": "libs/common/tsconfig.lib.json" }
+    }
+  }
+}

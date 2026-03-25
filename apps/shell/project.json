@@ -1,0 +1,16 @@
+
+{
+  "root": "apps/shell",
+  "sourceRoot": "apps/shell/src",
+  "projectType": "application",
+  "targets": {
+    "serve": {
+      "executor": "@nrwl/angular:webpack-dev-server",
+      "options": { "customWebpackConfig": { "path": "apps/shell/webpack.config.js" } }
+    },
+    "build": {
+      "executor": "@nrwl/angular:browser",
+      "options": { "customWebpackConfig": { "path": "apps/shell/webpack.config.js" } }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@myorg/common": ["libs/common/src/index.ts"],
+      "@myorg/portal": ["libs/portal/src/index.ts"]
+    },
+    "target": "es2022",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}

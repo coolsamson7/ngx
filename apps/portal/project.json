@@ -1,0 +1,12 @@
+
+{
+  "root": "libs/portal",
+  "sourceRoot": "libs/portal/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "options": { "tsConfig": "libs/portal/tsconfig.lib.json" }
+    }
+  }
+}
