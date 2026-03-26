@@ -1,8 +1,5 @@
 {
   "name": "microfrontend",
-  "root": "apps/microfrontend",
-  "sourceRoot": "apps/microfrontend/src",
-  "projectType": "application",
   "targets": {
     "build": {
       "executor": "@nx/angular:webpack-browser",
@@ -14,41 +11,32 @@
         "polyfills": ["zone.js"],
         "tsConfig": "apps/microfrontend/tsconfig.app.json",
         "customWebpackConfig": {
-          "path": "apps/microfrontend/webpack.config.js"
-        }
+          "path": "apps/microfrontend/webpack.config.ts"
+        },
+        "assets": ["apps/microfrontend/src/favicon.ico", "apps/microfrontend/src/assets"],
+        "styles": ["apps/microfrontend/src/styles.scss"],
+        "scripts": []
       },
       "configurations": {
         "production": {
-          "optimization": true,
-          "sourceMap": false,
-          "namedChunks": false,
-          "aot": true,
-          "extractLicenses": true,
-          "vendorChunk": false
+          "budgets": []
         },
         "development": {
+          "buildOptimizer": false,
           "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
           "sourceMap": true,
           "namedChunks": true
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@nx/angular:webpack-dev-server",
+      "executor": "@nx/angular:dev-server",
       "options": {
-        "buildTarget": "microfrontend:build",
-        "port": 4201
-      },
-      "configurations": {
-        "production": {
-          "buildTarget": "microfrontend:build:production"
-        },
-        "development": {
-          "buildTarget": "microfrontend:build:development"
-        }
-      },
-      "defaultConfiguration": "development"
+        "buildTarget": "microfrontend:build"
+      }
     }
   }
 }

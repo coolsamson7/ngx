@@ -5,7 +5,9 @@
     "paths": {
       "@ngx/common": ["libs/common/src/index.ts"],
       "@ngx/portal": ["libs/portal/src/index.ts"],
-      "@ngx/microfrontend": ["apps/microfrontend/src/index.ts"]
+      "microfrontend/Routes": [
+        "apps/microfrontend/src/app/remote-entry/entry.routes.ts"
+      ]
     },
     "target": "es2022",
     "module": "preserve",
