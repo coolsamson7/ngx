@@ -1,21 +1,24 @@
-
 {
   "npmScope": "ngx",
-  "implicitDependencies": {
-    "package.json": "*",
-    "tsconfig.base.json": "*"
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "sharedGlobals": [
+      "{workspaceRoot}/package.json",
+      "{workspaceRoot}/tsconfig.base.json"
+    ]
   },
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
-      "options": {
-        "cacheableOperations": ["build", "lint", "test"]
-      }
+  "targetDefaults": {
+    "build": {
+      "cache": true,
+      "inputs": ["default", "^default"]
+    },
+    "lint": {
+      "cache": true,
+      "inputs": ["default"]
+    },
+    "test": {
+      "cache": true,
+      "inputs": ["default", "^default"]
     }
-  },
-  "projects": {
-    "shell": {},
-    "portal": {},
-    "common": {}
   }
 }
