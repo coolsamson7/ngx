@@ -1,0 +1,13 @@
+const { ModuleFederationConfig } = require('@nx/module-federation');
+
+/**
+ * @type {import('@nx/module-federation').ModuleFederationConfig}
+ */
+const config = {
+  name: 'microfrontend',
+  exposes: {
+     './Module': './src/index.ts'
+  }
+};
+
+module.exports = config;

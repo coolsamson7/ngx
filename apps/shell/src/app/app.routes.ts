@@ -1,9 +1,13 @@
-import { Routes } from '@angular/router';
+import { Route } from '@angular/router';
+import { loadRemoteModule } from '@nx/module-federation/angular';
 
-export const routes: Routes = [
+import { loadRemoteModule } from '@nx/module-federation/angular';
+
+export const appRoutes: Route[] = [
+  { path: '', pathMatch: 'full', redirectTo: 'microfrontend' },
   {
-    path: '',
+    path: 'microfrontend',
     loadChildren: () =>
-      import('@ngx/portal').then(m => m.PortalModule)
+      loadRemoteModule('microfrontend', './Module').then(m => m.PortalModule)
   }
 ];

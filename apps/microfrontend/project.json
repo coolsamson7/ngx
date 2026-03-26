@@ -1,20 +1,20 @@
 {
-  "name": "shell",
-  "root": "apps/shell",
-  "sourceRoot": "apps/shell/src",
+  "name": "microfrontend",
+  "root": "apps/microfrontend",
+  "sourceRoot": "apps/microfrontend/src",
   "projectType": "application",
   "targets": {
     "build": {
-      "outputs": ["{options.outputPath}"],
       "executor": "@nx/angular:webpack-browser",
+      "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/shell",
-        "index": "apps/shell/src/index.html",
-        "main": "apps/shell/src/main.ts",
+        "outputPath": "dist/apps/microfrontend",
+        "index": "apps/microfrontend/src/index.html",
+        "main": "apps/microfrontend/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "apps/shell/tsconfig.app.json",
+        "tsConfig": "apps/microfrontend/tsconfig.app.json",
         "customWebpackConfig": {
-          "path": "apps/shell/webpack.config.js"
+          "path": "apps/microfrontend/webpack.config.js"
         }
       },
       "configurations": {
@@ -35,18 +35,17 @@
       "defaultConfiguration": "development"
     },
     "serve": {
-      "executor": "@nx/angular:module-federation-dev-server",
+      "executor": "@nx/angular:webpack-dev-server",
       "options": {
-        "buildTarget": "shell:build",
-        "port": 4200,
-        "devRemotes": ["microfrontend"]
+        "buildTarget": "microfrontend:build",
+        "port": 4201
       },
       "configurations": {
         "production": {
-          "buildTarget": "shell:build:production"
+          "buildTarget": "microfrontend:build:production"
         },
         "development": {
-          "buildTarget": "shell:build:development"
+          "buildTarget": "microfrontend:build:development"
         }
       },
       "defaultConfiguration": "development"
