@@ -1,4 +1,5 @@
 import { generateFiles, names, Tree, joinPathFragments } from '@nx/devkit';
+import { join } from 'path';
 
 export class RouteModuleWriter {
   // private
@@ -38,7 +39,10 @@ export class RouteModuleWriter {
     // write router module
 
     //const routesTemplatePath = 'tools/workspace-plugin/src/generators/portal-artifact-generator/router-module/templates';
-    const routesTemplatePath = joinPathFragments(__dirname, './templates')
+    const routesTemplatePath = join(
+      process.cwd(),
+      'tools/workspace-plugin/src/generators/portal-artifact-generator/router-module/templates'
+    )
 
     let moduleName = forModule;
     if (moduleName.endsWith('Module'))

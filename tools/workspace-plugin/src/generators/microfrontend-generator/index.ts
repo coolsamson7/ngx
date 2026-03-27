@@ -84,7 +84,9 @@ export default async function (tree: Tree, schema: MicrofrontendGeneratorSchema)
 
   // let's generate some files
 
-  generateFiles(tree, join(__dirname, "/templates"), projectConfig.root, {
+  const generatorRoot = join(process.cwd(), 'tools/workspace-plugin/src/generators/microfrontend-generator');
+
+  generateFiles(tree, join(generatorRoot, "templates"), projectConfig.root, {
     name: schema.name,
     serverURL: schema.serverURL,
     publicPortal: schema.generatePublicPortal || false,
@@ -94,7 +96,7 @@ export default async function (tree: Tree, schema: MicrofrontendGeneratorSchema)
   });
 
    if (schema.generatePrivatePortal === true) {
-      generateFiles(tree, join(__dirname, "/private-portal-templates"), projectConfig.root, {
+      generateFiles(tree, join(generatorRoot, "private-portal-templates"), projectConfig.root, {
           name: schema.name,
           publicPortal: schema.generatePublicPortal || false,
           privatePortal: true,
@@ -104,7 +106,7 @@ export default async function (tree: Tree, schema: MicrofrontendGeneratorSchema)
     }
 
    if (schema.generatePublicPortal === true) {
-      generateFiles(tree, join(__dirname, "/public-portal-templates"), projectConfig.root, {
+      generateFiles(tree, join(generatorRoot, "public-portal-templates"), projectConfig.root, {
           name: schema.name,
           publicPortal: true,
           privatePortal: schema.generatePrivatePortal || false,

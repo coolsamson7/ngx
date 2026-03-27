@@ -1,4 +1,5 @@
 import { generateFiles, ProjectConfiguration, Tree, joinPathFragments } from '@nx/devkit';
+import { join } from 'path';
 
 export class WebpackWriter {
   constructor(private project: ProjectConfiguration, private projectName: string) {}
@@ -7,7 +8,10 @@ export class WebpackWriter {
     // write router module
 
     //const webpackTemplatePath = 'tools/workspace-plugin/src/generators/portal-artifact-generator/webpack/templates';
-    const webpackTemplatePath = joinPathFragments(__dirname, './templates')
+    const webpackTemplatePath = join(
+      process.cwd(),
+      'tools/workspace-plugin/src/generators/portal-artifact-generator/webpack/templates'
+    )
 
     const moduleName = manifest.module.component;
     const fileName = manifest.module.file;

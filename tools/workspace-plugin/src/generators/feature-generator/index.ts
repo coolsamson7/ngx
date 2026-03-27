@@ -61,7 +61,9 @@ export default async function (tree: Tree, schema: FeatureGeneratorSchema) {
     throw new Error(`Project '${schema.projectName}' has no sourceRoot configured`);
   }
 
-  generateFiles(tree, join(__dirname, "/templates"), join(project.sourceRoot, schema.directory || ""), {
+  const generatorRoot = join(process.cwd(), 'tools/workspace-plugin/src/generators/feature-generator');
+
+  generateFiles(tree, join(generatorRoot, "templates"), join(project.sourceRoot, schema.directory || ""), {
     name: schema.name,
     schema: schema,
     feature: schema.name,
