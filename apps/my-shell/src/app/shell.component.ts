@@ -11,6 +11,7 @@ import {
   templateUrl: './shell.component.html',
   styleUrls: ['./shell.component.scss'],
   imports: [FeatureOutletDirective],
+  standalone: true
 })
 export class ShellComponent {
   // instance data

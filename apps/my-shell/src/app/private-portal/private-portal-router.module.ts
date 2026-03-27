@@ -17,7 +17,7 @@ export const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(
-      PortalManager.registerLazyRoutes('my-shell.private-portal', routes)
+      PortalManager.registerLazyRoutes('private-portal', routes)
     ),
   ],
 

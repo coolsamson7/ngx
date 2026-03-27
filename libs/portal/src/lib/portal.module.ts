@@ -10,7 +10,6 @@ import { DeploymentLoader, Manifest } from "./deployment";
 import { ModulesModule } from "./modules";
 import { HttpClientModule } from "@angular/common/http";
 //import { AboutModule } from "./about/about.module";
-//import { AbstractModule } from "./injection/abstract-module";
 import { CommonModule } from "@angular/common";
 import { FeatureReuseStrategy } from "./feature-reuse-strategy";
 import { AbstractModule } from "@ngx/common";

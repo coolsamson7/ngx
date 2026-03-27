@@ -78,6 +78,7 @@ import { ShellRouterModule } from './shell-router.module';
       enabled: !environment.production,
       trace: new ConsoleTrace('%d [%p]: %m %f\n'), // d(ate), l(evel), p(ath), m(message), f(rame)
       paths: {
+        feature: TraceLevel.FULL,
         portal: TraceLevel.FULL,
       },
     }),

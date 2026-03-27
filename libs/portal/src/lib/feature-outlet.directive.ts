@@ -26,7 +26,8 @@ export class UnknownFeatureComponent {
  * this directive is able to render the specified feature in the surrounding container
  */
 @Directive({
-    selector: 'feature-outlet'
+    selector: 'feature-outlet',
+    standalone: true
 })
 export class FeatureOutletDirective implements OnInit, OnChanges, OnDestroy {
     // inputs & outputs
