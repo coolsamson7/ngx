@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { AbstractFeature, Feature } from '@ngx/portal';
 
 @Feature({
@@ -12,4 +12,8 @@ import { AbstractFeature, Feature } from '@ngx/portal';
   template: `<div>my-microfrontend</div>`,
   standalone: true
 })
-export class RemoteEntryComponent extends AbstractFeature {}
+export class RemoteEntryComponent extends AbstractFeature {
+    constructor(injector: Injector) {
+        super(injector);
+      }
+  }

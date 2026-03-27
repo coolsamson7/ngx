@@ -44,6 +44,7 @@ export class ApplicationEndpointLocator extends EndpointLocator {
   declarations: [],
   imports: [
     BrowserModule,
+    AppRouterModule,
 
     AppComponent,
 
