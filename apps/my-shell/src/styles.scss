@@ -1,0 +1,29 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$my-shell-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$azure-palette,
+    tertiary: mat.$blue-palette,
+  ),
+  typography: (
+    brand-family: 'Roboto, "Helvetica Neue", sans-serif',
+    bold-weight: 700
+  ),
+  // FIX: Density must be an object with a 'scale' property
+  density: (
+    scale: 0 
+  )
+));
+
+html {
+  @include mat.all-component-themes($my-shell-theme);
+  @include mat.typography-hierarchy($my-shell-theme);
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

@@ -1,5 +1,5 @@
 import { Injector, NgModule } from '@angular/core';
-import { AbstractModule } from '../injection/abstract-module';
+import { AbstractModule } from '@ngx/common';
 
 /**
  * the modules module

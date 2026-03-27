@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Authorization, SessionManager, Ticket } from "@ngx/portal";
+import { Authorization, SessionManager, Ticket } from "@ngx/security";
 
 @Injectable({providedIn: 'root'})
 export class SampleAuthorization implements Authorization {

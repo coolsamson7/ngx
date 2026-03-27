@@ -1,3 +1,1 @@
-export function portal(name: string) {
-  return `Hello, ${name}!`;
-}
+export * from './lib';

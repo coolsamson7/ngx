@@ -1,7 +1,7 @@
 import { Inject, Injectable, Injector, ɵDirectiveDef } from '@angular/core';
 
 import { LoadChildrenCallback, Route, Router, Routes } from '@angular/router';
-import { loadRemoteModule, setRemoteDefinitions } from '@nx/angular/mf';
+import { setRemoteDefinitions } from '@nx/angular/mf';
 import { PortalModuleConfig, PortalModuleConfigToken } from './portal.module';
 import { FeatureRegistry } from './feature-registry';
 import { Deployment } from './deployment/deployment-model';
@@ -9,17 +9,17 @@ import { ModuleRegistry } from './modules';
 import { FeatureConfig } from './feature-config';
 import {
   DeploymentLoader,
-  HTTPDeploymentLoader,
+  //HTTPDeploymentLoader,
   LocalDeploymentLoader,
   ManifestDecorator,
 } from './deployment';
 import { TraceLevel, Tracer } from '@ngx/common';
 import { ReplaySubject } from 'rxjs';
-import { LocaleManager } from './locale';
+import { LocaleManager } from '@ngx/i18n';
 import { DeploymentConfigurationSource } from './deployment/deployment-configuration-source';
-import { ConfigurationManager } from './common';
-import { RouteBuilder, RouteBuilderManager } from './federation';
-import { SessionManager, Ticket } from './security';
+import { ConfigurationManager } from '@ngx/common';
+import { RouteBuilderManager } from './federation';
+import { SessionManager, Ticket } from '@ngx/security';
 
 /**
  * the runtime data of feature
@@ -84,9 +84,9 @@ export class PortalManager {
   loadDeployment(merge = false): Promise<void> {
     let loader: DeploymentLoader;
 
-    if (this.portalConfig.loader.server)
+    /* TODO FOO if (this.portalConfig.loader.server)
       loader = this.injector.get(HTTPDeploymentLoader);
-    else if (this.portalConfig.loader.local)
+    else*/ if (this.portalConfig.loader.local)
       loader = new LocalDeploymentLoader(...this.portalConfig.loader.local.remotes);
     else
        throw new Error("you need to specify either a server  or local loader")

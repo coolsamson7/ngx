@@ -2,6 +2,7 @@ import { Injectable, Injector } from "@angular/core";
 import { Deployment, DeploymentLoader, DeploymentRequest } from "../deployment";
 
 import { Observable } from "rxjs";
+/* TODO FOO
 import { AbstractHTTPService, Service } from "../common/communication";
 
 @Injectable({providedIn: 'root'})
@@ -34,4 +35,4 @@ export class HTTPDeploymentLoader extends DeploymentLoader {
         // @ts-ignore
         return this.deploymentService.computeDeployment(request).toPromise()
     }
-}
+}*/

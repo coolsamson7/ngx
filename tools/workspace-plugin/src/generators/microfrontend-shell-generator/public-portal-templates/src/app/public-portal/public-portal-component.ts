@@ -6,10 +6,12 @@ import {
     Feature,
     FeatureData,
     FeatureRegistry,
-    PortalManager,
+    PortalManager
+} from "@ngx/portal";
+import {
     SessionManager,
     Ticket
-} from "@ngx/portal";
+} from "@ngx/security";
 import { Component, Injector, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 

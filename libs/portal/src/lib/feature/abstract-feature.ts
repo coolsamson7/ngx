@@ -10,10 +10,9 @@ import {
   ProviderToken,
   Type
 } from '@angular/core';
-import { TraceLevel, Tracer } from '@ngx/common';
+import { TraceLevel, Tracer , TypeDescriptor} from '@ngx/common';
 import { FeatureManager } from './feature-manager';
 import { FeatureConfig } from '../feature-config';
-import { TypeDescriptor } from '../common';
 
 /**
  * a <code>LifecycleAware</code> can include functions that will be executed in the different phases of a component.
@@ -175,7 +174,6 @@ export class WithLifecycle implements OnInit, AfterViewInit, AfterContentInit, O
   selector: 'abstract-feature',
   template: ''
 })
-// eslint-disable-next-line @angular-eslint/component-class-suffix
 export class AbstractFeature extends WithLifecycle {
   // instance data
 

@@ -1,6 +1,6 @@
 import { Component, AfterContentInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { loadRemoteModule } from "@nx/angular/mf";
-
+/* TODO FOO
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { ActivatedRoute } from "@angular/router";
@@ -54,3 +54,4 @@ export class ReactComponentWrapper implements AfterContentInit, OnDestroy {
     this.root?.unmount()
   }
 }
+*/

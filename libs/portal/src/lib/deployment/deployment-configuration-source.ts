@@ -1,4 +1,4 @@
-import { ConfigurationSource } from "../common"
+import { ConfigurationSource } from "@ngx/common"
 
 export interface ConfigurationProperty {
   type: "object" | "string" | "boolean" | "number"

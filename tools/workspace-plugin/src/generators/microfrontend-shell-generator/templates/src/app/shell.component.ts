@@ -1,6 +1,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Component } from '@angular/core';
-import { FeatureData, FeatureRegistry, SessionManager, Ticket } from "@ngx/portal";
+import { FeatureData, FeatureRegistry } from "@ngx/portal";
+import { SessionManager, Ticket } from "@ngx/security";
 
 @Component({
     selector: 'app-root',

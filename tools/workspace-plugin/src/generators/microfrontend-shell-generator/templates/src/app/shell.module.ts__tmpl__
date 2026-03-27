@@ -6,24 +6,35 @@ import { localRoutes } from "./local.routes";
 
 import {
     AbstractModule,
-    CanActivateGuard,
-    CanDeactivateGuard,
     ConsoleTrace,
-    EndpointLocator,
-    I18nModule,
-    I18nResolver,
-    LocaleModule,
-    PortalModule,
-    PortalComponentsModule,
-    SecurityModule,
-    ServerTranslationLoader,
-    Shell,
     TraceLevel,
     TracerModule,
-    Manifest,
     ConfigurationModule,
     ConfigurationManager,
     ValueConfigurationSource
+} from "@ngx/common";
+
+import {
+    I18nModule,
+    I18nResolver,
+    LocaleModule,
+} from "@ngx/i18n";
+
+import {
+    SecurityModule,
+} from "@ngx/security";
+
+import {
+    CanActivateGuard,
+    CanDeactivateGuard,
+    EndpointLocator,
+
+    PortalModule,
+    PortalComponentsModule,
+    ServerTranslationLoader,
+    Shell,
+
+    Manifest
 } from "@ngx/portal";
 import {  Route } from "@angular/router";
 

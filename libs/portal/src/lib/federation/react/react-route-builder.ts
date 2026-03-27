@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { RouteBuilderManager, RouteBuilder } from "../route-builder";
 import { Route } from "@angular/router";
 import { Manifest } from "../../deployment";
-import { ReactComponentWrapper } from "./react-wrapper";
+/* TODO FOO import { ReactComponentWrapper } from "./react-wrapper";
 
 @Injectable({
     providedIn: 'root'
@@ -22,3 +22,4 @@ export class ReactRouteBuilder implements RouteBuilder {
         route.data!["module"] = manifest.name
     }
 }
+*/

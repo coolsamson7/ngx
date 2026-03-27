@@ -3,7 +3,7 @@ import { Route } from "@angular/router";
 import { Manifest } from "../deployment";
 import { WebComponentRouteBuilder } from "./web-component";
 import { AngularRouteBuilder } from "./angular";
-import { ReactRouteBuilder } from "./react";
+//import { ReactRouteBuilder } from "./react";
 
 export interface RouteBuilder {
     build(manifest: Manifest, route: Route) : void
@@ -22,7 +22,7 @@ export class RouteBuilderManager {
     constructor() {
         new AngularRouteBuilder(this)
         new WebComponentRouteBuilder(this)
-        new ReactRouteBuilder(this)
+        //new ReactRouteBuilder(this)
     }
 
     // public

@@ -1,4 +1,4 @@
-import { Authentication, AuthenticationRequest, Ticket } from "@ngx/portal";
+import { Authentication, AuthenticationRequest, Ticket } from "@ngx/security";
 import { Injectable } from "@angular/core";
 import { of, throwError } from "rxjs";
 

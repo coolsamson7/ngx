@@ -1,14 +1,16 @@
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @angular-eslint/use-lifecycle-interface */
 import {
+    SessionManager,
+    Ticket
+} from "@ngx/security";
+import {
     AboutDialogService,
     AbstractFeature,
     Feature,
     FeatureData,
     FeatureRegistry,
-    PortalManager,
-    SessionManager,
-    Ticket
+    PortalManager
 } from "@ngx/portal";
 import { Component, Injector } from "@angular/core";
 import { Router } from "@angular/router";

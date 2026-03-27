@@ -4,8 +4,7 @@ import { FeatureConfig, Visibility } from "./feature-config";
 import { FeatureData } from "./portal-manager";
 import { FolderData } from "./folder.decorator";
 import { TraceLevel, Tracer } from "@ngx/common";
-import { LocaleManager, OnLocaleChange } from "./locale";
-import { Translator } from "./i18n";
+import { LocaleManager, OnLocaleChange, Translator } from "@ngx/i18n";
 
 export type FeatureFilter = (feature : FeatureData) => boolean
 
