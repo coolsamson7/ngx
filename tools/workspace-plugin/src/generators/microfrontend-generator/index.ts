@@ -58,7 +58,7 @@ export default async function (tree: Tree, schema: MicrofrontendGeneratorSchema)
 
      // WHAT THE FUCK!!!!
 
-     json.targets.serve.options.liveReload = false
+     //json.targets.serve.options.liveReload = false
 
      if (json.targets.build.executor !== "@nx/angular:webpack-browser") {
        console.log("switched build executor from " + json.targets.build.executor + " to @nx/angular:webpack-browser")
