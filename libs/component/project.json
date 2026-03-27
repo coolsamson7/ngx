@@ -1,0 +1,11 @@
+{
+  "root": "libs/component",
+  "sourceRoot": "libs/component/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "options": { "tsConfig": "libs/component/tsconfig.lib.json" }
+    }
+  }
+}

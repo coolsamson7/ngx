@@ -1,0 +1,11 @@
+{
+  "root": "libs/security",
+  "sourceRoot": "libs/security/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "options": { "tsConfig": "libs/security/tsconfig.lib.json" }
+    }
+  }
+}

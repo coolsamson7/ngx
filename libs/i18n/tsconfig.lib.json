@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "target": "es2022",
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "types": [],
+    "declaration": true,
+    "paths": {
+      "@ngx/common": ["libs/common/src/index.ts"]
+    }
+  },
+  "exclude": ["**/*.spec.ts", "jest.config.ts", "src/test-setup.ts"],
+  "include": ["**/*.ts"]
+}

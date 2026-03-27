@@ -1,0 +1,11 @@
+{
+  "root": "libs/validation",
+  "sourceRoot": "libs/validation/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "options": { "tsConfig": "libs/validation/tsconfig.lib.json" }
+    }
+  }
+}

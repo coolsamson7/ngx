@@ -1,0 +1,11 @@
+{
+  "root": "libs/ui",
+  "sourceRoot": "libs/ui/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "options": { "tsConfig": "libs/ui/tsconfig.lib.json" }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "root": "libs/i18n",
+  "sourceRoot": "libs/i18n/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "options": { "tsConfig": "libs/i18n/tsconfig.lib.json" }
+    }
+  }
+}
