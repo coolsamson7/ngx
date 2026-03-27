@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from "@angular/router";
-import { FeatureData } from "../portal-manager";
+//
 import { Observable, filter, map, tap } from "rxjs";
 import { SessionManager } from "./session-manager";
 
+/* TODO FOO
 @Injectable({providedIn: "root"})
 export class SessionGuard implements CanActivate {
   // constructor
@@ -36,4 +37,4 @@ export class SessionGuard implements CanActivate {
 
     else return true    
   }
-}
+}*/

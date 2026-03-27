@@ -1,11 +1,11 @@
 import { InjectionToken, ModuleWithProviders, NgModule } from "@angular/core";
-import { AuthConfig } from "angular-oauth2-oidc";
+//import { AuthConfig } from "angular-oauth2-oidc";
 
 /**
  * the configuration object for the oidc module
  */
 export interface OIDCModuleConfig {
-    authConfig: AuthConfig
+    //TODO FOO authConfig: AuthConfig
 }
 
 export const OIDCModuleConfigToken = new InjectionToken<OIDCModuleConfig>('OIDCModuleConfig');

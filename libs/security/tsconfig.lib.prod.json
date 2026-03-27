@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.lib.json",
+  "compilerOptions": {
+    "declarationMap": false,
+    "paths": {
+      "@ngx/common": ["libs/security/src/index.ts"]
+    }
+  },
+  "angularCompilerOptions": {}
+}

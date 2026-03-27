@@ -91,8 +91,8 @@ export type I18nModuleConfig = {
  */
 @NgModule({
     imports: [FormatterModule, LocaleModule],
-    declarations: [TranslatePipe],
-    exports: [TranslatePipe]
+    declarations: [],//TranslatePipe
+    exports: []//TranslatePipe
 })
 export class I18nModule {
     static forRoot(config : I18nModuleConfig = {}) : ModuleWithProviders<I18nModule> {

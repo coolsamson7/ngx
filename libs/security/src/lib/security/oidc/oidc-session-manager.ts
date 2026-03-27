@@ -1,19 +1,18 @@
 import { Inject, Injectable } from "@angular/core";
 import { OIDCUser } from "./oidc-user";
-import { AuthConfig, NullValidationHandler, OAuthService } from "angular-oauth2-oidc";
+//import { AuthConfig, NullValidationHandler, OAuthService } from "angular-oauth2-oidc";
 import { OIDCAuthentication } from "./oidc-authentication";
 import { SessionManager } from "../session-manager";
 import { Ticket } from "../ticket.interface";
 import { OIDCModuleConfig, OIDCModuleConfigToken } from "./oidc-module";
 import { Router } from "@angular/router";
-import { ConfigurationManager } from "../../common/configuration";
-import { Tracer, TraceLevel } from "@ngx/common";
+import { Tracer, TraceLevel, ConfigurationManager } from "@ngx/common";
 
 export interface OIDCTicket extends Ticket {
     token : string
     refreshToken : string
 }
-
+/* TODO FOO
 @Injectable({providedIn: 'root'})
 export class OIDCSessionManager extends SessionManager<OIDCUser, OIDCTicket> {
     // constructor
@@ -126,3 +125,4 @@ export class OIDCSessionManager extends SessionManager<OIDCUser, OIDCTicket> {
         this.oauthService.logOut();
     }
 }
+*/

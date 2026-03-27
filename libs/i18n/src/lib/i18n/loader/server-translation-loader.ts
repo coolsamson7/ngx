@@ -1,9 +1,8 @@
 import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { I18nLoader } from "../i18n-loader";
-import { Translation, TranslationService } from "../../translation";
 
-@Injectable({providedIn: 'root'})
+/*@Injectable({providedIn: 'root'}) TODO FOO
 export class ServerTranslationLoader implements I18nLoader {
     // constructor
 
@@ -60,3 +59,4 @@ export class ServerTranslationLoader implements I18nLoader {
             )
     }
 }
+*/
