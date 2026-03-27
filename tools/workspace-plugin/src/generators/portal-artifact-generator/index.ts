@@ -16,6 +16,12 @@ export default async function (host: Tree, schema: MicrofrontendSchema) {
   // read project from workspace.json / angular.json
 
   const project = getProjects(host).get(schema.projectName);
+  if (!project) {
+    throw new Error(`Project '${schema.projectName}' not found in workspace configuration`);
+  }
+  if (!project.sourceRoot) {
+    throw new Error(`Project '${schema.projectName}' has no sourceRoot configured`);
+  }
 
   // create manifest
 
@@ -45,8 +51,8 @@ export default async function (host: Tree, schema: MicrofrontendSchema) {
     );
 
     const queue = manifest.features
-      .filter((feature) => feature.module)
-      .map((feature) => {
+      .filter((feature: any) => feature.module)
+      .map((feature: any) => {
         return {
           name: manifest.module.name + '.' + feature.id,
           feature: feature,

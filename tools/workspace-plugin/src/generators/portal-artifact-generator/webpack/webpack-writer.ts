@@ -1,7 +1,7 @@
 import { generateFiles, ProjectConfiguration, Tree, joinPathFragments } from '@nx/devkit';
 
 export class WebpackWriter {
-  constructor(private project: ProjectConfiguration, private projectName) {}
+  constructor(private project: ProjectConfiguration, private projectName: string) {}
 
   async write(host: Tree, manifest: any) {
     // write router module

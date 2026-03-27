@@ -52,6 +52,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "jest-preset-angular": "~14.4.0",
     "jest-util": "^29.7.0",
+    "workspace-plugin": "file:tools/workspace-plugin",
     "ng-packagr": "^19.2.0",
     "nx": "21.6.10",
     "prettier": "^2.6.2",
@@ -59,7 +60,9 @@
     "ts-node": "^10.9.2",
     "typescript": "5.7.2",
     "typescript-eslint": "^8.57.2",
-    "webpack": "5.105.0"
+    "webpack": "5.105.0",
+    "find-in-files": "^0.5.0",
+    "find-nearest-package-json": "^2.0.1"
   },
   "overrides": {
     "webpack": "5.105.0"

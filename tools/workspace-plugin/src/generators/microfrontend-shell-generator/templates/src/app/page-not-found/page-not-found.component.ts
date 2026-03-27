@@ -1,6 +1,6 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
-import { AbstractFeature, Feature } from '@modulefederation/portal';
+import { AbstractFeature, Feature } from '@ngx/portal';
 
 @Component({
   selector: 'page-not-found',

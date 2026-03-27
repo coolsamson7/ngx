@@ -22,6 +22,9 @@ export default async function (tree: Tree, schema: MicrofrontendShellGeneratorSc
   // read project from workspace.json / angular.json
 
   const projectConfig = getProjects(tree).get(schema.name);
+  if (!projectConfig) {
+    throw new Error(`Project '${schema.name}' not found after applicationGenerator`);
+  }
 
   // delete existing files
 

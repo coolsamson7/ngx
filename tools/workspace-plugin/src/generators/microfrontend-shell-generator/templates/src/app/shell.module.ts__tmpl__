@@ -24,7 +24,7 @@ import {
     ConfigurationModule,
     ConfigurationManager,
     ValueConfigurationSource
-} from "@modulefederation/portal";
+} from "@ngx/portal";
 import {  Route } from "@angular/router";
 
 import * as localManifest from "../assets/manifest.json"

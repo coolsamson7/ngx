@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { PortalModule } from "@modulefederation/portal";
+import { PortalModule } from "@ngx/portal";
 import { PrivatePortalComponent } from "./private-portal-component";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";

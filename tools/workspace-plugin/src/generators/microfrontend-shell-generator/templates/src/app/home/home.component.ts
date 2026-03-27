@@ -1,5 +1,5 @@
 import { Component, Injector } from '@angular/core';
-import { AbstractFeature, Feature } from "@modulefederation/portal";
+import { AbstractFeature, Feature } from "@ngx/portal";
 
 @Feature({
     id: 'home',

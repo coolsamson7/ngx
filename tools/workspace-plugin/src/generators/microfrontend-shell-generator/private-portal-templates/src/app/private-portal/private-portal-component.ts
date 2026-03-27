@@ -9,7 +9,7 @@ import {
     PortalManager,
     SessionManager,
     Ticket
-} from "@modulefederation/portal";
+} from "@ngx/portal";
 import { Component, Injector, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 

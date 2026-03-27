@@ -93,7 +93,14 @@ export class ManifestGenerator {
   }
 
   private findFile4Module(module: string): string {
-    return this.modules[module];
+    if (!this.modules) {
+      throw new Error('Module locations have not been loaded yet');
+    }
+    const file = this.modules[module];
+    if (!file) {
+      throw new Error(`Cannot find file for module '${module}'`);
+    }
+    return file;
   }
 
   private generateManifest(
@@ -250,9 +257,10 @@ export class ManifestGenerator {
     for (const decorator in decorators) {
       try {
         findFolder(decorator);
-      } catch (error) {
+      } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : String(error);
         throw new Error(
-          error.message +
+          message +
             ' in ' +
             decorators[decorator].file +
             ', line ' +
@@ -309,7 +317,7 @@ export class ManifestGenerator {
     };
 
     const mapFeature = (data: DecoratorData): any => {
-      let feature;
+      let feature: any;
 
       if ((feature = findFeature(data.data.id)) !== undefined) return feature;
 
@@ -340,11 +348,9 @@ export class ManifestGenerator {
         relative: this.relativeImport(modulePath, this.path(data.file)),
       };
 
-      if (decorator.isPageNotFound || decorator.id == "**")
-        feature.isPageNotFound = true
+      if (decorator.isPageNotFound || decorator.id == "**") feature.isPageNotFound = true
 
-      if (decorator.isDefault == true)
-        feature.isDefault = true
+      if (decorator.isDefault == true) feature.isDefault = true
 
       // check for lazy modules
 
@@ -376,9 +382,10 @@ export class ManifestGenerator {
         let decorator: DecoratorData;
         try {
           decorator = findFeatureDecorator(data.data.parent);
-        } catch (error) {
+        } catch (error: unknown) {
+          const message = error instanceof Error ? error.message : String(error);
           throw new Error(
-            error.message +
+            message +
               ' in file ' +
               data.file +
               ', line ' +

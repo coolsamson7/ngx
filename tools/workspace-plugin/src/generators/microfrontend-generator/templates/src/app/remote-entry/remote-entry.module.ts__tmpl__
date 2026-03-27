@@ -1,7 +1,7 @@
 import { Injector, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RemoteEntryComponent } from './remote-entry.component';
-import { AbstractModule, Microfrontend } from "@modulefederation/portal";
+import { AbstractModule, Microfrontend } from "@ngx/portal";
 import { RemoteEntryRouterModule } from "./remote-entry-router.module";
 
 @Microfrontend({name: '<%= name %>'})

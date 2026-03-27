@@ -30,7 +30,7 @@ import {
 <% } %>
   AbstractFeature,
   Feature
-} from "@modulefederation/portal";
+} from "@ngx/portal";
 
 <% if (schema.stateMixin) { %>
 interface <%= format.className() -%>State {

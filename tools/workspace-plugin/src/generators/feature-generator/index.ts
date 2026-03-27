@@ -10,12 +10,14 @@ import { join } from 'path';
 export default async function (tree: Tree, schema: FeatureGeneratorSchema) {
   // validate some settings
 
-  if ( schema.speechCommandMixin)
-     schema.commandMixin
+  if (schema.speechCommandMixin) schema.commandMixin = true
 
   // read project from workspace.json / angular.json
 
   const project = getProjects(tree).get(schema.projectName);
+  if (!project) {
+    throw new Error(`Project '${schema.projectName}' not found in workspace configuration`);
+  }
 
   // create the files
 
@@ -25,7 +27,15 @@ export default async function (tree: Tree, schema: FeatureGeneratorSchema) {
 
   const formatList = (str: string) => str.split(',').map(item => "\"" + item + "\"").join(", ")
 
-  const mixins = ["dialogMixin", "commandMixin", "onLocaleChangeMixin", "stateMixin", "viewMixin", "routingMixin", "speechCommandsMixin"]
+  const mixins: (keyof FeatureGeneratorSchema)[] = [
+    "dialogMixin",
+    "commandMixin",
+    "onLocaleChangeMixin",
+    "stateMixin",
+    "viewMixin",
+    "routingMixin",
+    "speechCommandMixin",
+  ]
   const mixinExpressions = ["WithDialogs", "WithCommands", "WithOnLocaleChange", "WithState<" + capitalized(schema.name) + "Component" + ">()", "WithView", "WithRouting", "WithSpeechCommands"]
 
   const formatSuperclass = () => {
@@ -45,6 +55,10 @@ export default async function (tree: Tree, schema: FeatureGeneratorSchema) {
      // done
 
      return superClass
+  }
+
+  if (!project.sourceRoot) {
+    throw new Error(`Project '${schema.projectName}' has no sourceRoot configured`);
   }
 
   generateFiles(tree, join(__dirname, "/templates"), join(project.sourceRoot, schema.directory || ""), {

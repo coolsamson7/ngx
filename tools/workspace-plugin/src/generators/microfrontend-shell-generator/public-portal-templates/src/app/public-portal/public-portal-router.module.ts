@@ -3,7 +3,7 @@
 
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { PortalManager } from '@modulefederation/portal';
+import { PortalManager } from '@ngx/portal';
 
 import { PublicPortalComponent } from './public-portal-component';
 

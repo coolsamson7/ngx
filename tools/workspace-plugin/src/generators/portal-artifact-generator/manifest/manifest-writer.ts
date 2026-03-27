@@ -27,13 +27,13 @@ export class Class {
   }
 
   optional(name: string, defaultValue: any): Class {
-    const equalArrays = (a, b) =>
+    const equalArrays = (a: any[] | undefined, b: any[] | undefined) =>
       a == undefined || b == undefined
         ? a == b
         : a.length === b.length &&
           a.every((element, index) => element == b[index]);
 
-    const equal = (a, b) => a == b;
+    const equal = (a: unknown, b: unknown) => a == b;
 
     if (Array.isArray(defaultValue))
       this.properties[name] = (object: any) => {
@@ -109,7 +109,7 @@ export class ManifestWriter {
 
     // features
 
-    const cleanFeature = (feature) => {
+    const cleanFeature = (feature: any) => {
       ManifestWriter.FeatureClass.clean(feature);
 
       if (feature.children)
