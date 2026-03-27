@@ -1,0 +1,16 @@
+{
+  "name": "my-microfrontend",
+  "commitHash": "253c108b3fc289605e96fd654b99c7ab34c348fb",
+  "version": "0.1",
+  "module": "RemoteEntryModule",
+  "features": [
+    {
+      "id": "",
+      "label": "my-microfrontend",
+      "component": "RemoteEntryComponent",
+      "tags": ["navigation"],
+      "visibility": ["public", "private"]
+    }
+  ],
+  "folders": []
+}
