@@ -1,0 +1,121 @@
+import { Component, Injector } from '@angular/core';
+<% if (schema.onLocaleChangeMixin) { %>
+import { Observable, of } from 'rxjs';
+<% } %>
+import {
+<% if (schema.dialogMixin) { -%>
+   WithDialogs,
+<% } %>
+<% if (schema.commandMixin) { -%>
+   WithCommands,
+   Command
+<% } %>
+<% if (schema.onLocaleChangeMixin) { -%>
+   WithOnLocaleChange,
+<% } %>
+<% if (schema.stateMixin) { -%>
+   WithState,
+<% } %>
+<% if (schema.viewMixin) { -%>
+   WithView,
+<% } %>
+<% if (schema.routingMixin) { -%>
+   WithRouting,
+<% } %>
+<% if (schema.featureMetadataMixin) { -%>
+   WithFeatureMetadata,
+<% } %>
+<% if (schema.speechCommandsMixin) { -%>
+   WithSpeechCommands,
+<% } %>
+  AbstractFeature,
+  Feature
+} from "@modulefederation/portal";
+
+<% if (schema.stateMixin) { %>
+interface <%= format.className() -%>State {
+   // TODO add members here
+}
+<% } -%>
+
+@Feature({
+   id: '<%= name -%>',
+<% if (schema.parent) { -%>
+   parent: '<%- schema.parent -%>',
+<% } -%>
+<% if (schema.label) { -%>
+   label: '<%- schema.label -%>',
+<% } -%>
+<% if (schema.labelKey) { -%>
+   labelKey: '<%- schema.labelKey -%>',
+<% } -%>
+<% if (schema.folder) { -%>
+   folder: '<%- schema.folder -%>',
+<% } -%>
+<% if (schema.permissions) { -%>
+   permissions: [<%- format.formatList(schema.permissions) %>],
+<% } -%>
+<% if (schema.path ||  schema.lazyModule) { -%>
+   router: {
+<% if (schema.path) { -%>
+      path: '<%= schema.path -%>',
+<% } -%>
+<% if (schema.lazyModule) { -%>
+      lazyModule: '<%= schema.lazyModule -%>',
+<% } -%>
+   },
+<% } -%>
+<% if (schema.categories) { -%>
+   categories: [<%- format.formatList(schema.categories) -%>],
+<% } -%>
+<% if (schema.tags) { -%>
+   tags: [<%- format.formatList(schema.tags) -%>],
+<% } -%>
+<% if (schema.i18n) { -%>
+   i18n: [<%- format.formatList(schema.i18n) -%>],
+<% } -%>
+})
+@Component({
+    selector: '<%= name %>',
+    templateUrl: './<%= name %>.feature.html',
+    styleUrls: ['./<%= name %>.feature.<%= style %>'],
+})
+export class <%= format.className() %> extends <%- format.superclass() -%> {
+    // constructor
+
+    constructor(injector: Injector) {
+        super(injector);
+    }
+
+<% if (schema.commandMixin) { %>
+    // commands
+
+    @Command({
+       label: "Test" // or better i18n!
+    })
+    test() {
+    }
+<% } %>
+
+
+<% if (schema.onLocaleChangeMixin) { %>
+     // implement WithOnLocaleChange
+
+     override onLocaleChange(locale : Intl.Locale) : Observable<any> {
+        // TODO
+
+        return of()
+     }
+<% } %>
+<% if (schema.stateMixin) { %>
+   // implement WithState
+
+   override applyState(state: <%= format.className() -%>State) : void {
+      // TODO
+   }
+
+   override writeState(state: <%= format.className() -%>State) : void {
+    // TODO
+   }
+<% } %>
+}

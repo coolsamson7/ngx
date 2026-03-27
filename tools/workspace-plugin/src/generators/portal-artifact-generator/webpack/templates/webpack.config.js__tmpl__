@@ -1,0 +1,8 @@
+const { withModuleFederation } = require('@nx/angular/module-federation');
+
+module.exports = withModuleFederation({
+   name: '<%- projectName %>',
+   exposes: {
+      './Module': '<%= moduleFile %>'
+   }
+});

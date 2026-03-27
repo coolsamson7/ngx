@@ -1,0 +1,26 @@
+ {
+ <% if (feature.module) { %>
+ <% if (isChild || rootModule) { %>
+       path: '<%- feature.router?.path || feature.id -%>',
+       loadChildren: () => import('<%=  execute.moduleImportPath(feature)  %>').then(m => m.<%= feature.module.name %> )
+ <% } else { %>
+          path: '<%- !isChild ? "" : (feature.router?.path || feature.id) -%>',
+          component: <%= feature.component %>,
+          children: [
+            <% for (let child of (feature.children || [])) { %>
+              <%- include(path('../includes/route.tmpl'), { feature: child, isChild: true, execute: execute }) -%>
+            <% } %>
+          ]
+ <% } %>
+ <% } else { %>
+   path: '<%- !isChild ? "" : (feature.router?.path || feature.id) -%>',
+          component: <%= feature.component %>,
+          children: [
+            <% for (let child of (feature.children || [])) { %>
+              <%- include(path('../includes/route.tmpl'), { feature: child, isChild: true, execute: execute }) -%>
+            <% } %>
+          ]
+ <% } %>
+
+
+  },

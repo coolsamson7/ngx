@@ -1,0 +1,46 @@
+{
+  "name": "shell",
+  "version": "0.1",
+  "commitHash": "253c108b3fc289605e96fd654b99c7ab34c348fb",
+  "module": "ShellModule",
+  "features": [
+    {
+      "id": "home",
+      "label": "home",
+      "component": "HomeComponent"
+    },
+<% if (privatePortal) { %>
+    {
+      "id": "private-portal",
+      "label": "private-portal",
+      "router": {
+        "lazyModule": "PrivatePortalModule"
+      },
+      "component": "PrivatePortalComponent",
+      "tags": ["portal"],
+      "visibility": ["private"],
+      "module": "PrivatePortalModule"
+    },
+<% } %>
+<% if (publicPortal) { %>
+    {
+      "id": "public-portal",
+      "label": "public-portal",
+      "router": {
+        "lazyModule": "PublicPortalModule"
+      },
+      "component": "PublicPortalComponent",
+      "tags": ["portal"],
+      "visibility": ["public"],
+      "module": "PublicPortalModule"
+    },
+<% } %>
+    {
+       "id": "**",
+       "label": "Page not found",
+       "icon": "language",
+       "component": "PageNotFoundComponent"
+     },
+  ],
+  "folders": []
+}
