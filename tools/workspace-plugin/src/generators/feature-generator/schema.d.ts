@@ -4,6 +4,7 @@ export interface FeatureGeneratorSchema {
   name: string,
   parent?: string,
   label?: string,
+  labelKey?: string,
   folder?: string,
   path?: string,
   lazyModule?: string,
@@ -13,11 +14,10 @@ export interface FeatureGeneratorSchema {
   i18n?: string,
   style?: Styles,
   dialogMixin?: boolean,
-  commandMixin?: boolean
-  dialogMixin?: boolean
-  stateMixin?: boolean
-  viewMixin?: boolean
-  routingMixin?: boolean
-  speechCommandMixin?: boolean
+  commandMixin?: boolean,
+  stateMixin?: boolean,
+  viewMixin?: boolean,
+  routingMixin?: boolean,
+  speechCommandMixin?: boolean,
   onLocaleChangeMixin?: boolean
 }

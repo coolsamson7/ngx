@@ -24,26 +24,26 @@
         "index": 0
       },
       "x-prompt": "Where is the portal server?",
-      "pattern": "^((https?:\/\/)|(www.))(?:([a-zA-Z]+)|(\\d+\\.\\d+.\\d+.\\d+)):\\d{4}$"
+      "pattern": "^((https?:\\/\\/)|(www.))(?:([a-zA-Z]+)|(\\d+\\.\\d+.\\d+.\\d+)):\\d{4}$"
     },
     "generatePublicPortal": {
       "description": "If yes, a public portal component will be generated.",
       "type": "boolean",
       "default": false,
-      "x-prompt": "Would you like me to generate a public portal component??",
+      "x-prompt": "Would you like me to generate a public portal component?"
     },
     "generatePrivatePortal": {
       "description": "If yes, a private portal component will be generated.",
       "type": "boolean",
       "default": false,
-      "x-prompt": "Would you like me to generate a public private component??",
+      "x-prompt": "Would you like me to generate a private portal component?"
     },
     "directory": {
       "description": "The directory of the new application.",
       "type": "string",
-      "x-priority": "important"
+      "x-priority": "important",
+      "x-prompt": "Which directory should the application be created in? (leave blank for default)"
     },
-
     "style": {
       "description": "The file extension to be used for style files.",
       "type": "string",
@@ -76,30 +76,43 @@
       "description": "Specifies if the style will be in the ts file.",
       "type": "boolean",
       "default": false,
-      "alias": "s"
+      "alias": "s",
+      "x-prompt": "Should styles be inlined in the component .ts file?"
     },
     "inlineTemplate": {
       "description": "Specifies if the template will be in the ts file.",
       "type": "boolean",
       "default": false,
-      "alias": "t"
+      "alias": "t",
+      "x-prompt": "Should the template be inlined in the component .ts file?"
     },
     "viewEncapsulation": {
       "description": "Specifies the view encapsulation strategy.",
       "enum": ["Emulated", "None", "ShadowDom"],
-      "type": "string"
+      "type": "string",
+      "x-prompt": {
+        "message": "Which view encapsulation strategy would you like to use?",
+        "type": "list",
+        "items": [
+          { "value": "Emulated", "label": "Emulated (default)" },
+          { "value": "None",     "label": "None" },
+          { "value": "ShadowDom","label": "ShadowDom" }
+        ]
+      }
     },
     "prefix": {
       "type": "string",
       "format": "html-selector",
       "description": "The prefix to apply to generated selectors.",
-      "alias": "p"
+      "alias": "p",
+      "x-prompt": "What prefix would you like to use for generated selectors? (e.g. app)"
     },
     "skipTests": {
       "description": "Skip creating spec files.",
       "type": "boolean",
       "default": false,
-      "alias": "S"
+      "alias": "S",
+      "x-prompt": "Skip creating spec files?"
     },
     "skipFormat": {
       "description": "Skip formatting files.",
@@ -117,7 +130,15 @@
       "type": "string",
       "enum": ["jest", "none"],
       "description": "Test runner to use for unit tests.",
-      "default": "jest"
+      "default": "jest",
+      "x-prompt": {
+        "message": "Which unit test runner would you like to use?",
+        "type": "list",
+        "items": [
+          { "value": "jest", "label": "Jest" },
+          { "value": "none", "label": "None" }
+        ]
+      }
     },
     "e2eTestRunner": {
       "type": "string",
@@ -128,27 +149,39 @@
     },
     "tags": {
       "type": "string",
-      "description": "Add tags to the application (used for linting)."
+      "description": "Add tags to the application (used for linting).",
+      "x-prompt": "Add tags to the application for linting (comma-separated, leave blank for none)"
     },
     "linter": {
       "description": "The tool to use for running lint checks.",
       "type": "string",
       "enum": ["eslint", "none"],
-      "default": "eslint"
+      "default": "eslint",
+      "x-prompt": {
+        "message": "Which linter would you like to use?",
+        "type": "list",
+        "items": [
+          { "value": "eslint", "label": "ESLint" },
+          { "value": "none",   "label": "None" }
+        ]
+      }
     },
     "strict": {
       "type": "boolean",
       "description": "Create an application with stricter type checking and build optimization options.",
-      "default": true
+      "default": true,
+      "x-prompt": "Enable strict type checking and build optimizations?"
     },
     "port": {
       "type": "number",
-      "description": "The port at which the remote application should be served."
+      "description": "The port at which the remote application should be served.",
+      "x-prompt": "Which port should the remote application be served on? (leave blank for default)"
     },
     "setParserOptionsProject": {
       "type": "boolean",
       "description": "Whether or not to configure the ESLint `parserOptions.project` option. We do not do this by default for lint performance reasons.",
-      "default": false
+      "default": false,
+      "x-prompt": "Configure ESLint parserOptions.project? (not recommended — impacts lint performance)"
     },
     "rootProject": {
       "description": "Create an application at the root of the workspace.",

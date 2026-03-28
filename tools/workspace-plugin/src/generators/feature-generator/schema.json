@@ -14,90 +14,109 @@
     },
     "name": {
       "type": "string",
-      "description": "Provide the feature name"
+      "description": "Provide the feature name",
+      "x-prompt": "What is the feature name?"
     },
     "parent": {
       "type": "string",
-      "description": "Provide the feature parent"
+      "description": "Provide the feature parent",
+      "x-prompt": "What is the parent feature id? (leave blank for none)"
     },
     "folder": {
       "type": "string",
-      "description": "Provide the feature folder"
+      "description": "Provide the feature folder",
+      "x-prompt": "Which folder should this feature belong to? (leave blank for none)"
     },
     "label": {
       "type": "string",
-      "description": "Provide the feature label"
+      "description": "Provide the feature label",
+      "x-prompt": "Provide a human-readable label for the feature (leave blank for none)"
     },
     "labelKey": {
       "type": "string",
-      "description": "Provide the feature label key"
+      "description": "Provide the feature label key",
+      "x-prompt": "Provide the i18n label key (leave blank for none)"
     },
     "directory": {
       "type": "string",
-      "description": "Provide the feature directory"
+      "description": "Provide the feature directory",
+      "x-prompt": "In which source directory should the feature be created? (leave blank for root)"
     },
     "path": {
       "type": "string",
-      "description": "Provide the optional path for the router if it differs from the name"
+      "description": "Provide the optional path for the router if it differs from the name",
+      "x-prompt": "Provide a custom router path if it differs from the feature name (leave blank to use name)"
     },
     "lazyModule": {
       "type": "string",
-      "description": "Provide the name of the module in case of lazy components"
+      "description": "Provide the name of the module in case of lazy components",
+      "x-prompt": "Provide the lazy module name if this feature is loaded lazily (leave blank for none)"
     },
     "categories": {
       "type": "string",
       "description": "Provide a comma separated list of categories",
-      "pattern":  "\\w+(,\\w+)*"
+      "pattern": "\\w+(,\\w+)*",
+      "x-prompt": "Provide a comma-separated list of categories (leave blank for none)"
     },
     "permissions": {
       "type": "string",
       "description": "Provide a comma separated list of permissions",
-      "pattern":  "\\w+(,\\w+)*"
+      "pattern": "\\w+(,\\w+)*",
+      "x-prompt": "Provide a comma-separated list of required permissions (leave blank for none)"
     },
     "tags": {
       "type": "string",
       "description": "Provide a comma separated list of tags",
-      "pattern":  "\\w+(,\\w+)*"
+      "pattern": "\\w+(,\\w+)*",
+      "x-prompt": "Provide a comma-separated list of tags (leave blank for none)"
     },
     "i18n": {
       "type": "string",
       "description": "Provide a comma separated list of required i18n namespaces",
-      "pattern":  "\\w+(,\\w+)*"
+      "pattern": "\\w+(,\\w+)*",
+      "x-prompt": "Provide a comma-separated list of required i18n namespaces (leave blank for none)"
     },
     "dialogMixin": {
       "type": "boolean",
-      "description": "Provide the dialog mixin",
-      "default": false
+      "description": "Include the dialog mixin?",
+      "default": false,
+      "x-prompt": "Include the dialog mixin?"
     },
     "commandMixin": {
       "type": "boolean",
-      "description": "Provide the command mixin",
-      "default": false
+      "description": "Include the command mixin?",
+      "default": false,
+      "x-prompt": "Include the command mixin?"
     },
     "stateMixin": {
       "type": "boolean",
-      "description": "Provide the state mixin",
-      "default": false
+      "description": "Include the state mixin?",
+      "default": false,
+      "x-prompt": "Include the state mixin?"
     },
     "viewMixin": {
       "type": "boolean",
-      "description": "Provide the view mixin",
-      "default": false
+      "description": "Include the view mixin?",
+      "default": false,
+      "x-prompt": "Include the view mixin?"
     },
     "routingMixin": {
       "type": "boolean",
-      "description": "Provide the routing mixin",
-      "default": false
+      "description": "Include the routing mixin?",
+      "default": false,
+      "x-prompt": "Include the routing mixin?"
     },
     "speechCommandMixin": {
       "type": "boolean",
-      "description": "Provide the speech command mixin",
-      "default": false
+      "description": "Include the speech command mixin?",
+      "default": false,
+      "x-prompt": "Include the speech command mixin?"
     },
     "onLocaleChangeMixin": {
       "type": "boolean",
-      "description": "Provide the feature mixin",
-      "default": false
+      "description": "Include the onLocaleChange mixin?",
+      "default": false,
+      "x-prompt": "Include the onLocaleChange mixin?"
     },
     "style": {
       "description": "The file extension to be used for style files.",
