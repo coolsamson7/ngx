@@ -25,6 +25,11 @@ import {
     SecurityModule,
 } from "@ngx/security";
 
+
+import {
+    EndpointLocator,
+} from "@ngx/communication";
+
 import {
     CanActivateGuard,
     CanDeactivateGuard,
@@ -40,7 +45,7 @@ import { SampleAuthentication } from "./security/sample-authentication";
 import { SampleAuthorization } from "./security/sample-authorization";
 import { ShellRouterModule } from './shell-router.module';
 
-/*@Injectable({providedIn: 'root'})
+@Injectable({providedIn: 'root'})
 export class ApplicationEndpointLocator extends EndpointLocator {
   // constructor
 
@@ -53,7 +58,7 @@ export class ApplicationEndpointLocator extends EndpointLocator {
   getEndpoint(domain : string) : string {
     return this.configuration.get<string>("backend." + domain)!
   }
-}*/
+}
 
 @Shell({
     name: '<%= name %>'
@@ -116,12 +121,12 @@ export class ApplicationEndpointLocator extends EndpointLocator {
             }
         }),
     ],
-    /*providers: [
+    providers: [
         {
             provide: EndpointLocator,
             useClass: ApplicationEndpointLocator
         }
-    ]*/
+    ]
 })
 export class ShellModule extends AbstractModule() {
     constructor(injector: Injector) {

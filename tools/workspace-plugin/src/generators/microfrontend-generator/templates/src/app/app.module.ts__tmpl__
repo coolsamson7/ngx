@@ -17,6 +17,10 @@ import {
 } from "@ngx/i18n";
 
 import {
+    EndpointLocator,
+} from "@ngx/communication";
+
+import {
    SecurityModule
 } from "@ngx/security";
 
@@ -30,7 +34,7 @@ import { appRoutes } from "./app.routes";
 import * as localManifest from "../assets/manifest.json"
 import { AppRouterModule } from "./app-router.module";
 
-/*@Injectable({providedIn: 'root'})
+@Injectable({providedIn: 'root'})
 export class ApplicationEndpointLocator extends EndpointLocator {
   // constructor
 
@@ -43,7 +47,7 @@ export class ApplicationEndpointLocator extends EndpointLocator {
   getEndpoint(domain : string) : string {
     return this.configuration.get<string>("backend." + domain)!
   }
-}*/
+}
 
 @NgModule({
   imports: [
@@ -98,12 +102,12 @@ export class ApplicationEndpointLocator extends EndpointLocator {
 
     AppRouterModule,
   ],
-  /*providers: [
+  providers: [
     {
       provide: EndpointLocator,
       useClass: ApplicationEndpointLocator
     }
-  ]*/
+  ]
 })
 export class AppModule {
 }
