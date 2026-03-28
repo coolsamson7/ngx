@@ -8,11 +8,11 @@ import {
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError, finalize, Observable } from "rxjs";
-//TODO FOOimport { ApplicationError, ErrorManager, HTTPCommunicationError, ServerError } from "../error";
+import { ApplicationError, ErrorManager, HTTPCommunicationError, ServerError } from "@ngx/common";
 
 import { tap } from "rxjs/operators";
 
-/*@Injectable()
+@Injectable()
 export class HTTPErrorInterceptor implements HttpInterceptor {
   // constructor
 
@@ -93,4 +93,3 @@ export class HTTPErrorInterceptor implements HttpInterceptor {
       )
   }
 }
-*/

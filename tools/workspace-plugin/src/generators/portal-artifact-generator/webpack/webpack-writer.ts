@@ -5,9 +5,8 @@ export class WebpackWriter {
   constructor(private project: ProjectConfiguration, private projectName: string) {}
 
   async write(host: Tree, manifest: any) {
-    // write router module
+    // write webpack config
 
-    //const webpackTemplatePath = 'tools/workspace-plugin/src/generators/portal-artifact-generator/webpack/templates';
     const webpackTemplatePath = join(
       process.cwd(),
       'tools/workspace-plugin/src/generators/portal-artifact-generator/webpack/templates'
