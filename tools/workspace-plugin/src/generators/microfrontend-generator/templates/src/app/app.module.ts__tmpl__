@@ -13,6 +13,7 @@ import {
 import {
    I18nModule,
    LocaleModule,
+   AssetTranslationLoader
 } from "@ngx/i18n";
 
 import {
@@ -20,17 +21,16 @@ import {
 } from "@ngx/security";
 
 import {
-  EndpointLocator,
   Manifest,
   PortalModule,
-  ServerTranslationLoader
+
 } from "@ngx/portal";
 import { environment } from "../environments/environment";
 import { appRoutes } from "./app.routes";
 import * as localManifest from "../assets/manifest.json"
 import { AppRouterModule } from "./app-router.module";
 
-@Injectable({providedIn: 'root'})
+/*@Injectable({providedIn: 'root'})
 export class ApplicationEndpointLocator extends EndpointLocator {
   // constructor
 
@@ -43,12 +43,13 @@ export class ApplicationEndpointLocator extends EndpointLocator {
   getEndpoint(domain : string) : string {
     return this.configuration.get<string>("backend." + domain)!
   }
-}
+}*/
 
 @NgModule({
-  declarations: [AppComponent],
   imports: [
     BrowserModule,
+
+    AppComponent,
 
     // configuration values
 
@@ -67,7 +68,7 @@ export class ApplicationEndpointLocator extends EndpointLocator {
         }
       },
       localRoutes: appRoutes,
-      localManifest: localManifest as Manifest,
+      localManifest: localManifest as any as Manifest,
     }),
 
     // tracing configuration
@@ -90,20 +91,19 @@ export class ApplicationEndpointLocator extends EndpointLocator {
     // i18n
 
     I18nModule.forRoot({
-      loader: {type: ServerTranslationLoader}
+      loader: {type: AssetTranslationLoader}
     }),
 
     // the application routes
 
     AppRouterModule,
   ],
-  providers: [
+  /*providers: [
     {
       provide: EndpointLocator,
       useClass: ApplicationEndpointLocator
     }
-  ],
-  bootstrap: [AppComponent],
+  ]*/
 })
 export class AppModule {
 }

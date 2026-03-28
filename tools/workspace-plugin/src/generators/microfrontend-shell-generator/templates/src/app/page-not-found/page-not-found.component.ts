@@ -1,5 +1,5 @@
-import { Component, Injector, OnInit } from '@angular/core';
-import { ActivatedRouteSnapshot, Router } from '@angular/router';
+import { Component, Injector } from '@angular/core';
+import { Router } from '@angular/router';
 import { AbstractFeature, Feature } from '@ngx/portal';
 
 @Component({

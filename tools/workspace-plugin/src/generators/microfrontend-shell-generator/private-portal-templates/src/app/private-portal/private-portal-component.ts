@@ -1,7 +1,6 @@
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @angular-eslint/use-lifecycle-interface */
 import {
-    AboutDialogService,
     AbstractFeature,
     Feature,
     FeatureData,
@@ -12,8 +11,11 @@ import {
     SessionManager,
     Ticket
 } from "@ngx/security";
-import { Component, Injector, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { Component, Injector } from '@angular/core';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { MatToolbar } from "@angular/material/toolbar";
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Feature({
     id: 'private-portal',
@@ -26,7 +28,8 @@ import { Router } from "@angular/router";
 @Component({
     selector: 'private-portal',
     templateUrl: './private-portal-component.html',
-    styleUrls: ["./private-portal-component.scss"]
+    styleUrls: ["./private-portal-component.scss"],
+    imports: [CommonModule, MatToolbar, MatButtonModule, RouterOutlet, RouterLink],
 })
 export class PrivatePortalComponent extends AbstractFeature {
     // instance data
@@ -35,7 +38,7 @@ export class PrivatePortalComponent extends AbstractFeature {
 
     // constructor
 
-    constructor(injector: Injector, private portalManager : PortalManager, private router : Router, private sessionManager : SessionManager<any, Ticket>, private featureRegistry : FeatureRegistry, private aboutDialogService : AboutDialogService) {
+    constructor(injector: Injector, private portalManager : PortalManager, private router : Router, private sessionManager : SessionManager<any, Ticket>, private featureRegistry : FeatureRegistry) {
         super(injector);
 
         featureRegistry.registry$.subscribe(_ => this.computeNavigation())
@@ -44,7 +47,7 @@ export class PrivatePortalComponent extends AbstractFeature {
     // callbacks
 
     about() {
-        this.aboutDialogService.show()
+        //this.aboutDialogService.show()
     }
 
     logout() {

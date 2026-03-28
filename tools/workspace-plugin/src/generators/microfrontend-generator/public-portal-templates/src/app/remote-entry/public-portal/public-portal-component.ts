@@ -5,7 +5,6 @@ import {
     Ticket
 } from "@ngx/security";
 import {
-    AboutDialogService,
     AbstractFeature,
     Feature,
     FeatureData,
@@ -13,7 +12,10 @@ import {
     PortalManager
 } from "@ngx/portal";
 import { Component, Injector } from "@angular/core";
-import { Router } from "@angular/router";
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { MatToolbar } from "@angular/material/toolbar";
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Feature({
     id: 'public-portal',
@@ -26,7 +28,8 @@ import { Router } from "@angular/router";
 @Component({
     selector: 'public-portal',
     templateUrl: './public-portal-component.html',
-    styleUrls: ["./public-portal-component.scss"]
+    styleUrls: ["./public-portal-component.scss"],
+    imports: [CommonModule, MatToolbar, MatButtonModule, RouterOutlet, RouterLink],
 })
 export class PublicPortalComponent extends AbstractFeature {
     // instance data
@@ -35,7 +38,7 @@ export class PublicPortalComponent extends AbstractFeature {
 
     // constructor
 
-    constructor(injector: Injector, private aboutDialogService : AboutDialogService, private router : Router, private featureRegistry : FeatureRegistry, private sessionManager : SessionManager<any, Ticket>, private portalManager : PortalManager) {
+    constructor(injector: Injector, private router : Router, private featureRegistry : FeatureRegistry, private sessionManager : SessionManager<any, Ticket>, private portalManager : PortalManager) {
         super(injector);
 
         featureRegistry.registry$.subscribe(_ => this.computeNavigation())
@@ -44,7 +47,7 @@ export class PublicPortalComponent extends AbstractFeature {
     // public
 
     about() {
-        this.aboutDialogService.show()
+        //this.aboutDialogService.show()
     }
 
     login() {

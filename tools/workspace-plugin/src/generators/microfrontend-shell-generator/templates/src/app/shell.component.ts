@@ -1,12 +1,13 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Component } from '@angular/core';
-import { FeatureData, FeatureRegistry } from "@ngx/portal";
+import { FeatureData, FeatureRegistry, FeatureOutletDirective } from "@ngx/portal";
 import { SessionManager, Ticket } from "@ngx/security";
 
 @Component({
     selector: 'app-root',
     templateUrl: './shell.component.html',
     styleUrls: ['./shell.component.scss'],
+    imports: [FeatureOutletDirective]
 })
 export class ShellComponent {
     // instance data

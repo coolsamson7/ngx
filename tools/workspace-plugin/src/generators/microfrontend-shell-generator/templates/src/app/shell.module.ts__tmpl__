@@ -18,6 +18,7 @@ import {
     I18nModule,
     I18nResolver,
     LocaleModule,
+    AssetTranslationLoader
 } from "@ngx/i18n";
 
 import {
@@ -27,13 +28,8 @@ import {
 import {
     CanActivateGuard,
     CanDeactivateGuard,
-    EndpointLocator,
-
     PortalModule,
-    PortalComponentsModule,
-    ServerTranslationLoader,
     Shell,
-
     Manifest
 } from "@ngx/portal";
 import {  Route } from "@angular/router";
@@ -44,7 +40,7 @@ import { SampleAuthentication } from "./security/sample-authentication";
 import { SampleAuthorization } from "./security/sample-authorization";
 import { ShellRouterModule } from './shell-router.module';
 
-@Injectable({providedIn: 'root'})
+/*@Injectable({providedIn: 'root'})
 export class ApplicationEndpointLocator extends EndpointLocator {
   // constructor
 
@@ -57,16 +53,17 @@ export class ApplicationEndpointLocator extends EndpointLocator {
   getEndpoint(domain : string) : string {
     return this.configuration.get<string>("backend." + domain)!
   }
-}
+}*/
 
 @Shell({
     name: '<%= name %>'
 })
 @NgModule({
-    declarations: [ShellComponent],
     imports: [
         BrowserModule,
         ShellRouterModule,
+
+        ShellComponent,
 
          // configuration
 
@@ -99,12 +96,8 @@ export class ApplicationEndpointLocator extends EndpointLocator {
         // localization
 
         I18nModule.forRoot({
-            loader: { type: ServerTranslationLoader }
+            loader: { type: AssetTranslationLoader }
         }),
-
-        // portal components
-
-        PortalComponentsModule,
 
         // the main microfrontend logic
 
@@ -115,7 +108,7 @@ export class ApplicationEndpointLocator extends EndpointLocator {
                 //local: { remotes: ["http://localhost:4201", "http://localhost:4202"]}
             },
             localRoutes: localRoutes,
-            localManifest: localManifest as Manifest,
+            localManifest: localManifest as any as Manifest,
             decorateRoutes: (route : Route) => {
                 route.resolve = {i18n: I18nResolver}
                 route.canActivate = [CanActivateGuard]
@@ -123,16 +116,17 @@ export class ApplicationEndpointLocator extends EndpointLocator {
             }
         }),
     ],
-    providers: [
+    /*providers: [
         {
             provide: EndpointLocator,
             useClass: ApplicationEndpointLocator
         }
-    ],
-    bootstrap: [ShellComponent],
+    ]*/
 })
 export class ShellModule extends AbstractModule() {
     constructor(injector: Injector) {
         super(injector);
     }
+
+    ngDoBootstrap() {}
 }
