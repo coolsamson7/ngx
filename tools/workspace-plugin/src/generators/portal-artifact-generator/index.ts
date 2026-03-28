@@ -1,7 +1,7 @@
 import { formatFiles, getProjects, Tree } from '@nx/devkit';
 import { MicrofrontendSchema } from './schema';
 
-import { ManifestGenerator } from './manifest/manifest-generator';
+import { ManifestGenerator } from './manifest/manifest-generator.ts';
 import { ManifestWriter } from './manifest/manifest-writer';
 import { RouteModuleWriter } from './router-module/route-module-writer';
 import { WebpackWriter } from './webpack/webpack-writer';

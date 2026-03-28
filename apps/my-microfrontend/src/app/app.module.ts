@@ -17,7 +17,7 @@ import { SecurityModule } from '@ngx/security';
 import {
   //EndpointLocator,
   Manifest,
-  PortalModule,
+  //PortalModule,
   //ServerTranslationLoader,
 } from '@ngx/portal';
 import { environment } from '../environments/environment';
@@ -56,7 +56,7 @@ export class ApplicationEndpointLocator extends EndpointLocator {
 
     SecurityModule.forRoot({}),
 
-    // the portal logic
+    /* the portal logic
 
     PortalModule.forRoot({
       loader: {
@@ -66,7 +66,7 @@ export class ApplicationEndpointLocator extends EndpointLocator {
       },
       localRoutes: appRoutes,
       localManifest: localManifest as any as Manifest,
-    }),
+    }),*/
 
     // tracing configuration
 
@@ -101,6 +101,6 @@ export class ApplicationEndpointLocator extends EndpointLocator {
       useClass: ApplicationEndpointLocator,
     },*/
   ],
-  bootstrap: [AppComponent],
+  //bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -107,7 +107,7 @@ import { ShellRouterModule } from './shell-router.module';
         //server: {},
         local: { 
           remotes: [
-            //"http://localhost:4201", "http://localhost:4202"
+            "http://localhost:4201",
           ]
         }
       },

@@ -6,7 +6,12 @@
     "module": "preserve",
     "moduleResolution": "bundler",
     "types": [],
-    "declaration": true
+    "declaration": true,
+    "paths": {
+      "@ngx/common": ["libs/common/src/index.ts"],
+      "@ngx/security": ["libs/security/src/index.ts"],
+      "@ngx/i18n": ["libs/i18n/src/index.ts"]
+    }
   },
   "exclude": ["**/*.spec.ts", "jest.config.ts", "src/test-setup.ts"],
   "include": ["**/*.ts"]

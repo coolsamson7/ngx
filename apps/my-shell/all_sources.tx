@@ -632,6 +632,8 @@ import {
   templateUrl: './shell.component.html',
   styleUrls: ['./shell.component.scss'],
   imports: [FeatureOutletDirective],
+  standalone: true,
+  //imports: [RouterOutlet], 
 })
 export class ShellComponent {
   // instance data
@@ -802,6 +804,8 @@ export class ShellModule extends AbstractModule() {
   constructor(injector: Injector) {
     super(injector);
   }
+
+  ngDoBootstrap() {}
 }
 
 

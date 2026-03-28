@@ -17,6 +17,7 @@
         "tsConfig": "apps/my-microfrontend/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
+          "apps/my-microfrontend/src/assets",
           {
             "glob": "**/*",
             "input": "apps/my-microfrontend/public"
@@ -58,11 +59,14 @@
           "namedChunks": true
         }
       },
-      "defaultConfiguration": "production"
+      "defaultConfiguration": "development"
     },
     "serve": {
       "continuous": true,
       "executor": "@nx/angular:dev-server",
+      "options": {
+        "port": 4201
+      },
       "configurations": {
         "production": {
           "buildTarget": "my-microfrontend:build:production"

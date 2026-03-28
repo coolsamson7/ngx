@@ -14,12 +14,14 @@ import {
   ManifestDecorator,
 } from './deployment';
 import { TraceLevel, Tracer } from '@ngx/common';
-import { ReplaySubject } from 'rxjs';
+import { ReplaySubject, take } from 'rxjs';
 import { LocaleManager } from '@ngx/i18n';
 import { DeploymentConfigurationSource } from './deployment/deployment-configuration-source';
 import { ConfigurationManager } from '@ngx/common';
 import { RouteBuilderManager } from './federation';
 import { SessionManager, Ticket } from '@ngx/security';
+
+console.log("YYYYY")
 
 /**
  * the runtime data of feature
@@ -74,7 +76,7 @@ export class PortalManager {
   ) {}
 
   static registerLazyRoutes(feature: string, routes: Routes): Routes {
-    PortalManager.instance.subscribe((injector) =>
+    PortalManager.instance.pipe(take(1)).subscribe((injector) =>
       injector.registerLazyRoutes(feature, routes)
     );
 

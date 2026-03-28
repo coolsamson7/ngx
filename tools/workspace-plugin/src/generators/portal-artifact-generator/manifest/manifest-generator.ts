@@ -433,7 +433,7 @@ export class ManifestGenerator {
 
     // make sure the "" feature comes first since it will get a special handling
 
-   let swap = (array: any[], i1: number, i2: number) => {
+   const swap = (array: any[], i1: number, i2: number) => {
        const tmp = array[i1];
        array[i1] = array[i2];
        array[i2] = tmp;

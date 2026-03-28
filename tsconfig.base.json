@@ -10,10 +10,7 @@
       "@ngx/security": ["libs/security/src/index.ts"],
       "@ngx/ui": ["libs/ui/src/index.ts"],
       "@ngx/validation": ["libs/validation/src/index.ts"],
-      "@ngx/view": ["libs/view/src/index.ts"],
-      "microfrontend/Routes": [
-        "apps/microfrontend/src/app/remote-entry/entry.routes.ts"
-      ]
+      "@ngx/view": ["libs/view/src/index.ts"]
     },
     "target": "es2022",
     "module": "preserve",

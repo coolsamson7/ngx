@@ -8,6 +8,9 @@
     "build:shell": "nx build shell",
     "build:portal": "nx build portal"
   },
+  "workspaces": [
+    "tools/*"
+  ],
   "dependencies": {
     "@angular/animations": "19.2.0",
     "@angular/cdk": "^19.2.0",
