@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "compodoc": "npx compodoc -p tsconfig.compodoc.json",
     "start:shell": "nx serve shell",
     "start:microfrontend": "nx run microfrontend:serve:standalone",
     "build:shell": "nx build shell",
