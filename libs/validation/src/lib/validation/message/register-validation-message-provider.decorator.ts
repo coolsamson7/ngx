@@ -1,4 +1,4 @@
-import { GConstructor } from "../../lang";
+import { GConstructor } from "@ngx/common";
 import { ValidationMessageManager } from "./validation-message-manager"
 import { ValidationMessageProvider } from "./validation-message-provider";
 

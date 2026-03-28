@@ -1,0 +1,11 @@
+{
+  "name": "@ngx/communication",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@ngx/common": "0.0.1",
+
+    "@angular/common": "^19.0.0",
+    "@angular/core": "^19.0.0",
+    "rxjs": "^7.8.0"
+  }
+}

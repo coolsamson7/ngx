@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "target": "es2022",
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "types": [],
+    "declaration": true
+  },
+  "exclude": ["**/*.spec.ts", "jest.config.ts", "src/test-setup.ts"],
+  "include": ["**/*.ts"]
+}

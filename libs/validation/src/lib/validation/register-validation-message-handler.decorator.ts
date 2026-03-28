@@ -1,7 +1,7 @@
 
 // the decorator
 
-import { GConstructor } from '../lang';
+import { GConstructor } from '@ngx/common';
 import { ValidationMessageHandler } from './validation-message-handler.interface';
 import { ValidationMessageRegistry } from './validation-message-registry';
 

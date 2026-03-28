@@ -1,5 +1,4 @@
-import { get, set } from "../../lang";
-import { StringBuilder } from "../../util";
+import { get, set, StringBuilder } from "@ngx/common";
 import { Test } from "../test"
 import { ValidationContext } from "../validation-context"
 import { ValidationError } from "../validation-error"

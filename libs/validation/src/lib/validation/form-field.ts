@@ -4,7 +4,7 @@ import { FormsModule, NgControl } from "@angular/forms";
 import { MatFormFieldModule, MatFormFieldControl, MatFormField } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { BehaviorSubject, distinctUntilChanged } from "rxjs";
-import { StringBuilder } from "../util";
+import { StringBuilder } from "@ngx/common";
 import { ValidationMessageRegistry } from "./validation-message-registry";
 
 @Component({

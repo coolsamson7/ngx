@@ -12,7 +12,7 @@ import { MatFormField } from '@angular/material/form-field';
 import {  Subject } from 'rxjs';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { ValidationMessageRegistry } from './validation-message-registry';
-import { StringBuilder } from '../util';
+import { StringBuilder } from '@ngx/common';
 
   
 
