@@ -14,7 +14,7 @@
         "index": "apps/my-microfrontend/src/index.html",
         "main": "apps/my-microfrontend/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "apps/my-microfrontend/tsconfig.app.json",
+        "tsConfig": "apps/my-microfrontend/tsconfig.mf.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           "apps/my-microfrontend/src/assets",
@@ -57,6 +57,9 @@
           "extractLicenses": false,
           "sourceMap": true,
           "namedChunks": true
+        },
+        "source": {
+          "tsConfig": "apps/my-microfrontend/tsconfig.app.json"
         }
       },
       "defaultConfiguration": "development"
@@ -73,6 +76,9 @@
         },
         "development": {
           "buildTarget": "my-microfrontend:build:development"
+        },
+        "source": {
+          "buildTarget": "my-microfrontend:build:source"
         }
       },
       "defaultConfiguration": "development"

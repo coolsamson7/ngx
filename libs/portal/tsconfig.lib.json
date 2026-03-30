@@ -7,8 +7,13 @@
     "moduleResolution": "bundler",
     "types": [],
     "declaration": true,
-
+    "composite": true
   },
   "exclude": ["**/*.spec.ts", "jest.config.ts", "src/test-setup.ts"],
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts"],
+  "references": [
+    { "path": "../common" },
+    { "path": "../security" },
+    { "path": "../i18n" }
+  ]
 }

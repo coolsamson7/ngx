@@ -6,5 +6,8 @@
       "@ngx/common": ["libs/common/src/index.ts"]
     }
   },
-  "angularCompilerOptions": {}
+  "angularCompilerOptions": {},
+  "references": [
+    { "path": "../common" }
+  ]
 }

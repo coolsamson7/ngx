@@ -9,5 +9,8 @@
     "declaration": true
   },
   "exclude": ["**/*.spec.ts", "jest.config.ts", "src/test-setup.ts"],
-  "include": ["**/*.ts"]
+build  "include": ["**/*.ts"],
+  "references": [
+    { "path": "../common" }
+  ]
 }
