@@ -5,7 +5,7 @@ export type ModuleMetadata = {
     /**
      * the module tye
      */
-    type? : 'shell' | 'microfrontend';
+    type? : 'library' | 'shell' | 'microfrontend';
     /**
      * the module name
      */

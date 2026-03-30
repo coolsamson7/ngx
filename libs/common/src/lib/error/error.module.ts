@@ -2,7 +2,7 @@ import { ErrorHandler, Injector, ModuleWithProviders, NgModule, Type } from '@an
 //import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { GlobalErrorHandler } from './global-error-handler';
 import { ErrorManager } from './error-manager';
-import { AbstractModule } from '../injection';
+import { AbstractModule } from '../modules';
 
 export interface ErrorModuleConfig {
   handler: Type<any>[]

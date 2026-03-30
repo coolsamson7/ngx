@@ -5,7 +5,9 @@ import { Microfrontend } from '@ngx/portal';
 import { AbstractModule } from '@ngx/common';
 import { RemoteEntryRouterModule } from './remote-entry-router.module';
 
-@Microfrontend({ name: 'my-microfrontend' })
+import * as pkg from '../../../package.json';
+
+@Microfrontend(pkg)
 @NgModule({
   declarations: [],
   imports: [CommonModule, RemoteEntryRouterModule, RemoteEntryComponent],

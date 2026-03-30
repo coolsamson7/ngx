@@ -1,5 +1,5 @@
-import { Module, ModuleMetadata } from "./modules";
-import { InjectionToken, Type } from "@angular/core";
+import { AbstractPackage, ConstructorFunction, TypeDescriptor } from "@ngx/common";
+import { ModuleMetadata } from "./modules";
 
 /**
  * meta data for libraries
@@ -8,10 +8,12 @@ export type ShellMetadata = ModuleMetadata & {
     type? : 'shell';
 };
 
-export const ShellMetadata = new InjectionToken<ShellMetadata>('ShellMetadata');
+ export function Shell(config: Partial<ModuleMetadata> = {}): any {
+     config.type = "shell"
 
-export function Shell(metadata : ShellMetadata) {
-    metadata.type = 'shell';
+     return function create<T extends ConstructorFunction<AbstractPackage<ModuleMetadata>>>(constructor: T): any {
+         TypeDescriptor.forType(constructor).addTypeDecorator(Shell)
 
-    return (componentClass : Type<any>) => Module(metadata, ShellMetadata)(componentClass);
-}
+         Reflect.set(constructor, "$$metadata", config);
+     }
+ }

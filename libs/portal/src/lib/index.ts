@@ -15,3 +15,5 @@ export * from "./version"
 export * from "./feature-reuse-strategy"
 export * from "./routing"
 export * from "./federation"
+
+import "./module"

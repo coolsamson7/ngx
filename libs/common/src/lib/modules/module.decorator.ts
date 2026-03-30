@@ -1,20 +1,22 @@
-import { InjectionToken, Type } from '@angular/core';
 import { ModuleMetadata } from './module.interface';
-import { addProviders } from '../util';
+import { TypeDescriptor } from '../reflection';
+import { ConstructorFunction } from '../lang';
+import { AbstractPackage, registerLibrary } from './module-registry';
+import { Injectable } from '@angular/core';
 
-/**
- * Abstract decorator for modules.
- * Automatically adds a provider for metadata.
- */
-export function Module(metadata : ModuleMetadata, token : InjectionToken<ModuleMetadata>) {
-    return (componentClass : Type<any>) => {
-        addProviders(componentClass, [
-            {
-                provide: token,
-                useValue: metadata
-            }
-        ]);
+ export function Library(config: Partial<ModuleMetadata> = {}): any {
+     config.type = "library"
 
-        Reflect.set(componentClass, "$$metadata", metadata);
-    };
-}
+     return function create<T extends ConstructorFunction<AbstractPackage<ModuleMetadata>>>(constructor: T): any {
+         TypeDescriptor.forType(constructor).addTypeDecorator(Library)
+
+         //ModuleRegistry.modules.push(constructor)
+
+         registerLibrary(constructor);
+
+         Injectable({providedIn: "root"})(constructor);
+
+         Reflect.set(constructor, "$$metadata", config);
+     }
+ }
+

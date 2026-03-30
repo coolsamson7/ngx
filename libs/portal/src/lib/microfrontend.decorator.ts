@@ -1,5 +1,5 @@
-import { InjectionToken, Type } from "@angular/core";
-import { Module, ModuleMetadata } from "./modules";
+import { AbstractPackage, ConstructorFunction, TypeDescriptor } from "@ngx/common";
+import { ModuleMetadata } from "./modules";
 
 /**
  * @ignore
@@ -8,11 +8,12 @@ export type MicrofrontendMetadata = ModuleMetadata & {
     type? : 'microfrontend';
 };
 
-export const MicrofrontendMetadata = new InjectionToken<MicrofrontendMetadata>('MicrofrontendMetadata');
+export function Microfrontend(config: Partial<ModuleMetadata> = {}): any {
+     config.type = "shell"
 
+     return function create<T extends ConstructorFunction<AbstractPackage<ModuleMetadata>>>(constructor: T): any {
+         TypeDescriptor.forType(constructor).addTypeDecorator(Microfrontend)
 
-export function Microfrontend(metadata : MicrofrontendMetadata) {
-    metadata.type = 'microfrontend';
-
-    return (componentClass : Type<any>) => Module(metadata, MicrofrontendMetadata)(componentClass);
-}
+         Reflect.set(constructor, "$$metadata", config);
+     }
+ }

@@ -35,7 +35,9 @@
     "serve": {
       "executor": "@nx/angular:dev-server",
       "options": {
-        "buildTarget": "microfrontend:build"
+        "buildTarget": "microfrontend:build",
+          "port": 4201,
+          "publicHost": "http://localhost:4200"
       }
     }
   }

@@ -1,5 +1,7 @@
-import { Injector, NgModule } from '@angular/core';
+import { APP_INITIALIZER, Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
+import * as pkg from '../../package.json';
 
 import { ShellComponent } from './shell.component';
 import { localRoutes } from './local.routes';
@@ -27,6 +29,9 @@ import {
   TracerModule,
   ConfigurationModule,
   ValueConfigurationSource,
+  getLibraryProviders,
+  createLibraries,
+  ModuleRegistry,
 } from '@ngx/common';
 
 import {
@@ -50,9 +55,7 @@ import { SampleAuthorization } from './security/sample-authorization';
 import { ShellRouterModule } from './shell-router.module';
 
 
-@Shell({
-  name: 'my-shell',
-})
+@Shell(pkg)
 @NgModule({
   declarations: [],
   imports: [
@@ -121,17 +124,26 @@ import { ShellRouterModule } from './shell-router.module';
     }),
   ],
   providers: [
-    /*{
-      provide: EndpointLocator,
-      useClass: ApplicationEndpointLocator,
-    },*/
+    ...getLibraryProviders(), // <-- all library classes registered with factories
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (injector: Injector) => () => {
+        createLibraries(injector)
+
+        injector.get(ModuleRegistry).report()
+      },
+      deps: [Injector],
+      multi: true,
+    },
   ],
   bootstrap: [], // 
 })
 export class ShellModule extends AbstractModule() {
   constructor(injector: Injector) {
     super(injector);
+
+    injector.get(ModuleRegistry).report()
   }
 
-  ngDoBootstrap() {}
+  ngDoBootstrap() { /* empty */ }
 }

@@ -47,9 +47,9 @@ export const AbstractModule = () =>  {
         constructor(injector: Injector) {
             super();
 
-            const metadata = Reflect.get(this.constructor, "$$metadata")
-            if ( metadata )
-                injector.get(ModuleRegistry).markAsLoaded(metadata)
+            //const metadata = Reflect.get(this.constructor, "$$metadata")
+            //if ( metadata )
+            //    injector.get(ModuleRegistry).markAsLoaded(metadata)
 
             injectorSubject.next(injector)
         }

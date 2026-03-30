@@ -5,7 +5,7 @@
     "target": "es2022",
     "module": "preserve",
     "moduleResolution": "bundler",
-    "types": [],
+    "types": ["reflect-metadata"],
     "declaration": true
   },
   "exclude": ["**/*.spec.ts", "jest.config.ts", "src/test-setup.ts"],

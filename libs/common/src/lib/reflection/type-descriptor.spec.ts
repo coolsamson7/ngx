@@ -1,4 +1,3 @@
-import "reflect-metadata"
 
 import { TypeDescriptor } from "./type-descriptor"
 import { Type } from "@angular/core"
