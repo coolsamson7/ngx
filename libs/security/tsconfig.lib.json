@@ -5,7 +5,7 @@
     "target": "es2022",
     "module": "preserve",
     "moduleResolution": "bundler",
-    "types": [],
+    "types": ["node"],
     "declaration": true,
     "paths": {
       "@ngx/common": ["libs/common/src/index.ts"]

@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "types": ["node"],
     "baseUrl": ".",
     "paths": {
       "@ngx/common": ["libs/common/src/index.ts"],

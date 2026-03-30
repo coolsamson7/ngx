@@ -19,7 +19,14 @@
           "tsConfig": "libs/common/tsconfig.lib.json"
         }
       },
-      "defaultConfiguration": "production"
+      "defaultConfiguration": "production",
+      "dependsOn": ["generate-lib-meta"]
+    },
+    "generate-lib-meta": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "ts-node tools/scripts/generate-lib-meta.ts libs/common"
+      }
     }
   }
 }

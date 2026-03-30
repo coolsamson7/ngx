@@ -5,7 +5,14 @@
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
-      "options": { "tsConfig": "libs/security/tsconfig.lib.json" }
+      "options": { "tsConfig": "libs/security/tsconfig.lib.json" },
+      "dependsOn": ["generate-lib-meta"]
+    },
+    "generate-lib-meta": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "ts-node tools/scripts/generate-lib-meta.ts libs/security"
+      }
     }
   }
 }

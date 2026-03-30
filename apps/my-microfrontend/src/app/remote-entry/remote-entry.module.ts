@@ -2,7 +2,7 @@ import { Injector, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RemoteEntryComponent } from './remote-entry.component';
 import { Microfrontend } from '@ngx/portal';
-import { AbstractModule } from '@ngx/common';
+import { AbstractPackage } from '@ngx/common';
 import { RemoteEntryRouterModule } from './remote-entry-router.module';
 
 import * as pkg from '../../../package.json';
@@ -13,7 +13,7 @@ import * as pkg from '../../../package.json';
   imports: [CommonModule, RemoteEntryRouterModule, RemoteEntryComponent],
   providers: [],
 })
-export class RemoteEntryModule extends AbstractModule() {
+export class RemoteEntryModule extends AbstractPackage {
   constructor(injector: Injector) {
     super(injector);
   }

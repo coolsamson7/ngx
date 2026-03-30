@@ -13,6 +13,12 @@
     "tools/*"
   ],
   "dependencies": {
+    "@ngx/common": "workspace:*",
+    "@ngx/portal": "workspace:*",
+    "@ngx/validation": "workspace:*",
+    "@ngx/security": "workspace:*",
+    "@ngx/i18n": "workspace:*",
+
     "@angular/animations": "19.2.0",
     "@angular/cdk": "^19.2.0",
     "@angular/common": "19.2.0",

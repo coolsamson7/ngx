@@ -1,8 +1,8 @@
 import { Injector } from "@angular/core";
 import { AbstractPackage, Library } from "./modules";
-import * as pkg from '../../package.json';
+import { LIBRARY_METADATA } from './package-meta';
 
-@Library(pkg)
+@Library(LIBRARY_METADATA)
 export class CommonPackage extends AbstractPackage {
     constructor(injector: Injector) { 
         super(injector)

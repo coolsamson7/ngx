@@ -32,6 +32,7 @@ import {
   getLibraryProviders,
   createLibraries,
   ModuleRegistry,
+  AbstractPackage,
 } from '@ngx/common';
 
 import {
@@ -99,10 +100,6 @@ import { ShellRouterModule } from './shell-router.module';
       loader: { type: AssetTranslationLoader },
     }),
 
-    // portal components
-
-    //PortalComponentsModule,
-
     // the main microfrontend logic
 
     PortalModule.forRoot({
@@ -124,7 +121,7 @@ import { ShellRouterModule } from './shell-router.module';
     }),
   ],
   providers: [
-    ...getLibraryProviders(), // <-- all library classes registered with factories
+    ...getLibraryProviders(),
     {
       provide: APP_INITIALIZER,
       useFactory: (injector: Injector) => () => {
@@ -138,7 +135,7 @@ import { ShellRouterModule } from './shell-router.module';
   ],
   bootstrap: [], // 
 })
-export class ShellModule extends AbstractModule() {
+export class ShellModule extends AbstractPackage {
   constructor(injector: Injector) {
     super(injector);
 
