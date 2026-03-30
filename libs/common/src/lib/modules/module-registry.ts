@@ -16,7 +16,7 @@ import { AbstractModule } from './abstract-module';
      factory: {
        provide: target,
        useFactory: (injector: Injector) => new target(injector),
-       deps: [Injector],
+       deps: [Injector, ModuleRegistry],
      }
    });
  }
@@ -75,7 +75,7 @@ export class ModuleRegistry {
      */
     register(metadata : ModuleMetadata) {
         if ( Tracer.ENABLED)
-            Tracer.Trace("portal", TraceLevel.FULL, "register module {0}", metadata.name)
+            Tracer.Trace("portal", TraceLevel.FULL, "register {0} {1}", metadata.type, metadata.name)
 
         // leave registered modules as is ( in case of a redeployment )
 

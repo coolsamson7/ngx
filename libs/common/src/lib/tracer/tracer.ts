@@ -82,7 +82,7 @@ export class Tracer {
     if (this.isTraced(path, level)) {
       // new
 
-      //TODO await Stacktrace.mapFrames(frame)
+      await Stacktrace.mapFrames(frame)
 
       // format
 

@@ -1,5 +1,6 @@
 {
-  "name": "shell",
+  "name": "@ngx/my-shell",
+  "type": "shell",
   "version": "0.1",
   "commitHash": "253c108b3fc289605e96fd654b99c7ab34c348fb",
   "module": "ShellModule",

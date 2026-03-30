@@ -1,5 +1,5 @@
 {
-  "name": "my-microfrontend",
+  "name": "@ngx/my-microfrontend",
   "type": "microfrontend",
   "version": "1.0.0",
   "commitHash": "cb82dad5fcafdd984c8ec02b2ffa985258b8da71",
