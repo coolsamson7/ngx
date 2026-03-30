@@ -89,5 +89,9 @@
       "style": "scss",
       "unitTestRunner": "jest"
     }
+  },
+
+  "cli": {
+    "packageManager": "pnpm"
   }
 }

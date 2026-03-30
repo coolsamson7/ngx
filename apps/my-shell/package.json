@@ -2,9 +2,9 @@
   "name": "@ngx/my-shell",
   "version": "0.0.1",
   "peerDependencies": {
-    "@ngx/common": "0.0.1",
-    "@ngx/i18n": "0.0.1",
-    "@ngx/portal": "0.0.1",
+    "@ngx/common": "workspace:*",
+    "@ngx/i18n": "workspace:*",
+    "@ngx/portal": "workspace:*",
 
     "@angular/common": "^19.0.0",
     "@angular/core": "^19.0.0",

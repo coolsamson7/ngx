@@ -13,12 +13,6 @@
     "tools/*"
   ],
   "dependencies": {
-    "@ngx/common": "workspace:*",
-    "@ngx/portal": "workspace:*",
-    "@ngx/validation": "workspace:*",
-    "@ngx/security": "workspace:*",
-    "@ngx/i18n": "workspace:*",
-
     "@angular/animations": "19.2.0",
     "@angular/cdk": "^19.2.0",
     "@angular/common": "19.2.0",
@@ -29,8 +23,15 @@
     "@angular/platform-browser": "19.2.0",
     "@angular/platform-browser-dynamic": "19.2.0",
     "@angular/router": "19.2.0",
+    "@ngx/common": "workspace:*",
+    "@ngx/i18n": "workspace:*",
+    "@ngx/portal": "workspace:*",
+    "@ngx/security": "workspace:*",
+    "@ngx/validation": "workspace:*",
     "@nx/angular": "21.6.10",
+    "reflect-metadata": "^0.2.2",
     "rxjs": "~7.8.0",
+    "source-map-js": "^1.2.1",
     "tslib": "^2.8.0",
     "zone.js": "~0.15.0"
   },

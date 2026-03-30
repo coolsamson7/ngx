@@ -2,5 +2,5 @@
 export const LIBRARY_METADATA = {
   "name": "@ngx/portal",
   "version": "0.0.1",
-  "commitHash": "4c6aa28"
+  "commitHash": "d0cc9be"
 };

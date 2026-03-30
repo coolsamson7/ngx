@@ -8,7 +8,6 @@
     "types": ["node"],
     "declaration": true,
     "paths": {
-      "@ngx/common": ["libs/common/src/index.ts"]
     }
   },
   "exclude": ["**/*.spec.ts", "jest.config.ts", "src/test-setup.ts"],
