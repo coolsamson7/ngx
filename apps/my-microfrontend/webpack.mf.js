@@ -3,6 +3,7 @@ const config = require('./module-federation.config');
 
 const singletonLibs = [
   'reflect-metadata',
+
   '@angular/core',
   '@angular/common',
   '@angular/common/http',
@@ -13,8 +14,10 @@ const singletonLibs = [
   '@angular/animations',
   '@angular/material',
   '@angular/cdk',
+
   'rxjs',
   'rxjs/operators',
+
   '@ngx/common',
   '@ngx/portal',
   '@ngx/i18n',

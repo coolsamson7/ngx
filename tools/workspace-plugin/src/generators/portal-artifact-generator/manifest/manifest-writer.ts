@@ -8,10 +8,6 @@ export class Class {
 
   properties: { [name: string]: Action } = {};
 
-  // constructor
-
-  constructor() {}
-
   // public
 
   public clean(object: any) {

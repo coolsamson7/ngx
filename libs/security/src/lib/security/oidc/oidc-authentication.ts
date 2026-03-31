@@ -8,11 +8,6 @@ import { OIDCTicket } from "./oidc-session-manager";
 
 @Injectable({providedIn: 'root'})
 export class OIDCAuthentication implements Authentication<OIDCUser, OIDCTicket> {
-    // constructor
-
-    constructor() {
-    }
-
     // implement Authentication
 
     authenticate(request : AuthenticationRequest) {

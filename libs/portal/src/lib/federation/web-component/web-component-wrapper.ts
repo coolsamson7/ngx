@@ -18,7 +18,7 @@ export type WebComponentWrapperOptions =  {
   selector: 'web-component-wrapper',
   template: '<div #vc></div>',
 })
-// eslint-disable-next-line @angular-eslint/component-class-suffix
+ 
 export class WebComponentWrapper implements AfterContentInit {
   // input
 

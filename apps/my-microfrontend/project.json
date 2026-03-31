@@ -14,7 +14,7 @@
         "index": "apps/my-microfrontend/src/index.html",
         "main": "apps/my-microfrontend/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "apps/my-microfrontend/tsconfig.mf.json",
+        "tsConfig": "apps/my-microfrontend/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           "apps/my-microfrontend/src/assets",
@@ -90,7 +90,11 @@
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint"
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["apps/my-microfrontend/**/*.{ts,tsx,js,jsx}"],
+        "eslintConfig": "eslint.config.mjs"
+      }
     },
     "test": {
       "executor": "@nx/jest:jest",

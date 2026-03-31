@@ -1,0 +1,69 @@
+name: Publish Docs
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Nx App
+        run: pnpm nx build app --configuration=production  # was: --prod --public-url=./
+        env:
+          PUBLIC_URL: /novx/sample/
+
+      - name: Debug built index.html        # ← add this temporarily
+        run: cat dist/apps/app/index.html
+
+      - name: Debug i18n     # ← add this temporarily
+        run: ls -la dist/apps/app/i18n
+
+      - name: Generate docs
+        run: pnpm run docs
+
+      - name: Copy App
+        run: |
+          mkdir -p dist/docs/sample
+          cp -R dist/apps/app/* dist/docs/sample/  # was: apps/app/dist/*    
+          echo "✅ Nx app copied into docs/sample"
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/docs
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

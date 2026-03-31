@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
-/* eslint-disable @typescript-eslint/member-ordering */
-
 import { MethodDescriptor } from "./method-descriptor";
 import { PropertyDescriptor } from "./property-descriptor"
 import { Decorator } from "./decorator";

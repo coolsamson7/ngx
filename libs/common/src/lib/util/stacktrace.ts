@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
+ 
 import { catchError, forkJoin, lastValueFrom, map, Observable, of, shareReplay, switchMap, tap } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
 import { SourceMapConsumer } from 'source-map-js';
 
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
+ 
 const UNKNOWN_FUNCTION = '<unknown>';
 
 export interface StackFrame {

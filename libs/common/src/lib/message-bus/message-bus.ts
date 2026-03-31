@@ -14,10 +14,6 @@ export class MessageBus {
 
   private stream = new Subject<BusMessage>();
 
-  // constructor
-
-  constructor() {}
-
   // public
 
   /**

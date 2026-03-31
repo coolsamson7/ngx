@@ -1,3 +1,3 @@
 export * from "./validation"
 
-import "./package"
+import "./module"

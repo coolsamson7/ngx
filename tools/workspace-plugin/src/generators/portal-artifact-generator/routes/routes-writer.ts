@@ -3,8 +3,6 @@ import { RouteModuleWriter } from '../router-module/route-module-writer';
 import { join } from 'path';
 
 export class RoutesWriter {
-  constructor() {}
-
   async write(host: Tree, manifest: any) {
     // write router module
 

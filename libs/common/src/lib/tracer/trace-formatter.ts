@@ -98,7 +98,7 @@ export class TraceFormatter {
       // string literal
 
       string: (value: string) => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+         
         result.push((builder: StringBuilder, model: TraceModel) =>
           builder.append(value)
         );

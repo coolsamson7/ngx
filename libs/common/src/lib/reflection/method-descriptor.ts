@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-function-type */
-/* eslint-disable @typescript-eslint/ban-types */
-
 import { StringBuilder } from "../util";
 import { MemberDescriptor, PropertyType } from "./member-descriptor";
 
@@ -19,7 +16,6 @@ export class MethodDescriptor extends MemberDescriptor {
 
   // constructor
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
   constructor(name: string, public method: Function, type: PropertyType) {
     super(name, type)
 
@@ -28,7 +24,6 @@ export class MethodDescriptor extends MemberDescriptor {
 
   // private
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
   private analyze(method: Function) {
     this.returnType = Reflect.getMetadata("design:returntype", method)
     this.async = Object.getPrototypeOf(method).constructor.name === "AsyncFunction"

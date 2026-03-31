@@ -34,7 +34,7 @@ class Patch {
 export class Type<T> {
     // static data
 
-    static cache: { } = {}
+    static cache = {}
     private static patches: Patch[] = [];
     private static timeout = false
 

@@ -10,10 +10,6 @@ import { StateDescriptor } from './state-descriptor';
  */
 @Injectable({ providedIn: 'root' })
 export class StateManager {
-  // constructor
-
-  constructor() {}
-
   // private
 
   private static descriptor(instance: any): StateDescriptor | undefined {

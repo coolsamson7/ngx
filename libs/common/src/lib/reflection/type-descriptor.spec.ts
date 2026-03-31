@@ -2,7 +2,6 @@
 import { TypeDescriptor } from "./type-descriptor"
 import { Type } from "@angular/core"
 
-// eslint-disable-next-line @typescript-eslint/ban-types,@typescript-eslint/no-empty-function
 const typeDecorator = (): any => {
     return function create(target: Type<any>) {
         TypeDescriptor.forType(target).addTypeDecorator(typeDecorator)
@@ -10,7 +9,6 @@ const typeDecorator = (): any => {
 }
 
 const methodDecorator = (test: string) :any => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
     return (target: any, property: string, descriptor: PropertyDescriptor) => {
         TypeDescriptor.forType(target.constructor).addMethodDecorator(target, property, methodDecorator, test)
     }

@@ -8,6 +8,13 @@
       "options": { "tsConfig": "libs/ui/tsconfig.lib.json" },
       "dependsOn": ["generate-lib-meta"]
     },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["libs/communication/**/*.{ts,tsx,js,jsx}"],
+        "eslintConfig": "eslint.config.mjs"
+      }
+    },
     "generate-lib-meta": {
       "executor": "nx:run-commands",
       "options": {

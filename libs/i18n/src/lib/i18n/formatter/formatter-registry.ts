@@ -10,11 +10,6 @@ export class FormatterRegistry {
 
     private registry : { [type : string] : ValueFormatter<any, any> } = {};
 
-    // constructor
-
-    constructor() {
-    }
-
     // public
 
     /**

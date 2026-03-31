@@ -1,4 +1,4 @@
-import { NgModule, Injectable } from '@angular/core';
+import { NgModule, Injectable, DoBootstrap } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import {
@@ -103,4 +103,8 @@ export class ApplicationEndpointLocator extends EndpointLocator {
   ],
   //bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule implements DoBootstrap {
+    ngDoBootstrap() {
+        /* empty */
+        }
+}

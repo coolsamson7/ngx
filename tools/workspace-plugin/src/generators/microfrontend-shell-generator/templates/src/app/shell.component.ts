@@ -1,4 +1,4 @@
-/* eslint-disable @angular-eslint/component-selector */
+ 
 import { Component } from '@angular/core';
 import { FeatureData, FeatureRegistry, FeatureOutletDirective } from "@ngx/portal";
 import { SessionManager, Ticket } from "@ngx/security";

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-function-type */
+ 
 import { StateData } from './stateful.decorator';
 import { StateManager } from './state-manager';
 import { get, set } from '../lang';

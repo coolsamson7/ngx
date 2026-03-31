@@ -1,5 +1,5 @@
-/* eslint-disable @angular-eslint/component-selector */
-/* eslint-disable @angular-eslint/use-lifecycle-interface */
+ 
+ 
 import {
     SessionManager,
     Ticket

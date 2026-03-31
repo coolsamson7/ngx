@@ -6,11 +6,6 @@ export class ObjectDecorator {
 
   properties: { [name: string]: Decorate } = {}
 
-  // constructor
-
-  constructor() {
-  }
-
   // fluent
 
   defaultValue(name: string, defaultValue: any): ObjectDecorator {

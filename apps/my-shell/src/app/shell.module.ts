@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, Injector, NgModule } from '@angular/core';
+import { APP_INITIALIZER, Injector, NgModule, DoBootstrap } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import * as pkg from '../../package.json';
@@ -135,12 +135,14 @@ import { ShellRouterModule } from './shell-router.module';
   ],
   bootstrap: [], // 
 })
-export class ShellModule extends AbstractPackage {
+export class ShellModule extends AbstractPackage implements DoBootstrap {
   constructor(injector: Injector) {
     super(injector);
 
     injector.get(ModuleRegistry).report()
   }
 
-  ngDoBootstrap() { /* empty */ }
+  ngDoBootstrap() {
+      /* empty */
+   }
 }

@@ -81,7 +81,11 @@
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint"
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["apps/shell/**/*.{ts,tsx,js,jsx}"],
+        "eslintConfig": "eslint.config.mjs"
+      }
     },
     "test": {
       "executor": "@nx/jest:jest",
