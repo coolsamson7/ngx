@@ -4,22 +4,10 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nx/angular:ng-packagr-lite",
-      "outputs": [
-        "{workspaceRoot}/dist/{projectRoot}"
-      ],
+      "executor": "@nx/angular:package",
       "options": {
-        "project": "libs/common/ng-package.json"
+        "tsConfig": "libs/common/tsconfig.lib.json"
       },
-      "configurations": {
-        "production": {
-          "tsConfig": "libs/common/tsconfig.lib.prod.json"
-        },
-        "development": {
-          "tsConfig": "libs/common/tsconfig.lib.json"
-        }
-      },
-      "defaultConfiguration": "production",
       "dependsOn": ["xgenerate-lib-meta"]
     },
     "lint": {

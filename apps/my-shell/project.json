@@ -8,6 +8,7 @@
   "targets": {
     "build": {
       "executor": "@nx/angular:webpack-browser",
+      "dependsOn": ["^build"],
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/my-shell",
@@ -28,7 +29,8 @@
         ],
         "customWebpackConfig": {
           "path": "apps/my-shell/webpack.config.js"
-        }
+        },
+        "buildLibsFromSource": true
       },
       "configurations": {
         "production": {
@@ -47,7 +49,8 @@
           "outputHashing": "all",
           "customWebpackConfig": {
             "path": "apps/my-shell/webpack.prod.config.js"
-          }
+          },
+          "buildLibsFromSource": true
         },
         "development": {
           "buildOptimizer": false,
@@ -55,7 +58,8 @@
           "vendorChunk": true,
           "extractLicenses": false,
           "sourceMap": true,
-          "namedChunks": true
+          "namedChunks": true,
+          "buildLibsFromSource": true
         },
         "source": {
           "tsConfig": "apps/my-shell/tsconfig.app.json"

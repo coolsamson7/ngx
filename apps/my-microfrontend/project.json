@@ -8,6 +8,7 @@
   "targets": {
     "build": {
       "executor": "@nx/angular:webpack-browser",
+      "dependsOn": ["^build"],
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/my-microfrontend",
@@ -56,7 +57,8 @@
           "vendorChunk": true,
           "extractLicenses": false,
           "sourceMap": true,
-          "namedChunks": true
+          "namedChunks": true,
+          "buildLibsFromSource": true
         },
         "source": {
           "tsConfig": "apps/my-microfrontend/tsconfig.app.json"

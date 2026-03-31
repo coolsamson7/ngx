@@ -24,18 +24,18 @@ const singletonLibs = [
   '@ngx/security',
 ];
 
-function shared(libraryName, sharedConfig) {
-  if (libraryName === 'reflect-metadata') {
-    return { ...sharedConfig, singleton: true, strictVersion: false, eager: true };
-  }
+module.exports = withModuleFederation({
+  ...config,
+  shared: (libraryName, sharedConfig) => {
+    const isSingleton = singletonLibs.some(
+      (lib) => libraryName === lib || libraryName.startsWith(lib + '/')
+    );
 
-  const isSingleton = singletonLibs.some(
-    (lib) => libraryName === lib || libraryName.startsWith(lib + '/')
-  );
-
-  return isSingleton
-    ? { ...sharedConfig, singleton: true, strictVersion: false, eager: false }
-    : sharedConfig;
-}
-
-module.exports = withModuleFederation({ ...config, shared });
+    return {
+      ...sharedConfig,
+      singleton: isSingleton,
+      strictVersion: false,
+      eager: libraryName === 'reflect-metadata',
+    };
+  },
+});

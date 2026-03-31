@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "target": "es2022",
-    "module": "preserve",
+    "module": "es2022",
     "moduleResolution": "bundler",
     "types": [],
     "declaration": true,
