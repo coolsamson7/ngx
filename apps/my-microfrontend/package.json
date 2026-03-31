@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "peerDependencies": {
     "@ngx/common": "workspace:*",
+    "@ngx/security": "workspace:*",
+    "@ngx/communication": "workspace:*",
     "@ngx/i18n": "workspace:*",
     "@ngx/portal": "workspace:*",
 

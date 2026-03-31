@@ -4,6 +4,8 @@
   "peerDependencies": {
     "@ngx/common": "workspace:*",
     "@ngx/i18n": "workspace:*",
+    "@ngx/security": "workspace:*",
+    "@ngx/communication": "workspace:*",
     "@ngx/portal": "workspace:*",
 
     "@angular/common": "^19.0.0",
