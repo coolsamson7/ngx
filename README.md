@@ -11,12 +11,7 @@ NGX implements an Angular based portal framework supporting microfrontends vastl
 - centralized error handling ( including error boundaries )
 - session handling
 - i18n integration
-- meta-data based approach that allows for
-  - filtering of available features according to authentication, authorization or other aspects ( e.g. feature flags )
-  - automatic router configuration according to the metadata
-  - dynamic navigation features that are based on the meta-data and custom rules
-  - feature outlets that cover both local and federated components and allow for custom async preloading logic ( e.g. i18n loading )
-  - custom application configurations with support for both client and server side logic
+- meta-data based approach required for the microfrontend logic and additional dynamic approaches
 
 While the framework supports enterprise portals with dynamic microfrontends - and server side configuration mechanisms - as one extreme it also covers small local only applications without significant coding and rampup overhead, making it a one-size-fits-all framework.
 
@@ -81,13 +76,13 @@ which will be used by the framework in order to support different use-cases:
 
 Several application styles are supported with this architecture:
 - Applications with local only features 
-- Applications that support fdederated modules based on client-side fetching of the corresponding manifests
-- Applications that support fdederated modules based on a server-computed overall manifest.
+- Applications that support federated modules based on client-side fetching of the corresponding manifests
+- Applications that support federated modules based on a server-computed overall manifest.
 
 The third point is the most flexible and powerfull approach by having server side components that control the complete configuration
 of a portal with respect to the number of associated modules and any filtering- and configuration-logic respecting authorization and feture-flag aspects. 
 
-## Monorepo Setuo
+## Monorepo Setup
 
 NGX is split in individual packages
 
