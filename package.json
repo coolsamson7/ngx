@@ -9,7 +9,7 @@
     "start:microfrontend": "nx run microfrontend:serve:standalone",
     "build:shell": "nx build shell",
     "build:portal": "nx build portal",
-    "build": "nx run-many --target=build --all",
+    "build": "nx run-many --target=build --all --parallel=false",
     "lint": "nx run-many --target=lint --all",
     "test": "nx run-many --target=test --all"
   },
