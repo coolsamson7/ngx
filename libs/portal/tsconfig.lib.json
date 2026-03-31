@@ -7,7 +7,12 @@
     "moduleResolution": "bundler",
     "types": [],
     "declaration": true,
-    "composite": true
+    "composite": true,
+    "paths": {
+      "@ngx/common": ["../../dist/libs/common"],
+      "@ngx/i18n": ["../../dist/libs/i18n"],
+      "@ngx/security": ["../../dist/libs/security"]
+    }
   },
   "exclude": ["**/*.spec.ts", "jest.config.ts", "src/test-setup.ts"],
   "include": ["**/*.ts"],

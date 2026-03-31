@@ -1,11 +1,12 @@
 {
   "name": "@ngx/portal",
   "version": "0.0.1",
-  "peerDependencies": {
+  "dependencies": {
     "@ngx/common": "workspace:*",
     "@ngx/i18n": "workspace:*",
-    "@ngx/security": "workspace:*",
-
+    "@ngx/security": "workspace:*"
+  },
+  "peerDependencies": {
     "@angular/common": "^19.0.0",
     "@angular/core": "^19.0.0",
     "rxjs": "^7.8.0"
