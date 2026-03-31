@@ -6,12 +6,12 @@
     "build": {
       "executor": "@nx/angular:package",
       "options": { "tsConfig": "libs/validation/tsconfig.lib.json" },
-      "dependsOn": ["generate-lib-meta"]
+      "dependsOn": ["xgenerate-lib-meta"]
     },
     "generate-lib-meta": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "ts-node tools/scripts/generate-lib-meta.ts libs/validation"
+        "command": "pnpm run generate-lib-meta -- libs/validation"
       }
     }
   }

@@ -90,8 +90,24 @@
       "unitTestRunner": "jest"
     }
   },
-
   "cli": {
     "packageManager": "pnpm"
+  },
+
+  "targets": {
+    "generate-lib-meta": {
+      "executor": "nx:run-commands",
+      "options": {
+        "parallel": true,
+        "commands": [
+          { "command": "pnpm run generate-lib-meta -- libs/common" },
+          { "command": "pnpm run generate-lib-meta -- libs/i18n" },
+          { "command": "pnpm run generate-lib-meta -- libs/security" },
+          { "command": "pnpm run generate-lib-meta -- libs/portal" },
+          { "command": "pnpm run generate-lib-meta -- libs/communication" },
+          { "command": "pnpm run generate-lib-meta -- libs/validation" }
+        ]
+      }
+    }
   }
 }

@@ -6,7 +6,7 @@
     "build": {
       "executor": "@nx/angular:package",
       "options": { "tsConfig": "libs/security/tsconfig.lib.json" },
-      "dependsOn": ["generate-lib-meta"]
+      "dependsOn": ["xgenerate-lib-meta"]
     },
     "lint": {
       "executor": "@nx/eslint:lint",
@@ -18,7 +18,7 @@
     "generate-lib-meta": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "ts-node tools/scripts/generate-lib-meta.ts libs/security"
+        "command": "pnpm run generate-lib-meta -- libs/security"
       }
     }
   }

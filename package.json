@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "generate-lib-meta": "tsc tools/scripts/generate-lib-meta.ts --outDir dist/tools && node dist/tools/generate-lib-meta.js",
     "docs": "npx compodoc -p tsconfig.compodoc.json",
     "start:shell": "nx serve shell",
     "start:microfrontend": "nx run microfrontend:serve:standalone",
@@ -63,7 +64,6 @@
     "@swc/helpers": "~0.5.11",
     "@types/jest": "^29.5.12",
     "@types/node": "18.16.9",
-    "@typescript-eslint/eslint-plugin": "^8.58.0",
     "@typescript-eslint/utils": "^8.40.0",
     "angular-eslint": "^19.2.0",
     "eslint-plugin-playwright": "^1.6.2",
