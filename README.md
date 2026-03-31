@@ -86,10 +86,13 @@ of a portal with respect to the number of associated modules and any filtering- 
 
 NGX is split in individual packages
 
-- [common](https://github.com/coolsamson7/ngx/tree/main/libs/core#readme) utility functions
-- [i18n](https://github.com/coolsamson7/ngx/tree/main/libs/i18n#readme) a lightweight i18n solution
-- [security](https://github.com/coolsamson7/ngx/tree/main/libs/security#readme) authentication & session handling
-- [portal](https://github.com/coolsamson7/ngx/tree/main/libs/portal#readme) the meta-data microfrontend framework 
+
+
+
+- [common](https://github.com/coolsamson7/ngx/wiki/Common) utility functions
+- [i18n](https://github.com/coolsamson7/ngx/wiki/I18N) a lightweight i18n solution
+- [security](https://github.com/coolsamson7/ngx/wiki/Security) authentication & session handling
+- [portal](https://github.com/coolsamson7/ngx/wiki/Portal) the meta-data microfrontend framework 
 
 ## Wiki
 
