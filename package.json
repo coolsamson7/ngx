@@ -46,6 +46,7 @@
     "@angular-eslint/eslint-plugin": "^21.3.1",
     "@angular/build": "19.2.0",
     "@angular/compiler-cli": "19.2.0",
+    "@compodoc/compodoc": "^1.2.1",
     "@module-federation/enhanced": "^0.18.0",
     "@nx/devkit": "21.6.10",
     "@nx/eslint": "^21.6.10",
