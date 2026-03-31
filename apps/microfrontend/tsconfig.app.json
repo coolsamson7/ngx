@@ -3,20 +3,16 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "types": [],
-    "target": "ES2020",
-    "paths": {
-      "@ngx/common": ["../../libs/common/src/index.ts"],
-      "@ngx/portal": ["../../libs/portal/src/index.ts"],
-      "@ngx/validation": ["../../libs/validation/src/index.ts"],
-      "@ngx/security": ["../../libs/security/src/index.ts"],
-      "@ngx/i18n": ["../../libs/i18n/src/index.ts"],
-      "@ngx/view": ["../../libs/view/src/index.ts"],
-      "@ngx/ui": ["../../libs/ui/src/index.ts"],
-      "@ngx/component": ["../../libs/component/src/index.ts"],
-      "@ngx/communication": ["../../libs/communication/src/index.ts"]
-    }
+    "target": "ES2020"
   },
   "files": ["src/main.ts", "src/app/remote-entry/entry.routes.ts"],
   "include": ["src/**/*.d.ts"],
-  "exclude": ["jest.config.ts", "src/**/*.test.ts", "src/**/*.spec.ts"]
+  "exclude": ["jest.config.ts", "src/**/*.test.ts", "src/**/*.spec.ts"],
+  "references": [
+    { "path": "../../libs/common" },
+    { "path": "../../libs/security" },
+    { "path": "../../libs/portal" },
+    { "path": "../../libs/communication" },
+    { "path": "../../libs/i18n" }
+  ]
 }
