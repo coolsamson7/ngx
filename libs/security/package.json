@@ -1,6 +1,7 @@
 {
   "name": "@ngx/security",
   "version": "0.0.3",
+  "private": false,
   "publishConfig": {
     "access": "public"
   },
