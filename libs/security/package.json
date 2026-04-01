@@ -1,9 +1,8 @@
 {
   "name": "@ngx/security",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "peerDependencies": {
     "@ngx/common": "workspace:*",
-
     "@angular/common": "^19.0.0",
     "@angular/core": "^19.0.0",
     "rxjs": "^7.8.0"
