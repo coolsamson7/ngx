@@ -1,6 +1,9 @@
 {
   "name": "@ngx/portal",
   "version": "0.0.2",
+  "publishConfig": {
+    "access": "public"
+  },
   "peerDependencies": {
     "@ngx/common": "workspace:*",
     "@ngx/i18n": "workspace:*",

@@ -1,6 +1,9 @@
 {
   "name": "@ngx/validation",
   "version": "0.0.2",
+  "publishConfig": {
+    "access": "public"
+  },
   "peerDependencies": {
     "@ngx/common": "workspace:*",
     "@angular/common": "^19.0.0",
