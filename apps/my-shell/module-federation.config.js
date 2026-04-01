@@ -1,6 +1,6 @@
 module.exports = {
   name: 'my-shell',
-  remotes: [],
+  remotes: ['my-microfrontend'],
   exposes: {
     './Module': 'apps/my-shell/src/app/shell.module.ts',
   },

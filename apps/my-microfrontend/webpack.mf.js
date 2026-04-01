@@ -21,6 +21,9 @@ const singletonLibs = [
   '@ngx/security',
 ];
 
+// Workspace libs have non-semver versions ("workspace:*"), so skip requiredVersion
+const workspaceLibs = ['@ngx/common', '@ngx/portal', '@ngx/i18n', '@ngx/security'];
+
 module.exports = withModuleFederation({
   dts: false,
   ...config,
@@ -31,11 +34,15 @@ module.exports = withModuleFederation({
 
     if (!isSingleton) return sharedConfig;
 
+    const isWorkspace = workspaceLibs.some(
+      (lib) => libraryName === lib || libraryName.startsWith(lib + '/')
+    );
+
     return {
       ...sharedConfig,
       singleton: true,
-      strictVersion: true,
-      requiredVersion: 'auto',
+      strictVersion: !isWorkspace,   // workspace:* is not semver, strict breaks negotiation
+      requiredVersion: isWorkspace ? false : 'auto',
       eager: libraryName === 'reflect-metadata',
     };
   },
