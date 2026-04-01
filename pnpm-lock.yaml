@@ -174,6 +174,9 @@ importers:
       jest-util:
         specifier: ^29.7.0
         version: 29.7.0
+      jsonc-eslint-parser:
+        specifier: ^3.1.0
+        version: 3.1.0
       ng-packagr:
         specifier: ^19.2.0
         version: 19.2.2(@angular/compiler-cli@19.2.0(@angular/compiler@19.2.0(@angular/core@19.2.0(rxjs@7.8.2)(zone.js@0.15.1)))(typescript@5.7.2))(tslib@2.8.1)(typescript@5.7.2)
@@ -213,12 +216,18 @@ importers:
       '@ngx/common':
         specifier: workspace:*
         version: link:../../libs/common
+      '@ngx/communication':
+        specifier: workspace:*
+        version: link:../../libs/communication
       '@ngx/i18n':
         specifier: workspace:*
         version: link:../../libs/i18n
       '@ngx/portal':
         specifier: workspace:*
         version: link:../../libs/portal
+      '@ngx/security':
+        specifier: workspace:*
+        version: link:../../libs/security
       rxjs:
         specifier: ^7.8.0
         version: 7.8.2
@@ -234,12 +243,18 @@ importers:
       '@ngx/common':
         specifier: workspace:*
         version: link:../../libs/common
+      '@ngx/communication':
+        specifier: workspace:*
+        version: link:../../libs/communication
       '@ngx/i18n':
         specifier: workspace:*
         version: link:../../libs/i18n
       '@ngx/portal':
         specifier: workspace:*
         version: link:../../libs/portal
+      '@ngx/security':
+        specifier: workspace:*
+        version: link:../../libs/security
       rxjs:
         specifier: ^7.8.0
         version: 7.8.2
@@ -6436,6 +6451,10 @@ packages:
   jsonc-eslint-parser@2.4.2:
     resolution: {integrity: sha512-1e4qoRgnn448pRuMvKGsFFymUCquZV0mpGgOyIKNgD3JVDTsVJyRBGH/Fm0tBb8WsWGgmB1mDe6/yJMQM37DUA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  jsonc-eslint-parser@3.1.0:
+    resolution: {integrity: sha512-75EA7EWZExL/j+MDKQrRbdzcRI2HOkRlmUw8fZJc1ioqFEOvBsq7Rt+A6yCxOt9w/TYNpkt52gC6nm/g5tFIng==}
+    engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
   jsonc-parser@3.2.0:
     resolution: {integrity: sha512-gfFQZrcTc8CnKXp6Y4/CBT3fTc0OVuDofpre4aEeEpSBPV5X5v4+Vmx+8snU7RLPrNHPKSgLxGo9YuQzz20o+w==}
@@ -17335,6 +17354,12 @@ snapshots:
       acorn: 8.16.0
       eslint-visitor-keys: 3.4.3
       espree: 9.6.1
+      semver: 7.7.4
+
+  jsonc-eslint-parser@3.1.0:
+    dependencies:
+      acorn: 8.16.0
+      eslint-visitor-keys: 5.0.1
       semver: 7.7.4
 
   jsonc-parser@3.2.0: {}

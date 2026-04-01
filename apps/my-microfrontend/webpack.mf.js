@@ -3,7 +3,6 @@ const config = require('./module-federation.config');
 
 const singletonLibs = [
   'reflect-metadata',
-
   '@angular/core',
   '@angular/common',
   '@angular/common/http',
@@ -14,10 +13,8 @@ const singletonLibs = [
   '@angular/animations',
   '@angular/material',
   '@angular/cdk',
-
   'rxjs',
   'rxjs/operators',
-
   '@ngx/common',
   '@ngx/portal',
   '@ngx/i18n',
@@ -31,10 +28,13 @@ module.exports = withModuleFederation({
       (lib) => libraryName === lib || libraryName.startsWith(lib + '/')
     );
 
+    if (!isSingleton) return sharedConfig;
+
     return {
       ...sharedConfig,
-      singleton: isSingleton,
-      strictVersion: false,
+      singleton: true,
+      strictVersion: true,
+      requiredVersion: 'auto',
       eager: libraryName === 'reflect-metadata',
     };
   },
