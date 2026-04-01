@@ -22,6 +22,7 @@ const singletonLibs = [
 ];
 
 module.exports = withModuleFederation({
+  dts: false,
   ...config,
   shared: (libraryName, sharedConfig) => {
     const isSingleton = singletonLibs.some(
