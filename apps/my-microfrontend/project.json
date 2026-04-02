@@ -113,6 +113,12 @@
         "buildTarget": "my-microfrontend:build",
         "spa": true
       }
+    },
+    "generate-lib-meta": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm run generate-lib-meta -- apps/my-microfrontend"
+      }
     }
   }
 }

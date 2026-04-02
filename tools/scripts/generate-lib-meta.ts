@@ -6,7 +6,8 @@ import { execSync } from 'node:child_process';
 
 // The path to the library being built
 // Pass as argument: `ts-node tools/scripts/generate-lib-meta.ts libs/common`
-const libPath = process.argv[2];
+const args = process.argv.slice(2).filter(arg => arg !== '--');
+const libPath = args[0];
 if (!libPath) {
   console.error('Usage: ts-node generate-lib-meta.ts <libPath>');
   process.exit(1);

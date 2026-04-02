@@ -5,9 +5,9 @@ import { Microfrontend } from '@ngx/portal';
 import { AbstractPackage } from '@ngx/common';
 import { RemoteEntryRouterModule } from './remote-entry-router.module';
 
-//import * as pkg from '../../../package.json';
+import {LIBRARY_METADATA} from './package-meta';
 
-@Microfrontend({name: "mfe"})
+@Microfrontend(LIBRARY_METADATA)
 @NgModule({
   declarations: [],
   imports: [CommonModule, RemoteEntryRouterModule, RemoteEntryComponent],

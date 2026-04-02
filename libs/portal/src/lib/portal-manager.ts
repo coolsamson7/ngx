@@ -2,7 +2,8 @@ import { Inject, Injectable, Injector, ɵDirectiveDef } from '@angular/core';
 
 import { LoadChildrenCallback, Route, Router, Routes } from '@angular/router';
 import { setRemoteDefinitions } from '@nx/angular/mf';
-import { PortalModuleConfig, PortalModuleConfigToken } from './portal.module';
+import { PortalModuleConfigToken } from './portal.module';
+import type { PortalModuleConfig } from './portal.module';
 import { FeatureRegistry } from './feature-registry';
 import { Deployment } from './deployment/deployment-model';
 import { ModuleRegistry } from './modules';

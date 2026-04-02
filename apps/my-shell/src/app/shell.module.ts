@@ -1,7 +1,7 @@
 import { APP_INITIALIZER, Injector, NgModule, DoBootstrap } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import * as pkg from '../../package.json';
+import {LIBRARY_METADATA} from './package-meta';
 
 import { ShellComponent } from './shell.component';
 import { localRoutes } from './local.routes';
@@ -11,7 +11,6 @@ import {
   CanDeactivateGuard,
 
   PortalModule,
-  //PortalComponentsModule,
   
   //ServerTranslationLoader,
   Shell,
@@ -56,7 +55,7 @@ import { SampleAuthorization } from './security/sample-authorization';
 import { ShellRouterModule } from './shell-router.module';
 
 
-@Shell(pkg)
+@Shell(LIBRARY_METADATA)
 @NgModule({
   declarations: [],
   imports: [

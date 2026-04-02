@@ -1,6 +1,6 @@
 // Auto-generated, do not edit
 export const LIBRARY_METADATA = {
-  "name": "@ngx/common",
-  "version": "0.0.4",
+  "name": "my-microfrontend", // TODO @ngx/my-microfrontend
+  "version": "0.0.1",
   "commitHash": "e43b091"
 };

@@ -4,7 +4,8 @@ import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError, shareReplay } from 'rxjs/operators';
 import { I18nLoader } from '../i18n-loader';
-import { TranslationLoaderConfig, TranslationLoaderConfigInjectionToken } from '../i18n.module';
+import { TranslationLoaderConfigInjectionToken } from '../i18n.module';
+import type { TranslationLoaderConfig } from '../i18n.module';
 import { TraceLevel, Tracer } from "@ngx/common";
 
 /**
