@@ -1,0 +1,16 @@
+{
+  "name": "@ngx/foundation",
+  "version": "0.0.4",
+  "main": "src/index.ts",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@ngx/common": "workspace:*",
+
+    "@angular/common": "^19.0.0",
+    "@angular/core": "^19.0.0",
+    "rxjs": "^7.8.0"
+  }
+}
