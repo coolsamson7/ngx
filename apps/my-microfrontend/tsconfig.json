@@ -7,7 +7,7 @@
     "noFallthroughCasesInSwitch": true,
     "importHelpers": true,
     "isolatedModules": true,
-    "emitDecoratorMetadata": false,
+    "emitDecoratorMetadata": true,
     "module": "es2022",
     "resolveJsonModule": true
   },
