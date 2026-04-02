@@ -1,4 +1,4 @@
-import { TypeDescriptor } from '../common/reflection';
+import { TypeDescriptor } from '@ngx/common';
 import { CommandConfig } from './command-config';
 
 /**

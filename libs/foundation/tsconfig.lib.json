@@ -9,5 +9,10 @@
     "declaration": true
   },
   "exclude": ["**/*.spec.ts", "jest.config.ts", "src/test-setup.ts"],
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts"],
+  "references": [
+    { "path": "../common" },
+    { "path": "../portal" },
+    { "path": "../i18n" }
+  ]
 }

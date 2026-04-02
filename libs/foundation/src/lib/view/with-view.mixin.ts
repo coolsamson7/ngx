@@ -1,7 +1,7 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 
 import { ViewChild, Component, AfterViewInit } from "@angular/core";
-import { AbstractFeature } from "../feature";
+import { AbstractFeature } from "@ngx/portal";
 import { hasMixin, registerMixins } from "@ngx/common";
 import { ViewComponent } from "./view.component";
 import { CommandConfig, CommandManager, ExecutionContext, LockCommandGroupInterceptor, LockCommandInterceptor } from "../command";

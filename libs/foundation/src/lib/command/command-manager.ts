@@ -1,4 +1,4 @@
-import { OnLocaleChange } from "../locale";
+import { OnLocaleChange } from "@ngx/i18n";
 import { CommandConfig } from "./command-config";
 import { CommandDescriptor } from "./command-descriptor";
 import { CommandInterceptor } from "./command-interceptor";

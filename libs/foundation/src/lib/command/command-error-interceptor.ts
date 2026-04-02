@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AbstractCommandInterceptor } from './command-interceptor';
 import { ExecutionContext } from './execution-context';
-import { ErrorManager } from '../common/error';
+import { ErrorManager } from '@ngx/common';
 
 /**
  * A {@link CommandInterceptor} that will intercept errors and delegate them to the {@link ErrorManager}

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { inject } from "@angular/core";
-import { AbstractFeature } from "../feature";
-import { Type, TypeDescriptor } from "../common/reflection";
+import { AbstractFeature } from "@ngx/portal";
+import { Type, TypeDescriptor } from "@ngx/common";
 import { TraceLevel, Tracer , registerMixins, get} from "@ngx/common";
 import { CommandConfig } from "./command-config";
 import { CommandDescriptor } from "./command-descriptor";
@@ -12,9 +12,9 @@ import { CommandManager } from "./command-manager";
 import { ExecutionContext } from "./execution-context";
 import { CommandError } from "./command-error";
 import { ShortcutManager } from "../shortcuts";
-import { LocaleManager, OnLocaleChange } from "../locale";
+import { LocaleManager, OnLocaleChange } from "@ngx/i18n";
 import { Observable, of } from "rxjs";
-import { Translator } from "../i18n";
+import { Translator } from "@ngx/i18n";
 
 
 type Constructor<T = any> =  new (...args: any[]) => T;

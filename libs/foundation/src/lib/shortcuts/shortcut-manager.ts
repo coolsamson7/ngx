@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Key, Shortcut } from './shortcut';
 import { TraceLevel, Tracer, StringBuilder } from '@ngx/common';
-import { DialogService } from '../dialog';
+//import { DialogService } from '../dialog';
 
 /**
  * @ignore
@@ -61,11 +61,11 @@ export class ShortcutManager {
 
     // constructor
 
-    constructor(dialogs : DialogService) {
-        dialogs.addListener({
+    constructor(/*dialogs : DialogService*/) {
+        /*dialogs.addListener({
             openDialog: () => {this.pushLevel()},
             closedDialog: () => {this.popLevel()}
-        })
+        })*/
 
         this.setupCharKeyCodes();
 
