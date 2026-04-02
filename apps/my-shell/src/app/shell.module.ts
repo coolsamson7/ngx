@@ -1,7 +1,7 @@
 import { APP_INITIALIZER, Injector, NgModule, DoBootstrap } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import * as pkg from '../../package.json';
+//import * as pkg from '../../package.json';
 
 import { ShellComponent } from './shell.component';
 import { localRoutes } from './local.routes';
@@ -56,7 +56,7 @@ import { SampleAuthorization } from './security/sample-authorization';
 import { ShellRouterModule } from './shell-router.module';
 
 
-@Shell(pkg)
+@Shell({name: "my-shell"})
 @NgModule({
   declarations: [],
   imports: [
