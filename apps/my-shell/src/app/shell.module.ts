@@ -62,7 +62,7 @@ import { ShellRouterModule } from './shell-router.module';
     BrowserModule,
     ShellRouterModule,
 
-    ShellComponent,
+    //ShellComponent,
 
     // configuration
 
@@ -132,7 +132,7 @@ import { ShellRouterModule } from './shell-router.module';
       multi: true,
     },
   ],
-  bootstrap: [], // 
+  bootstrap: [ShellComponent], //
 })
 export class ShellModule extends AbstractPackage implements DoBootstrap {
   constructor(injector: Injector) {
