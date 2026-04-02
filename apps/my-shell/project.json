@@ -29,8 +29,7 @@
         ],
         "customWebpackConfig": {
           "path": "apps/my-shell/webpack.config.js"
-        },
-        "buildLibsFromSource": true
+        }
       },
       "configurations": {
         "production": {
@@ -49,8 +48,7 @@
           "outputHashing": "all",
           "customWebpackConfig": {
             "path": "apps/my-shell/webpack.prod.config.js"
-          },
-          "buildLibsFromSource": true
+          }
         },
         "development": {
           "buildOptimizer": false,
@@ -58,8 +56,7 @@
           "vendorChunk": true,
           "extractLicenses": false,
           "sourceMap": true,
-          "namedChunks": true,
-          "buildLibsFromSource": true
+          "namedChunks": true
         },
         "source": {
           "tsConfig": "apps/my-shell/tsconfig.app.json"
@@ -70,9 +67,6 @@
     "serve": {
       "continuous": true,
       "executor": "@nx/angular:module-federation-dev-server",
-      "options": {
-        "devRemotes": ["my-microfrontend"]
-      },
       "configurations": {
         "production": {
           "buildTarget": "my-shell:build:production"

@@ -1,5 +1,6 @@
 const { withModuleFederation } = require('@nx/angular/module-federation');
 const config = require('./module-federation.config');
+const path = require('path');
 
 const singletonLibs = [
   'reflect-metadata',
@@ -46,4 +47,17 @@ module.exports = withModuleFederation({
       eager: libraryName === 'reflect-metadata',
     };
   },
-});
+}).then(cfg => {
+    // Override tsconfig paths — force webpack to resolve @ngx/*
+    // through node_modules symlinks (pnpm workspace links)
+    cfg.resolve = cfg.resolve || {};
+    cfg.resolve.alias = {
+      ...cfg.resolve.alias,
+      '@ngx/portal': path.resolve(__dirname, '../../node_modules/@ngx/portal'),
+      '@ngx/common': path.resolve(__dirname, '../../node_modules/@ngx/common'),
+      '@ngx/i18n': path.resolve(__dirname, '../../node_modules/@ngx/i18n'),
+      '@ngx/security': path.resolve(__dirname, '../../node_modules/@ngx/security'),
+      '@ngx/communication': path.resolve(__dirname, '../../node_modules/@ngx/communication'),
+    };
+    return cfg;
+  });

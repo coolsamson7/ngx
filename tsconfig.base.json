@@ -19,6 +19,7 @@
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": false,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "isolatedModules": true
   }
 }
