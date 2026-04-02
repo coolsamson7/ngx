@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "paths": {
+      "@ngx/common": ["dist/libs/common"],
+      "@ngx/portal": ["dist/libs/portal"],
+      "@ngx/i18n": ["dist/libs/i18n"],
+      "@ngx/security": ["dist/libs/security"],
+      "@ngx/validation": ["dist/libs/validation"],
+      "@ngx/view": ["dist/libs/view"],
+      "@ngx/ui": ["dist/libs/ui"],
+      "@ngx/component": ["dist/libs/component"],
+      "@ngx/communication": ["dist/libs/communication"]
+    }
+  }
+}
+

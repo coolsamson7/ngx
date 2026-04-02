@@ -6,12 +6,8 @@
     "module": "preserve",
     "moduleResolution": "bundler",
     "types": [],
-    "declaration": true,
-    "composite": true
+    "declaration": true
   },
   "exclude": ["**/*.spec.ts", "jest.config.ts", "src/test-setup.ts"],
-  "include": ["**/*.ts"],
-  "references": [
-    { "path": "../common" }
-  ]
+  "include": ["**/*.ts"]
 }

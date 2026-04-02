@@ -4,7 +4,4 @@ module.exports = {
   exposes: {
     './Module': 'apps/my-shell/src/app/shell.module.ts',
   },
-  shared: (libraryName, sharedConfig) => {
-      return sharedConfig;
-    }
 };
