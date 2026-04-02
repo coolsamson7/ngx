@@ -1,6 +1,7 @@
 {
   "name": "@ngx/validation",
   "version": "0.0.4",
+  "main": "src/index.ts",
   "private": false,
   "publishConfig": {
     "access": "public"
