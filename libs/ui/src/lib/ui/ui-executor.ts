@@ -1,8 +1,9 @@
-import { Inject, Injector, Type } from "@angular/core";
+import { Inject, Injectable, Injector, Type } from "@angular/core";
 import { UIHandler } from "./ui-handler";
-import { UI_HANDLER_TYPES } from "./ui.module";
+import { UI_HANDLER_TYPES } from "./ui.tokens";
 import { UIRequest } from "./ui-request";
 
+@Injectable() 
 export class UIExecutor {
     private handlerMap = new Map<Type<any>, UIHandler<any>>();
 

@@ -1,9 +1,8 @@
 import { ModuleWithProviders, NgModule, Type, InjectionToken, Provider } from '@angular/core';
 
-export const UI_HANDLER_TYPES = new InjectionToken<Type<UIHandler<any>>[]>('UI_HANDLER_TYPES');
-
 import { UIHandler } from './ui-handler';
 import { UIExecutor } from './ui-executor';
+import { UI_HANDLER_TYPES } from './ui.tokens';
 
   export function provideUIHandlers(
     handlers: Type<UIHandler<any>>[]
