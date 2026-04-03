@@ -36,6 +36,7 @@ export class LocalDeploymentLoader extends DeploymentLoader {
                 ManifestDecorator.decorate(manifest)
 
                 manifest.remoteEntry = this.urls[index]
+                manifest.remoteEntryName = 'remoteEntry.mjs'
 
                 deployment.modules[manifest.name] = manifest
             }

@@ -67,6 +67,13 @@
     "serve": {
       "continuous": true,
       "executor": "@nx/angular:module-federation-dev-server",
+      "options": {
+        "port": 4200,
+        "poll": 0,
+        "liveReload": false,
+        "hmr": false
+
+      },
       "configurations": {
         "production": {
           "buildTarget": "my-shell:build:production"

@@ -6,7 +6,7 @@ import { PortalModuleConfigToken } from './portal.module';
 import type { PortalModuleConfig } from './portal.module';
 import { FeatureRegistry } from './feature-registry';
 import { Deployment } from './deployment/deployment-model';
-import { ModuleRegistry } from './modules';
+import { ModuleRegistry } from '@ngx/common';
 import { FeatureConfig } from './feature-config';
 import {
   DeploymentLoader,
@@ -396,6 +396,7 @@ export class PortalManager {
       }
     }
 
+console.log('=== REMOTE DEFINITIONS ===', JSON.stringify(remotes, null, 2))
     setRemoteDefinitions(remotes);
 
     // fill feature registry
