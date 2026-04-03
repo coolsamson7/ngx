@@ -1,4 +1,5 @@
 import { SnackbarRequest, UIHandler } from "../ui";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 export class SnackbarHandler
   implements UIHandler<SnackbarRequest> {

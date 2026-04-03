@@ -9,7 +9,9 @@
       "@ngx/validation": ["libs/validation/src/index.ts"],
       "@ngx/security": ["libs/security/src/index.ts"],
       "@ngx/i18n": ["libs/i18n/src/index.ts"],
-      "@ngx/communication": ["libs/communication/src/index.ts"]
+      "@ngx/communication": ["libs/communication/src/index.ts"],
+      "@ngx/foundation": ["libs/foundation/src/index.ts"],
+      "@ngx/ui": ["libs/ui/src/index.ts"]
     },
     "target": "es2022",
     "module": "preserve",
