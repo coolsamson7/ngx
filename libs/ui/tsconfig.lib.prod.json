@@ -3,7 +3,7 @@
   "compilerOptions": {
     "declarationMap": false,
     "paths": {
-      "@ngx/common": ["libs/common/src/index.ts"]
+      "@ngx/common": ["libs/ui/src/index.ts"]
     }
   },
   "angularCompilerOptions": {},

@@ -1,0 +1,29 @@
+.content {
+  gap: 10px;
+
+  display: grid;
+  grid-template-columns: min-content auto;
+
+  .warn {
+    color: yellow;
+    font-size: xx-large;
+  }
+
+  .info {
+    color: black;
+    font-size: xx-large;
+  }
+
+  .error {
+    color: red;
+    font-size: xx-large;
+  }
+
+  .mat-icon {
+    line-height: normal;
+  }
+
+  .text {
+    align-self: center;
+  }
+}
