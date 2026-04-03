@@ -6,10 +6,12 @@ import {
 } from "@angular/material/dialog";
 import { CommonModule } from "@angular/common";
 import { MatButtonModule } from "@angular/material/button";
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { FeatureOutletDirective } from "@ngx/portal"; // adjust if needed
 import { CommandAdministration, CommandDescriptor, ExecutionContext } from "@ngx/foundation";
 import type { OpenDialogConfig } from "../../ui";
+import { TranslatePipe } from "@ngx/i18n";
 
 @Component({
   selector: "feature-dialog",
@@ -18,7 +20,9 @@ import type { OpenDialogConfig } from "../../ui";
     CommonModule,
     MatDialogModule,
     MatButtonModule,
-    FeatureOutletDirective // 🔥 reuse your directive
+    MatTooltipModule,
+    TranslatePipe,
+    FeatureOutletDirective
   ],
   styleUrls: ["./feature-dialog.scss"],
   templateUrl: "./feature-dialog.html"
@@ -38,6 +42,14 @@ export class FeatureDialogComponent {
 
   // public
 
+  isDefault(command: CommandDescriptor): boolean {
+    return command.shortcut == 'return' || command.shortcut == 'enter' || false;
+  }
+
+  tooltip(command: CommandDescriptor): string {
+      return command.tooltip ?? "";
+  }
+  
   onInstance(instance: CommandAdministration) {
     this.instance = instance;
 

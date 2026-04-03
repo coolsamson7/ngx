@@ -23,14 +23,14 @@ export class TestDialogComponent extends WithCommands(AbstractFeature, {inheritC
   // commands
 
   @Command({
-    i18n: 'portal:commands.ok.label',
+    i18n: 'shell:ok',
   })
   ok() {
     return "ok"
   }
 
   @Command({
-    i18n: 'portal:commands.cancel.label',
+    i18n: 'shell:cancel',
   })
   cancel() {
    return undefined

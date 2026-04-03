@@ -8,7 +8,9 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-    <button mat-button *ngFor="let command of commands" (click)="onClick(command)">
-        {{ command.label }}
+    <button mat-button mat-raised-button *ngFor="let command of commands" (click)="onClick(command)"
+            [color]="isDefault(command) ? 'primary' : 'basic'"
+            [matTooltip]="tooltip(command)">
+        {{command.label || (command.i18n! | translate)}}
     </button>
 </mat-dialog-actions>

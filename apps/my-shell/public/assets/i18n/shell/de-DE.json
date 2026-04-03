@@ -3,6 +3,13 @@
     "label": "Hallo"
   },
   "ok": {
-    "label": "Ok"
+    "label": "Ok",
+    "shortcut": "enter",
+    "tooltip": "Ok tooltip"
+  },
+  "cancel": {
+    "label": "Cancel",
+    "shortcut": "escape",
+    "tooltip": "Cancel tooltip"
   }
 }
