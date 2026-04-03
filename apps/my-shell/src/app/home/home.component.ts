@@ -3,6 +3,10 @@ import { Command, WithCommands } from '@ngx/foundation';
 import { TranslatePipe } from '@ngx/i18n';
 import { AbstractFeature, Feature } from '@ngx/portal';
 import { WithDialogs, WithSnackbar } from '@ngx/ui';
+import { TestDialogComponent } from './test-dialog';
+
+
+const a = TestDialogComponent
 
 @Feature({
   id: 'home',
@@ -23,6 +27,17 @@ export class HomeComponent extends WithDialogs(WithSnackbar(WithCommands(Abstrac
   }
 
   // commands
+
+  @Command({
+      i18n: 'shell:hello',
+  })
+  open() {
+    this.openDialog({
+      title: "Title", 
+      dialog: "test-dialog",
+      buttons: ["ok", "cancel"]
+    });
+  }
 
   @Command({
     i18n: 'shell:hello',

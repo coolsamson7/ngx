@@ -11,13 +11,14 @@ export const routes: Routes = [
   {
     path: '',
     component: PrivatePortalComponent,
+    children: [],
   },
 ];
 
 @NgModule({
   imports: [
     RouterModule.forChild(
-      PortalManager.registerLazyRoutes('private-portal', routes)
+      PortalManager.registerLazyRoutes('private-portal', routes),
     ),
   ],
 

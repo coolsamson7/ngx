@@ -8,6 +8,8 @@
   },
   "angularCompilerOptions": {},
   "references": [
-    { "path": "../common" }
+    { "path": "../common" },
+    { "path": "../foundation" },
+    { "path": "../portal" }
   ]
 }

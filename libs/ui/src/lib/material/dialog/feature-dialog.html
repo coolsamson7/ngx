@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+
+<mat-dialog-content>
+    <feature-outlet
+            [feature]="data.dialog"
+            (ready)="onInstance($event)">
+    </feature-outlet>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button *ngFor="let command of commands" (click)="onClick(command)">
+        {{ command.label }}
+    </button>
+</mat-dialog-actions>

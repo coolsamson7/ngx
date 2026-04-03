@@ -1,17 +1,21 @@
 {
   "name": "my-shell",
   "type": "shell",
-  "version": "0.1",
-  "commitHash": "253c108b3fc289605e96fd654b99c7ab34c348fb",
+  "version": "0.0.1",
+  "commitHash": "747db45b311257eda7d1a63b369cd671983586ee",
   "module": "ShellModule",
   "features": [
     {
+      "id": "test-dialog",
+      "label": "test-dialog",
+      "component": "TestDialogComponent"
+    },
+    {
       "id": "home",
       "label": "home",
-      "tags": ["navigation"],
-      "component": "HomeComponent"
+      "component": "HomeComponent",
+      "isDefault": true
     },
-
     {
       "id": "private-portal",
       "label": "private-portal",
@@ -23,7 +27,6 @@
       "visibility": ["private"],
       "module": "PrivatePortalModule"
     },
-
     {
       "id": "public-portal",
       "label": "public-portal",
@@ -35,12 +38,12 @@
       "visibility": ["public"],
       "module": "PublicPortalModule"
     },
-
     {
       "id": "**",
       "label": "Page not found",
       "icon": "language",
-      "component": "PageNotFoundComponent"
+      "component": "PageNotFoundComponent",
+      "isPageNotFound": true
     }
   ],
   "folders": []

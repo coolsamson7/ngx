@@ -1,6 +1,7 @@
 import { Observable } from "rxjs";
 import { UIRequest } from "../../ui-request";
 import { UIExecutor } from "../../ui-executor";
+import { CommandDescriptor } from "@ngx/foundation";
 
 export interface ButtonConfiguration {
     label?: string
@@ -26,6 +27,16 @@ export interface ConfirmationDialogConfig {
 
 export class ConfirmationDialogRequest implements UIRequest<Observable<any>> {
   constructor(public readonly config: ConfirmationDialogConfig) {}
+}
+
+export interface OpenDialogConfig {
+    title : string;
+    dialog : string;
+    buttons? : string[]
+}
+
+export class OpenDialogRequest implements UIRequest<Observable<any>> {
+  constructor(public readonly config: OpenDialogConfig) {}
 }
 
 export class ConfirmationDialogBuilder {

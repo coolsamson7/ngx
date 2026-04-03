@@ -2,10 +2,12 @@ import {
     Component,
     ComponentRef,
     Directive,
+    EventEmitter,
     Input,
     OnChanges,
     OnDestroy,
     OnInit,
+    Output,
     SimpleChanges,
     ViewContainerRef
 } from '@angular/core';
@@ -37,6 +39,9 @@ export class FeatureOutletDirective implements OnInit, OnChanges, OnDestroy {
      */
     @Input() feature = ""
     @Input() input : any = {}
+
+    @Output()
+    ready = new EventEmitter<any>();
 
     // instance data
 
@@ -123,5 +128,9 @@ export class FeatureOutletDirective implements OnInit, OnChanges, OnDestroy {
             const value = this.input[key]
             this.component.setInput(key, value)
         }
+
+        // ready
+
+        this.ready.emit(this.component.instance);
     }
 }

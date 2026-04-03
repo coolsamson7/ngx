@@ -1,13 +1,15 @@
 import { GConstructor, registerMixins } from "@ngx/common";
 import { UIExecutor } from "../../ui-executor";
 import { inject } from "@angular/core";
-import { ConfirmationDialogBuilder } from "./confirmation-dialog-builder";
+import { ConfirmationDialogBuilder, OpenDialogConfig, OpenDialogRequest } from "./confirmation-dialog-builder";
 import { AbstractFeature } from "@ngx/portal";
 
 export interface Dialogs {
   //openDialog<T>(component: ComponentType<T>, configuration: any) : Observable<any>
 
   confirmationDialog() : ConfirmationDialogBuilder
+
+  openDialog(dialog: OpenDialogConfig) : any;
 
   //inputDialog() : InputDialogBuilder
 
@@ -36,6 +38,10 @@ export function WithDialogs<T extends GConstructor<AbstractFeature>>(base: T) :G
 
         confirmationDialog() : ConfirmationDialogBuilder {
             return new ConfirmationDialogBuilder(this.executor)
+        }
+
+        openDialog(config: OpenDialogConfig)  : any{
+            return this.executor.render(new OpenDialogRequest(config));
         }
 
         //dynamicDialog() : DynamicDialogBuilder {
