@@ -48,6 +48,10 @@ import {
   LocaleModule,
 } from '@ngx/i18n';
 
+import {
+  MaterialUIModule,
+} from '@ngx/ui';
+
 import { Route } from '@angular/router';
 
 import * as localManifest from '../assets/manifest.json';
@@ -108,7 +112,11 @@ import { ShellRouterModule } from './shell-router.module';
         interceptors: []
     }),
 
-    // the main microfrontend logic
+    // ui
+
+    MaterialUIModule,
+
+    // portal
 
     PortalModule.forRoot({
       loader: {
@@ -141,7 +149,7 @@ import { ShellRouterModule } from './shell-router.module';
       multi: true,
     },
   ],
-  //bootstrap: [ShellComponent],
+
 })
 export class ShellModule extends AbstractPackage implements DoBootstrap {
   constructor(injector: Injector) {
