@@ -52,10 +52,7 @@ export class ModuleRegistry {
      */
     constructor(private injector: Injector) {
         if ( Tracer.ENABLED)
-            Tracer.Trace("portal", TraceLevel.FULL, "new module registry")
-
-        console.log("########### MR")
-        console.log(new Error().stack);
+            Tracer.Trace("portal", TraceLevel.FULL, "create module registry")
 
         ;(window as any)["modules"] = () => {
             this.report()
