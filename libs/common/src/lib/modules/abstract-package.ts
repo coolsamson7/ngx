@@ -1,5 +1,5 @@
 import { Injector } from '@angular/core';
-import { ModuleMetadata } from './module.interface';
+import { ModuleMetadata } from './module-metadata.interface';
 import { AbstractModule } from './abstract-module';
 import { ModuleRegistry } from './module-registry';
 

@@ -1,5 +1,5 @@
 import { AbstractPackage, ConstructorFunction, TypeDescriptor } from "@ngx/common";
-import { ModuleMetadata } from "./modules";
+import { ModuleMetadata } from "@ngx/common";
 
 /**
  * @ignore

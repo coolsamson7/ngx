@@ -1,4 +1,4 @@
-import { ModuleMetadata } from './module.interface';
+import { ModuleMetadata } from './module-metadata.interface';
 import { TypeDescriptor } from '../reflection';
 import { ConstructorFunction } from '../lang';
 import { Injectable } from '@angular/core';

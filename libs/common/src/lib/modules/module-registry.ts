@@ -1,7 +1,6 @@
 import { Injectable, Injector, Provider, Type } from '@angular/core';
-import { ModuleMetadata } from './module.interface';
+import { ModuleMetadata } from './module-metadata.interface';
 import { TraceLevel, Tracer } from '../tracer';
-import { AbstractModule } from './abstract-module';
 
  export interface LibraryMeta {
    provide: Type<any>;

@@ -1,5 +1,5 @@
 import { FeatureConfig } from "../feature-config";
-import { ModuleMetadata } from "../modules";
+import { ModuleMetadata } from "@ngx/common";
 import { FolderData } from "../folder.decorator";
 
 export interface Manifest extends ModuleMetadata {

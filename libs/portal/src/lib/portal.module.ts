@@ -7,7 +7,7 @@ import {
 import { Route, RouteReuseStrategy, Routes } from "@angular/router";
 import { PortalManager } from "./portal-manager";
 import { DeploymentLoader, Manifest } from "./deployment";
-import { ModulesModule } from "./modules";
+
 import { HttpClientModule } from "@angular/common/http";
 //import { AboutModule } from "./about/about.module";
 import { CommonModule } from "@angular/common";
@@ -41,7 +41,7 @@ function loadDeployment(portalManager : PortalManager) : () => Promise<void> {
 }
 
 @NgModule({
-    imports: [CommonModule, ModulesModule, HttpClientModule], // AboutModule
+    imports: [CommonModule, HttpClientModule], // AboutModule
     providers: [
         {
             provide: APP_INITIALIZER,

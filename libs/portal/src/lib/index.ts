@@ -1,6 +1,5 @@
 export * from "./portal.module"
 export * from "./feature-registry"
-export * from "./modules"
 export * from "./deployment"
 export * from "./feature-config"
 export * from "./portal-manager"
