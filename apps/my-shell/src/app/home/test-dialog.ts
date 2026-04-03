@@ -1,0 +1,38 @@
+import { Component, Injector } from '@angular/core';
+import { Command, WithCommands } from '@ngx/foundation';
+import { TranslatePipe } from '@ngx/i18n';
+import { AbstractFeature, Feature } from '@ngx/portal';
+import { WithDialogs, WithSnackbar } from '@ngx/ui';
+
+@Feature({
+  id: 'test-dialog',
+})
+@Component({
+  standalone: true,
+  selector: 'test-dialog',
+  templateUrl: './test-dialog.html',
+  styleUrls: ['./test-dialog.scss']
+})
+export class TestDialogComponent extends WithCommands(AbstractFeature, {inheritCommands: false}) {
+  // constructor
+
+  constructor(injector: Injector) {
+    super(injector);
+  }
+
+  // commands
+
+  @Command({
+    i18n: 'portal:commands.ok.label',
+  })
+  ok() {
+    return "ok"
+  }
+
+  @Command({
+    i18n: 'portal:commands.cancel.label',
+  })
+  cancel() {
+   return undefined
+  }
+}
