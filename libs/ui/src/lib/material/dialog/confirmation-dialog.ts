@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/materia
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { CommonModule } from "@angular/common";
-import { I18nModule, Translator } from "@ngx/i18n";
+import { I18nModule, TranslatePipe, Translator } from "@ngx/i18n";
 import type { ButtonConfiguration, ButtonData, ConfirmationDialogConfig } from "../../ui/elements";
 import { get } from "@ngx/common";
 
@@ -110,7 +110,9 @@ export abstract class CommonDialog {
         MatIconModule,
         MatDialogModule,
         MatButtonModule,
-        I18nModule
+        I18nModule,
+
+        TranslatePipe
     ]
 })
 export class ConfirmationDialog extends CommonDialog implements OnInit {
@@ -142,7 +144,7 @@ export class ConfirmationDialog extends CommonDialog implements OnInit {
     // implement OnInit
 
     ngOnInit() : void {
-        //this.data.buttons.forEach(button => this.decorate(button))
+        this.data.buttons.forEach(button => this.decorate(button))
 
         const button = this.data.buttons.find(button => button.primary)
 

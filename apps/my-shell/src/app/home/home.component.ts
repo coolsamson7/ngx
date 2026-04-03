@@ -37,6 +37,12 @@ export class HomeComponent extends WithDialogs(WithSnackbar(WithCommands(Abstrac
     i18n: 'shell:ok',
   })
   ok() {
-    this.confirmationDialog().message("Hello world!").okCancel().show()
+    this.confirmationDialog()
+      .title("Confirmation")
+      .message("Hello world!")
+      .okCancel()
+      .show().subscribe(result => {
+        console.log("Dialog result:", result)
+      })
   }
 }

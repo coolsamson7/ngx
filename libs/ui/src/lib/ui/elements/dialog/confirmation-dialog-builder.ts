@@ -93,9 +93,20 @@ export class ConfirmationDialogBuilder {
     public ok() : ConfirmationDialogBuilder {
         return this
             .button({
-                i18n: "portal.commands:ok",
+                i18n: "portal:commands.ok.label",
                 primary: true,
                 result: true
+            })
+    }
+
+    /**
+     * add "cancel"
+     */
+    public cancel() : ConfirmationDialogBuilder {
+        return this
+            .button({
+                i18n: "portal:commands.cancel.label",
+                result: undefined
             })
     }
 
@@ -103,16 +114,7 @@ export class ConfirmationDialogBuilder {
      * add "ok" and "cancel" buttons
      */
     public okCancel() : ConfirmationDialogBuilder {
-        return this
-            .button({
-                i18n: "portal.commands:ok",
-                primary: true,
-                result: true
-            })
-            .button({
-                i18n: "portal.commands:cancel",
-                result: undefined
-            })
+        return this.ok().cancel()
     }
 
     // show

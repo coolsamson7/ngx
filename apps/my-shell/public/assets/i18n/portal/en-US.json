@@ -1,0 +1,10 @@
+{
+  "commands": {
+    "ok": {
+      "label": "Ok"
+    },
+    "cancel": {
+      "label": "Cancel"
+    }
+  }
+}
