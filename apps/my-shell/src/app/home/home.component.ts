@@ -35,17 +35,21 @@ export class HomeComponent extends WithDialogs(WithSnackbar(WithCommands(Abstrac
     this.openDialog({
       title: "Title", 
       dialog: "test-dialog",
-      buttons: ["ok", "cancel"]
+      buttons: ["ok", "cancel"],
+      onStartup: {
+        command: "hello",
+        args: ["world"]
+      }
+    }).subscribe(result => {
+      console.log("Dialog result:", result)
     });
   }
 
   @Command({
     i18n: 'shell:hello',
   })
-  hello() {
-    console.log("hello")
-
-    this.showSnackbar("Hello world!", { duration: 2000 })
+  hello(world: string = "world") {
+    this.showSnackbar("hello" + world, { duration: 2000 })
   }
 
   @Command({

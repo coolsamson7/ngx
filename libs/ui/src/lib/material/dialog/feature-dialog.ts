@@ -53,6 +53,16 @@ export class FeatureDialogComponent {
   onInstance(instance: CommandAdministration) {
     this.instance = instance;
 
+    // call startup
+
+    if ( this.data.onStartup) {
+      const command = this.instance.getCommand(this.data.onStartup.command);
+
+      command.run(...this.data.onStartup.args);
+    }
+
+    // create buttons
+
     for (const commandName of this.data.buttons ?? []) {
       const command = this.instance.getCommand(commandName);
 

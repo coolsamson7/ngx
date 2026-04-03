@@ -23,6 +23,15 @@ export class TestDialogComponent extends WithCommands(AbstractFeature, {inheritC
   // commands
 
   @Command({
+    i18n: 'shell:hello',
+  })
+  hello() {
+    console.log("hello")
+    return "world"
+  }
+
+
+  @Command({
     i18n: 'shell:ok',
   })
   ok() {

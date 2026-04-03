@@ -131,7 +131,7 @@ export class CommandDescriptor {
 
          // call listeners
 
-         this.onError(context.error);
+         this.onError(context);
 
          return Promise.reject(error);
        }
@@ -151,7 +151,7 @@ export class CommandDescriptor {
 
            // call listeners
 
-           this.onResult(context.result);
+           this.onResult(context);
 
            return context.result;
          })
@@ -164,7 +164,7 @@ export class CommandDescriptor {
 
            // call listeners
 
-           this.onError(context.error);
+           this.onError(context);
          });
     }
 

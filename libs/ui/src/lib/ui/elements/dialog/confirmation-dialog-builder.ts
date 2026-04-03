@@ -29,9 +29,15 @@ export class ConfirmationDialogRequest implements UIRequest<Observable<any>> {
   constructor(public readonly config: ConfirmationDialogConfig) {}
 }
 
+export interface StartupConfig {
+    command: string,
+    args: any[]
+}
+
 export interface OpenDialogConfig {
     title : string;
     dialog : string;
+    onStartup?: StartupConfig
     buttons? : string[]
 }
 
