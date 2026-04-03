@@ -22,8 +22,6 @@ import { ConfigurationManager } from '@ngx/common';
 import { RouteBuilderManager } from './federation';
 import { SessionManager, Ticket } from '@ngx/security';
 
-console.log("YYYYY")
-
 /**
  * the runtime data of feature
  */
@@ -396,7 +394,7 @@ export class PortalManager {
       }
     }
 
-console.log('=== REMOTE DEFINITIONS ===', JSON.stringify(remotes, null, 2))
+
     setRemoteDefinitions(remotes);
 
     // fill feature registry
