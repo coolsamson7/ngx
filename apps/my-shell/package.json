@@ -4,11 +4,14 @@
   "peerDependencies": {
     "@angular/common": "^19.0.0",
     "@angular/core": "^19.0.0",
+
     "@ngx/common": "workspace:*",
     "@ngx/communication": "workspace:*",
     "@ngx/i18n": "workspace:*",
     "@ngx/portal": "workspace:*",
     "@ngx/security": "workspace:*",
+    "@ngx/foundation": "workspace:*",
+
     "rxjs": "^7.8.0"
   },
   "devDependencies": {

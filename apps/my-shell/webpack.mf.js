@@ -25,6 +25,7 @@ dts: false,
       'rxjs/operators',
 
       '@ngx/common',
+      '@ngx/foundation',
       '@ngx/portal',
       '@ngx/i18n',
       '@ngx/security',

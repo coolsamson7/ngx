@@ -1,4 +1,6 @@
 import { Component, Injector } from '@angular/core';
+import { Command, WithCommands } from '@ngx/foundation';
+import { TranslatePipe } from '@ngx/i18n';
 import { AbstractFeature, Feature } from '@ngx/portal';
 
 @Feature({
@@ -10,11 +12,21 @@ import { AbstractFeature, Feature } from '@ngx/portal';
   selector: 'home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  imports: [TranslatePipe],
 })
-export class HomeComponent extends AbstractFeature {
+export class HomeComponent extends WithCommands(AbstractFeature, {inheritCommands: false}) {
   // constructor
 
   constructor(injector: Injector) {
     super(injector);
+  }
+
+  // commands
+
+  @Command({
+    i18n: 'shell:hello',
+  })
+  hello() {
+    console.log("hello")
   }
 }

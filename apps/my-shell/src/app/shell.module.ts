@@ -6,6 +6,8 @@ import {LIBRARY_METADATA} from './package-meta';
 import { ShellComponent } from './shell.component';
 import { localRoutes } from './local.routes';
 
+import { CommandModule } from "@ngx/foundation"
+
 import {
   CanActivateGuard,
   CanDeactivateGuard,
@@ -62,8 +64,6 @@ import { ShellRouterModule } from './shell-router.module';
     BrowserModule,
     ShellRouterModule,
 
-    //ShellComponent,
-
     // configuration
 
     ConfigurationModule.forRoot(new ValueConfigurationSource(environment)),
@@ -89,14 +89,23 @@ import { ShellRouterModule } from './shell-router.module';
     // manages the current locale
 
     LocaleModule.forRoot({
-      locale: 'en-US',
-      supportedLocales: ['en-US', 'de-DE'],
+      locale: 'en',
+      supportedLocales: ['en', 'de'],
     }),
 
     // localization
 
     I18nModule.forRoot({
-      loader: { type: AssetTranslationLoader },
+      loader: { 
+        type: AssetTranslationLoader,
+        path: 'assets/i18n/'
+      },
+    }),
+
+    // commands
+
+    CommandModule.forRoot({
+        interceptors: []
     }),
 
     // the main microfrontend logic
@@ -132,7 +141,7 @@ import { ShellRouterModule } from './shell-router.module';
       multi: true,
     },
   ],
-  bootstrap: [ShellComponent], //
+  //bootstrap: [ShellComponent],
 })
 export class ShellModule extends AbstractPackage implements DoBootstrap {
   constructor(injector: Injector) {

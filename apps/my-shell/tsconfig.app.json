@@ -17,6 +17,7 @@
     { "path": "../../libs/security" },
     { "path": "../../libs/portal" },
     { "path": "../../libs/communication" },
+    { "path": "../../libs/foundation" },
     { "path": "../../libs/i18n" }
   ]
 }
