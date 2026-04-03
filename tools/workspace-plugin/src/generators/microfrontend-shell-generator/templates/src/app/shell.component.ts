@@ -7,7 +7,8 @@ import { SessionManager, Ticket } from "@ngx/security";
     selector: 'app-root',
     templateUrl: './shell.component.html',
     styleUrls: ['./shell.component.scss'],
-    imports: [FeatureOutletDirective]
+    imports: [FeatureOutletDirective],
+    standalone: true
 })
 export class ShellComponent {
     // instance data

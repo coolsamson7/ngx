@@ -1,4 +1,4 @@
-import { Injector, Injectable, NgModule } from '@angular/core';
+import { APP_INITIALIZER, Injector, Injectable, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { ShellComponent } from './shell.component';
@@ -13,7 +13,10 @@ import {
     TracerModule,
     ConfigurationModule,
     ConfigurationManager,
-    ValueConfigurationSource
+    ValueConfigurationSource,
+     createLibraries,
+      ModuleRegistry,
+      AbstractPackage,
 } from "@ngx/common";
 
 import {
@@ -67,8 +70,6 @@ export class ApplicationEndpointLocator extends EndpointLocator {
     imports: [
         BrowserModule,
         ShellRouterModule,
-
-        ShellComponent,
 
          // configuration
 
@@ -125,11 +126,19 @@ export class ApplicationEndpointLocator extends EndpointLocator {
         }),
     ],
     providers: [
+        ...getLibraryProviders(),
         {
-            provide: EndpointLocator,
-            useClass: ApplicationEndpointLocator
-        }
-    ]
+          provide: APP_INITIALIZER,
+          useFactory: (injector: Injector) => () => {
+            createLibraries(injector)
+
+            injector.get(ModuleRegistry).report()
+          },
+          deps: [Injector],
+          multi: true,
+        },
+      ],
+    bootstrap: [ShellComponent]
 })
 export class ShellModule extends AbstractModule() {
     constructor(injector: Injector) {
