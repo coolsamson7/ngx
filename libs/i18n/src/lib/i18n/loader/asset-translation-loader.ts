@@ -25,7 +25,9 @@ export class AssetTranslationLoader implements I18nLoader {
         private http : HttpClient
     ) {
         // @ts-ignore
-        this.path = configuration.path;
+        if (configuration["path"]) {
+            this.path = configuration["path"];
+        }
     }
 
     // implement I18nLoader
