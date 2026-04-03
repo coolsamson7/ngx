@@ -1,5 +1,6 @@
 import { ReplaySubject } from "rxjs";
 import { Injector } from "@angular/core";
+import { ModuleRegistry } from "./module-registry";
 
 
 abstract class _AbstractModule {
@@ -15,9 +16,9 @@ export const AbstractModule = () =>  {
         constructor(injector: Injector) {
             super();
 
-            //const metadata = Reflect.get(this.constructor, "$$metadata")
-            //if ( metadata )
-            //    injector.get(ModuleRegistry).markAsLoaded(metadata)
+            const metadata = Reflect.get(this.constructor, "$$metadata")
+            if ( metadata )
+                injector.get(ModuleRegistry).markAsLoaded(metadata)
 
             injectorSubject.next(injector)
         }
