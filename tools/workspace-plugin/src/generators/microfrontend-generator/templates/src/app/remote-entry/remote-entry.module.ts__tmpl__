@@ -5,7 +5,9 @@ import { AbstractModule } from "@ngx/common";
 import { Microfrontend } from "@ngx/portal";
 import { RemoteEntryRouterModule } from "./remote-entry-router.module";
 
-@Microfrontend({name: '<%= name %>'})
+import {LIBRARY_METADATA} from './package-meta';
+
+@Microfrontend(LIBRARY_METADATA)
 @NgModule({
     imports: [CommonModule, RemoteEntryRouterModule, RemoteEntryComponent],
     providers: [],

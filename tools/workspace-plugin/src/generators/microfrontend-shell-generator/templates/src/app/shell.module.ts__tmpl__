@@ -4,6 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ShellComponent } from './shell.component';
 import { localRoutes } from "./local.routes";
 
+import {LIBRARY_METADATA} from './package-meta';
+
 import {
     AbstractModule,
     ConsoleTrace,
@@ -60,9 +62,7 @@ export class ApplicationEndpointLocator extends EndpointLocator {
   }
 }
 
-@Shell({
-    name: '<%= name %>'
-})
+@Shell(LIBRARY_METADATA)
 @NgModule({
     imports: [
         BrowserModule,
@@ -108,9 +108,12 @@ export class ApplicationEndpointLocator extends EndpointLocator {
 
         PortalModule.forRoot({
             loader: {
-                server: {},
-                // switch to local if you don't want to depend on the server
-                //local: { remotes: ["http://localhost:4201", "http://localhost:4202"]}
+                //server: {},
+                local: {
+                   remotes: [
+                      //"http://localhost:4201"
+                   ]
+                }
             },
             localRoutes: localRoutes,
             localManifest: localManifest as any as Manifest,
