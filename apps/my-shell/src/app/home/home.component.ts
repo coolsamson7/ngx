@@ -2,7 +2,7 @@ import { Component, Injector } from '@angular/core';
 import { Command, WithCommands } from '@ngx/foundation';
 import { TranslatePipe } from '@ngx/i18n';
 import { AbstractFeature, Feature } from '@ngx/portal';
-import { WithSnackbar } from '@ngx/ui';
+import { WithDialogs, WithSnackbar } from '@ngx/ui';
 
 @Feature({
   id: 'home',
@@ -15,7 +15,7 @@ import { WithSnackbar } from '@ngx/ui';
   styleUrls: ['./home.component.scss'],
   imports: [TranslatePipe],
 })
-export class HomeComponent extends WithSnackbar(WithCommands(AbstractFeature, {inheritCommands: false})) {
+export class HomeComponent extends WithDialogs(WithSnackbar(WithCommands(AbstractFeature, {inheritCommands: false}))) {
   // constructor
 
   constructor(injector: Injector) {
@@ -31,5 +31,12 @@ export class HomeComponent extends WithSnackbar(WithCommands(AbstractFeature, {i
     console.log("hello")
 
     this.showSnackbar("Hello world!", { duration: 2000 })
+  }
+
+  @Command({
+    i18n: 'shell:ok',
+  })
+  ok() {
+    this.confirmationDialog().message("Hello world!").okCancel().show()
   }
 }

@@ -1,5 +1,8 @@
 {
   "hello": {
     "label": "Hallo"
+  },
+  "ok": {
+    "label": "Ok"
   }
 }
