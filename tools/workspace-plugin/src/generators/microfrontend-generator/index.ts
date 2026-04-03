@@ -3,6 +3,7 @@ import { applicationGenerator } from '@nx/angular/generators';
 
 import { MicrofrontendGeneratorSchema } from './schema';
 import { join } from 'path';
+import { Schema } from '@nx/angular/src/generators/application/schema';
 /**
  * main function
  * @param tree the virtual file system
@@ -16,7 +17,7 @@ export default async function (tree: Tree, schema: MicrofrontendGeneratorSchema)
     // set some defaults
     minimal: false,
     bundler: 'webpack'
-  });
+  } as any as Schema);
 
   // read project from workspace.json / angular.json
 
