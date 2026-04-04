@@ -96,8 +96,8 @@ import { ExtensionModule } from './extension';
     // manages the current locale
 
     LocaleModule.forRoot({
-      locale: 'en',
-      supportedLocales: ['en', 'de'],
+      locale: 'en-US',
+      supportedLocales: ['en-US', 'de-DE'],
     }),
 
     // localization

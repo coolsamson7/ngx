@@ -5,7 +5,6 @@ import {
   Ticket,
 } from '@ngx/security';
 import {
-  //AboutDialogService,
   AbstractFeature,
   Feature,
   FeatureData,
@@ -18,6 +17,7 @@ import { MatToolbar } from "@angular/material/toolbar";
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { AvatarComponent } from "../avatar/avatar.component";
+import { LocaleSwitchComponent } from '../locale/locale-switch.component';
 
 @Feature({
   id: 'private-portal',
@@ -31,7 +31,7 @@ import { AvatarComponent } from "../avatar/avatar.component";
   selector: 'private-portal',
   templateUrl: './private-portal-component.html',
   styleUrls: ['./private-portal-component.scss'],
-  imports: [CommonModule, MatToolbar, MatButtonModule, RouterOutlet, RouterLink, AvatarComponent],
+  imports: [CommonModule, MatToolbar, MatButtonModule, RouterOutlet, RouterLink, AvatarComponent, LocaleSwitchComponent],
 })
 export class PrivatePortalComponent extends AbstractFeature {
   // instance data

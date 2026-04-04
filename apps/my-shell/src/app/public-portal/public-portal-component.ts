@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { WithDialogs } from '@ngx/ui';
 import { AvatarComponent } from '../avatar/avatar.component';
+import { LocaleSwitchComponent } from '../locale/locale-switch.component';
 
 @Feature({
   id: 'public-portal',
@@ -33,7 +34,7 @@ import { AvatarComponent } from '../avatar/avatar.component';
   selector: 'public-portal',
   templateUrl: './public-portal-component.html',
   styleUrls: ['./public-portal-component.scss'],
-  imports: [CommonModule, RouterOutlet, RouterLink, MatToolbar, MatButtonModule, AvatarComponent],
+  imports: [CommonModule, RouterOutlet, RouterLink, MatToolbar, MatButtonModule, LocaleSwitchComponent],
 })
 export class PublicPortalComponent extends WithDialogs(AbstractFeature) {
   // instance data
