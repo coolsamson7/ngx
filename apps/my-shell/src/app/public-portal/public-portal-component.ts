@@ -18,6 +18,7 @@ import { MatToolbar } from "@angular/material/toolbar";
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { WithDialogs } from '@ngx/ui';
+import { AvatarComponent } from '../avatar/avatar.component';
 
 @Feature({
   id: 'public-portal',
@@ -32,7 +33,7 @@ import { WithDialogs } from '@ngx/ui';
   selector: 'public-portal',
   templateUrl: './public-portal-component.html',
   styleUrls: ['./public-portal-component.scss'],
-  imports: [CommonModule, RouterOutlet, RouterLink, MatToolbar, MatButtonModule],
+  imports: [CommonModule, RouterOutlet, RouterLink, MatToolbar, MatButtonModule, AvatarComponent],
 })
 export class PublicPortalComponent extends WithDialogs(AbstractFeature) {
   // instance data

@@ -17,6 +17,7 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { MatToolbar } from "@angular/material/toolbar";
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { AvatarComponent } from "../avatar/avatar.component";
 
 @Feature({
   id: 'private-portal',
@@ -30,7 +31,7 @@ import { MatButtonModule } from '@angular/material/button';
   selector: 'private-portal',
   templateUrl: './private-portal-component.html',
   styleUrls: ['./private-portal-component.scss'],
-  imports: [CommonModule, MatToolbar, MatButtonModule, RouterOutlet, RouterLink],
+  imports: [CommonModule, MatToolbar, MatButtonModule, RouterOutlet, RouterLink, AvatarComponent],
 })
 export class PrivatePortalComponent extends AbstractFeature {
   // instance data
