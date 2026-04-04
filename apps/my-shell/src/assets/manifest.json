@@ -18,6 +18,7 @@
     {
       "id": "home",
       "label": "home",
+      "i18n": ["shell", "portal"],
       "component": "HomeComponent",
       "isDefault": true
     },
@@ -35,6 +36,7 @@
     {
       "id": "public-portal",
       "label": "public-portal",
+      "i18n": ["shell", "portal"],
       "router": {
         "lazyModule": "PublicPortalModule"
       },

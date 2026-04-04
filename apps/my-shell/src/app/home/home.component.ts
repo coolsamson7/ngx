@@ -1,14 +1,10 @@
-import { Component, Injector } from '@angular/core';
-import { Command, WithCommands } from '@ngx/foundation';
+import { Component, Injector, ViewChild } from '@angular/core';
+import { Command, ViewComponent, WithCommands, WithView } from '@ngx/foundation';
 import { TranslatePipe } from '@ngx/i18n';
 import { AbstractFeature, Feature } from '@ngx/portal';
-import { WithDialogs, WithSnackbar } from '@ngx/ui';
-import { TestDialogComponent } from './test-dialog';
+import { CommandToolbarComponent, WithCommandToolbar, WithDialogs, WithSnackbar } from '@ngx/ui';
 import { WithExtensions } from '../extension/with-extensions';
 import { SampleExtensionPoint } from '../extension/sample.extension';
-
-
-const a = TestDialogComponent
 
 @Feature({
   id: 'home',
@@ -19,10 +15,13 @@ const a = TestDialogComponent
   selector: 'home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  imports: [TranslatePipe],
+  imports: [TranslatePipe, CommandToolbarComponent, ViewComponent],
 })
-export class HomeComponent extends WithExtensions(WithDialogs(WithSnackbar(WithCommands(AbstractFeature, {inheritCommands: false})))) {
-  extensionPoint! : SampleExtensionPoint 
+export class HomeComponent extends WithExtensions(WithView(WithDialogs(WithSnackbar(WithCommandToolbar(WithCommands(AbstractFeature, {inheritCommands: false})))))) {
+  extensionPoint! : SampleExtensionPoint
+
+  @ViewChild(CommandToolbarComponent) override commandToolbar? : CommandToolbarComponent
+  @ViewChild(ViewComponent) override view! : ViewComponent
 
   // constructor
 
@@ -39,10 +38,19 @@ export class HomeComponent extends WithExtensions(WithDialogs(WithSnackbar(WithC
       console.log(menu)
   }
 
+  // override WithCommandToolbar
+
+  override buildToolbar() {
+      this
+        .addCommand2Toolbar("open")
+        .addCommand2Toolbar("hello")
+        .addCommand2Toolbar("ok")
+  }
+
   // commands
 
   @Command({
-      i18n: 'shell:hello',
+      i18n: 'shell:open',
   })
   open() {
     this.openDialog({

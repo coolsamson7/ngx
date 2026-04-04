@@ -3,6 +3,10 @@
     "label": "Hallo",
     "shortcut": "ctrl+h"
   },
+  "open": {
+    "label": "Open",
+    "shortcut": "ctrl+o"
+  },
   "ok": {
     "label": "Ok",
     "shortcut": "enter",

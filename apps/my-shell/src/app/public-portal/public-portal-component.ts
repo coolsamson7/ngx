@@ -21,6 +21,7 @@ import { WithDialogs } from '@ngx/ui';
 
 @Feature({
   id: 'public-portal',
+  i18n: ["shell", "portal"],
   visibility: ['public'],
   tags: ['portal'],
   router: {

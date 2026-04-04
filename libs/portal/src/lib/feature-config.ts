@@ -61,11 +61,6 @@ export interface FeatureConfig {
      */
     isDefault? : boolean
 
-     /**
-     * if true, the "**" redirect will point to this feature
-     */
-     isPageNotFound? : boolean
-
     /**
      * optional label. if not set, populated with the id
      */
@@ -76,7 +71,7 @@ export interface FeatureConfig {
      */
     labelKey? : string
     /**
-     * optional label key
+     * optional list of  i18n namespaces to preload
      */
     i18n? : string[]
     /**
