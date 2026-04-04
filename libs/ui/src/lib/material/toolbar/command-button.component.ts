@@ -8,11 +8,12 @@ import { CommandDescriptor, CommandListener, CommandManager, ExecutionContext, W
 import { AbstractFeature } from "@ngx/portal";
 import { hasMixin } from "@ngx/common";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { IconComponent } from "../../icon";
 
 @Component({
     selector: 'command-button',
     templateUrl: './command-button.component.html',
-    //styleUrls: ['./command-button.component.scss'],
+    styleUrls: ['./command-button.component.scss'],
     standalone: true,
     encapsulation: ViewEncapsulation.None,
     imports: [
@@ -24,7 +25,8 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 
         MatButtonModule,
         MatIconModule,
-        MatTooltipModule
+        MatTooltipModule,
+        IconComponent
     ]
 })
 export class CommandButtonComponent implements OnInit, CommandListener {

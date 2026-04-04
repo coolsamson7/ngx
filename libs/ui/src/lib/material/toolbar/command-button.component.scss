@@ -1,25 +1,14 @@
-
-.mat-mdc-button {
-min-width: 48px;
-}
-  .mat-mdc-button > .mat-icon {
-    width: unset;
-    height: unset;
-    margin-right: unset;
-    //font-size: 24px;
-}
-
 .button {
-    padding: 0;
-    //display: grid !important;
-    align-items: center !important;
+  height: 100%;
+  min-width: unset;
+  padding: 0 8px;
+}
 
-    .mdc-button__label {
-        margin-top: 10px;
-    }
-
-    .label {
-        
-    }
-
+.content {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  line-height: 1;
 }
