@@ -18,7 +18,7 @@ export class SampleExtensionPoint extends ExtensionPoint {
 
 @Extension()
 @Injectable({providedIn: 'root'})
-export class SampleExtension extends AbstractExtension<SampleExtensionPoint> {
+export class SampleExtension extends AbstractExtension<SampleExtensionPoint,any> {
     readonly type = SampleExtensionPoint;
 
     // implement

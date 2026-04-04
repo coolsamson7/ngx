@@ -1,0 +1,9 @@
+<mat-toolbar class="toolbar dense-5">
+  <mat-toolbar-row>
+    <ng-container  *ngFor="let element of elements">
+      <command-button *ngIf="element.type === 'command'" [command]="command(element)" [label]="label"></command-button>
+
+      <command-menu-button *ngIf="element.type === 'menu'" [commands]="commands(element)" [icon]="element.icon" [tooltip]="element.tooltip" [label]="element.label"></command-menu-button>
+    </ng-container>
+  </mat-toolbar-row>
+</mat-toolbar>

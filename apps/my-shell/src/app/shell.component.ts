@@ -1,5 +1,6 @@
  
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
+import { ShortcutManager } from '@ngx/foundation';
 import { FeatureData, FeatureRegistry, FeatureOutletDirective } from '@ngx/portal';
 import {
   SessionManager,
@@ -22,6 +23,7 @@ export class ShellComponent {
 
   constructor(
     private featureRegistry: FeatureRegistry,
+    private shortcutManager: ShortcutManager,
     private sessionManager: SessionManager<any, Ticket>
   ) {
     // public portal
@@ -33,6 +35,11 @@ export class ShellComponent {
     featureRegistry.registry$.subscribe(
       (registry) => (this.portal = this.determinePortal())
     );
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  public handleKeydown(e : any) {
+      this.shortcutManager.handleKeydown(e);
   }
 
   // private

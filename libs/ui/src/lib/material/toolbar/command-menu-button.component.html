@@ -1,0 +1,20 @@
+<div>
+  <button matMenuTriggerFor]="menu" mat-button>
+      <mat-icon>{{icon}}</mat-icon>
+      <mat-icon iconPositionEnd>arrow_drop_down</mat-icon>
+  </button>
+
+  <mat-menu #menu="matMenu" class="dense-5">
+    <button *ngFor="let command of commands"  (click)="command.run()" [disabled]="!command.enabled" mat-menu-item>{{command.label}}</button>
+  </mat-menu>
+</div>
+
+<ng-template #tooltipContent>
+  <h1>Something</h1>
+  <ul>
+    <li>Blah</li>
+    <li>Blah</li>
+    <li>Blah</li>
+  </ul>
+  <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Delectus similique commodi, tempora explicabo molestiae minima nesciunt est repellat recusandae, natus nulla eos sapiente et hic sequi exercitationem quia at? Accusamus.</p>
+</ng-template>

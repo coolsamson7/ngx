@@ -1,0 +1,25 @@
+
+.mat-mdc-button {
+min-width: 48px;
+}
+  .mat-mdc-button > .mat-icon {
+    width: unset;
+    height: unset;
+    margin-right: unset;
+    //font-size: 24px;
+}
+
+.button {
+    padding: 0;
+    //display: grid !important;
+    align-items: center !important;
+
+    .mdc-button__label {
+        margin-top: 10px;
+    }
+
+    .label {
+        
+    }
+
+}

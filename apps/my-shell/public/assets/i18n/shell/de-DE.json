@@ -1,6 +1,7 @@
 {
   "hello": {
-    "label": "Hallo"
+    "label": "Hallo",
+    "shortcut": "ctrl+h"
   },
   "ok": {
     "label": "Ok",
