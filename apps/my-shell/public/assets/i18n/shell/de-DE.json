@@ -4,16 +4,16 @@
     "shortcut": "ctrl+h"
   },
   "open": {
-    "label": "Open",
+    "label": "Öffnen",
     "shortcut": "ctrl+o"
   },
   "ok": {
-    "label": "Ok",
+    "label": "Jaja",
     "shortcut": "enter",
     "tooltip": "Ok tooltip"
   },
   "cancel": {
-    "label": "Cancel",
+    "label": "Abbrechen",
     "shortcut": "escape",
     "tooltip": "Cancel tooltip"
   }

@@ -70,8 +70,8 @@ export class PublicPortalComponent extends WithDialogs(AbstractFeature) {
   login() {
     this.sessionManager
       .openSession({
-        user: 'admin',
-        password: 'admin',
+        user: 'Andreas Ernst',
+        password: 'secret',
       })
       .subscribe(
         (session) => {

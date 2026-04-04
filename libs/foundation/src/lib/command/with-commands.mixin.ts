@@ -266,8 +266,7 @@ export function WithCommands<T extends Constructor<AbstractFeature>>(base: T, co
                                 case "tooltip":
                                 case "shortcut":
                                 case "speech":
-                                    if (!(<any>commandConfig)[name])
-                                        (<any>commandConfig)[name] = translations[name]
+                                    (<any>commandConfig)[name] = translations[name]
                                 break;
 
                                 default:

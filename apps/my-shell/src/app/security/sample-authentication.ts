@@ -14,16 +14,13 @@ export class SampleAuthentication
 
   authenticate(request: AuthenticationRequest) {
     const { user, password } = request;
-    if (
-      (user === 'admin' && password === 'admin') ||
-      (user === 'guest' && password === 'guest')
-    ) {
-      return of({
-        user: { account: request.user, permissions: [] },
-        ticket: {},
-      });
-    } else {
-      return throwError(new Error('authentication failed'));
-    }
+
+    return of({
+      user: {
+          account: request.user,
+          permissions: []
+      },
+      ticket: {},
+    });
   }
 }

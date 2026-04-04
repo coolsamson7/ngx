@@ -4,7 +4,7 @@
     "shortcut": "ctrl+h"
   },
   "open": {
-    "label": "Öffnen",
+    "label": "Open",
     "shortcut": "ctrl+o"
   },
   "ok": {
@@ -13,7 +13,7 @@
     "tooltip": "Ok tooltip"
   },
   "cancel": {
-    "label": "Abbrechen",
+    "label": "Cancel",
     "shortcut": "escape",
     "tooltip": "Abbrechen tooltip"
   }
