@@ -1,6 +1,16 @@
 {
   "name": "@ngx/my-shell",
   "version": "0.0.1",
+  "svg-to-ts": {
+    "conversionType": "constants",
+    "srcFiles": ["src/assets/icons/*.svg"],
+    "outputDirectory": "src/app/icons/generated",
+    "typeName": "AppIconName",
+    "prefix": "appIcon",
+    "svgoConfig": {
+      "plugins": [{ "name": "preset-default" }]
+    }
+  },
   "peerDependencies": {
     "@angular/common": "^19.0.0",
     "@angular/core": "^19.0.0",

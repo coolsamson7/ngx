@@ -3,7 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import {LIBRARY_METADATA} from './package-meta';
 
-import { ShellComponent } from './shell.component';
+import { completeIconSet } from './icons/generated/my-icons';
+
 import { localRoutes } from './local.routes';
 
 import { CommandModule } from "@ngx/foundation"
@@ -49,6 +50,7 @@ import {
 } from '@ngx/i18n';
 
 import {
+  IconRegistry,
   MaterialUIModule,
 } from '@ngx/ui';
 
@@ -140,6 +142,13 @@ import { ExtensionModule } from './extension';
     }),
   ],
   providers: [
+       {
+        provide: APP_INITIALIZER,
+        useFactory: (registry: IconRegistry) => () => registry.registerAll(Object.fromEntries(completeIconSet.map(icon => [icon.name, icon]))),
+        deps: [IconRegistry],
+        multi: true,
+      },
+
     ...getLibraryProviders(),
     {
       provide: APP_INITIALIZER,

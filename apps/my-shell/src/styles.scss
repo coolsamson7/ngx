@@ -1,7 +1,9 @@
 @use '@angular/material' as mat;
 
+/* 1. Core */
 @include mat.core();
 
+/* 2. Theme */
 $my-shell-theme: mat.define-theme((
   color: (
     theme-type: light,
@@ -10,20 +12,27 @@ $my-shell-theme: mat.define-theme((
   ),
   typography: (
     brand-family: 'Roboto, "Helvetica Neue", sans-serif',
-    bold-weight: 700
+    plain-family: 'Roboto, "Helvetica Neue", sans-serif',
+    bold-weight: 700,
+    medium-weight: 500,
+    regular-weight: 400
   ),
-  // FIX: Density must be an object with a 'scale' property
   density: (
-    scale: 0 
+    scale: 0
   )
 ));
 
+/* 3. Apply theme */
 html {
   @include mat.all-component-themes($my-shell-theme);
   @include mat.typography-hierarchy($my-shell-theme);
 }
 
+/* 4. Global styles */
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: 'Roboto', "Helvetica Neue", sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

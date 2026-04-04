@@ -6,6 +6,17 @@
   "sourceRoot": "apps/my-shell/src",
   "tags": [],
   "targets": {
+    "generate-icons": {
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/apps/my-shell/src/app/icons/generated"],
+      "inputs": [
+        { "fileset": "{projectRoot}/src/assets/icons/*.svg" }
+      ],
+      "options": {
+        "command": "pnpm exec svg-to-ts-constants",
+        "cwd": "apps/my-shell"
+      }
+    },
     "build": {
       "executor": "@nx/angular:webpack-browser",
       "dependsOn": ["^build"],
@@ -29,8 +40,7 @@
           }
         ],
         "styles": [
-          "apps/my-shell/src/styles.scss",
-          "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css"
+          "apps/my-shell/src/styles.scss"
         ],
         "customWebpackConfig": {
           "path": "apps/my-shell/webpack.config.js"

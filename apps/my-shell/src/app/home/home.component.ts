@@ -2,7 +2,7 @@ import { Component, Injector, ViewChild } from '@angular/core';
 import { Command, ViewComponent, WithCommands, WithView } from '@ngx/foundation';
 import { TranslatePipe } from '@ngx/i18n';
 import { AbstractFeature, Feature } from '@ngx/portal';
-import { CommandToolbarComponent, WithCommandToolbar, WithDialogs, WithSnackbar } from '@ngx/ui';
+import { CommandToolbarComponent, IconComponent, WithCommandToolbar, WithDialogs, WithSnackbar } from '@ngx/ui';
 import { WithExtensions } from '../extension/with-extensions';
 import { SampleExtensionPoint } from '../extension/sample.extension';
 
@@ -15,7 +15,7 @@ import { SampleExtensionPoint } from '../extension/sample.extension';
   selector: 'home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  imports: [TranslatePipe, CommandToolbarComponent, ViewComponent],
+  imports: [TranslatePipe, CommandToolbarComponent, ViewComponent, IconComponent],
 })
 export class HomeComponent extends WithExtensions(WithView(WithDialogs(WithSnackbar(WithCommandToolbar(WithCommands(AbstractFeature, {inheritCommands: false})))))) {
   extensionPoint! : SampleExtensionPoint
@@ -51,6 +51,7 @@ export class HomeComponent extends WithExtensions(WithView(WithDialogs(WithSnack
 
   @Command({
       i18n: 'shell:open',
+      icon: "open",
   })
   open() {
     this.openDialog({
@@ -68,6 +69,7 @@ export class HomeComponent extends WithExtensions(WithView(WithDialogs(WithSnack
 
   @Command({
     i18n: 'shell:hello',
+    icon: "save"
   })
   hello(world: string = "world") {
     this.showSnackbar("hello" + world, { duration: 2000 })
@@ -75,6 +77,7 @@ export class HomeComponent extends WithExtensions(WithView(WithDialogs(WithSnack
 
   @Command({
     i18n: 'shell:ok',
+    icon: "revert"
   })
   ok() {
     this.confirmationDialog()
