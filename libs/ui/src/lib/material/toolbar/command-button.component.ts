@@ -9,12 +9,10 @@ import { AbstractFeature } from "@ngx/portal";
 import { hasMixin } from "@ngx/common";
 import { MatTooltipModule } from "@angular/material/tooltip";
 
-
-
 @Component({
     selector: 'command-button',
     templateUrl: './command-button.component.html',
-    styleUrls: ['./command-button.component.scss'],
+    //styleUrls: ['./command-button.component.scss'],
     standalone: true,
     encapsulation: ViewEncapsulation.None,
     imports: [
@@ -79,10 +77,10 @@ export class CommandButtonComponent implements OnInit, CommandListener {
             this.descriptor  = (<CommandManager><unknown>this.feature).getCommand(this.command)
         else
             throw new Error("WithCommands is missing")
-      }
+    }
 
-        this.descriptor.addListener(this)
+    this.descriptor.addListener(this)
 
-        this.tooltip =  (this.descriptor.tooltip || "") + (this.descriptor.shortcut ? (" " + this.descriptor.shortcut) : "")
+    this.tooltip =  (this.descriptor.tooltip || "") + (this.descriptor.shortcut ? (" " + this.descriptor.shortcut) : "")
     }
 }

@@ -105,7 +105,7 @@ class ToolbarCommandElement extends ToolbarElement {
 @Component({
     selector: 'command-toolbar',
     templateUrl: './command-toolbar.component.html',
-    styleUrls: ['./command-toolbar.component.scss'],
+    //styleUrls: ['./command-toolbar.component.scss'],
     standalone: true,
     imports: [
       // angular
