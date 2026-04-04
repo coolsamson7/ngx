@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-empty-interface */
-
 import { GConstructor ,registerMixins, hasMixin } from "@ngx/common";
 
+import { Component, ViewChild} from "@angular/core";
 import { CommandToolbarComponent } from "./command-toolbar.component";
 import { CommandManager } from "@ngx/foundation";
 import { AbstractFeature } from "@ngx/portal";
@@ -31,17 +30,16 @@ export interface WithCommandToolbarConfig {
 }
 
 export function WithCommandToolbar<T extends GConstructor<CommandManager & AbstractFeature>>(base: T, config : WithCommandToolbarConfig = {}) :GConstructor<WithCommandToolbar> &  T  {
-    return registerMixins(class WithCommandToolbarClass extends base implements WithCommandToolbar {
+  @Component({
+          selector: 'with-command-toolbar-component',
+          template: ""
+ })
+  class WithCommandToolbarClass extends base implements WithCommandToolbar {
         // instance data
 
+        @ViewChild(CommandToolbarComponent) commandToolbar? : CommandToolbarComponent
+
         addCommands = config.addCommands ?? AddCommands.ON_CREATE
-        commandToolbar? : CommandToolbarComponent
-
-        // constructor
-
-        constructor(...args: any[]) {
-            super(...args);
-        }
 
         // private
 
@@ -80,6 +78,7 @@ export function WithCommandToolbar<T extends GConstructor<CommandManager & Abstr
 
         return this
       }
+    }
 
-    }, WithCommandToolbar)
+    return registerMixins(WithCommandToolbarClass, WithCommandToolbar)
   }

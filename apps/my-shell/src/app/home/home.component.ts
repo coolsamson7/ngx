@@ -1,4 +1,4 @@
-import { Component, Injector, ViewChild } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { Command, ViewComponent, WithCommands, WithView } from '@ngx/foundation';
 import { TranslatePipe } from '@ngx/i18n';
 import { AbstractFeature, Feature } from '@ngx/portal';
@@ -19,9 +19,6 @@ import { SampleExtensionPoint } from '../extension/sample.extension';
 })
 export class HomeComponent extends WithExtensions(WithView(WithDialogs(WithSnackbar(WithCommandToolbar(WithCommands(AbstractFeature, {inheritCommands: false})))))) {
   extensionPoint! : SampleExtensionPoint
-
-  @ViewChild(CommandToolbarComponent) override commandToolbar? : CommandToolbarComponent
-  @ViewChild(ViewComponent) override view! : ViewComponent
 
   // constructor
 
@@ -45,13 +42,15 @@ export class HomeComponent extends WithExtensions(WithView(WithDialogs(WithSnack
         .addCommand2Toolbar("open")
         .addCommand2Toolbar("hello")
         .addCommand2Toolbar("ok")
+        .addCommand2Toolbar("lockView")
+        .addCommand2Toolbar("lockCommand")
   }
 
   // commands
 
   @Command({
       i18n: 'shell:open',
-      icon: "open",
+      icon: "forward",
   })
   open() {
     this.openDialog({
@@ -77,7 +76,7 @@ export class HomeComponent extends WithExtensions(WithView(WithDialogs(WithSnack
 
   @Command({
     i18n: 'shell:ok',
-    icon: "revert"
+    icon: "help"
   })
   ok() {
     this.confirmationDialog()
@@ -88,4 +87,26 @@ export class HomeComponent extends WithExtensions(WithView(WithDialogs(WithSnack
         console.log("Dialog result:", result)
       })
   }
+
+   @Command({
+      label: 'Long Running Command',
+      icon: "help",
+      lock: "command"
+    })
+    async lockCommand() {
+        console.log(">")
+        await new Promise(resolve => setTimeout(resolve, 1000));
+         console.log("<")
+    }
+
+    @Command({
+      label: 'Loch View COmmand',
+      icon: "help",
+      lock: "view"
+    })
+    async lockView() {
+        console.log(">")
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        console.log("<")
+    }
 }
