@@ -4,38 +4,24 @@ import { ConfirmationDialogRequest } from "../../ui/elements";
 import { UIHandler } from "../../ui";
 import { MatDialog } from "@angular/material/dialog";
 import { ConfirmationDialog } from "./confirmation-dialog";
-
-export interface DialogListener {
-  openDialog() : void
-  closedDialog() : void
-}
+import { ShortcutManager } from "@ngx/foundation";
 
 @Injectable()
 export class ConfirmationDialogHandler implements UIHandler<ConfirmationDialogRequest> {
   type = ConfirmationDialogRequest;
 
-  // instance data
-
-  private listener: DialogListener[] = []
-
   // constructor
 
-  constructor(private dialog : MatDialog) {}
-
-  // public
-
-  addListener(listener: DialogListener) {
-    this.listener.push(listener)
-  }
+  constructor(private dialog : MatDialog, private shortcutManager: ShortcutManager) {}
 
   // implement
 
   handle(req: ConfirmationDialogRequest): Observable<any> {
+      this.shortcutManager.pushLevel()
       return this.dialog.open(ConfirmationDialog,  { data: req.config })
             .afterClosed()
             .pipe(
-              // call listener
-              tap(() => this.listener.forEach(listener => listener.closedDialog()))
+              tap(() =>  this.shortcutManager.popLevel())
             )
   }
 }
