@@ -30,7 +30,6 @@ export class TestDialogComponent extends WithCommands(AbstractFeature, {inheritC
     return "world"
   }
 
-
   @Command({
     i18n: 'shell:ok',
   })

@@ -59,6 +59,7 @@ import { environment } from '../environments/environment';
 import { SampleAuthentication } from './security/sample-authentication';
 import { SampleAuthorization } from './security/sample-authorization';
 import { ShellRouterModule } from './shell-router.module';
+import { ExtensionModule } from './extension';
 
 
 @Shell(LIBRARY_METADATA)
@@ -67,6 +68,8 @@ import { ShellRouterModule } from './shell-router.module';
   imports: [
     BrowserModule,
     ShellRouterModule,
+
+    ExtensionModule,
 
     // configuration
 

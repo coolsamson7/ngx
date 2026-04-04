@@ -4,6 +4,8 @@ import { TranslatePipe } from '@ngx/i18n';
 import { AbstractFeature, Feature } from '@ngx/portal';
 import { WithDialogs, WithSnackbar } from '@ngx/ui';
 import { TestDialogComponent } from './test-dialog';
+import { WithExtensions } from '../extension/with-extensions';
+import { SampleExtensionPoint } from '../extension/sample.extension';
 
 
 const a = TestDialogComponent
@@ -19,11 +21,22 @@ const a = TestDialogComponent
   styleUrls: ['./home.component.scss'],
   imports: [TranslatePipe],
 })
-export class HomeComponent extends WithDialogs(WithSnackbar(WithCommands(AbstractFeature, {inheritCommands: false}))) {
+export class HomeComponent extends WithExtensions(WithDialogs(WithSnackbar(WithCommands(AbstractFeature, {inheritCommands: false})))) {
+  extensionPoint! : SampleExtensionPoint 
+
   // constructor
 
   constructor(injector: Injector) {
     super(injector);
+
+    this.addExtensionPoint(this.extensionPoint = new SampleExtensionPoint()).addMenu("home")
+
+    // TEST
+
+    this.extend()
+
+    for ( const menu of this.extensionPoint.menus)
+      console.log(menu)
   }
 
   // commands
