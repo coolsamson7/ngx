@@ -2,13 +2,18 @@
   "name": "my-shell",
   "type": "shell",
   "version": "0.0.1",
-  "commitHash": "747db45b311257eda7d1a63b369cd671983586ee",
+  "commitHash": "b3e13b78812ce8397538da79af2e2c4bd69fcc64",
   "module": "ShellModule",
   "features": [
     {
       "id": "test-dialog",
       "label": "test-dialog",
       "component": "TestDialogComponent"
+    },
+    {
+      "id": "about-dialog",
+      "label": "about-dialog",
+      "component": "AboutDialog"
     },
     {
       "id": "home",

@@ -2,9 +2,7 @@ import { ExtensionRegistry } from './extension-registry';
 import { ExtensionModule } from "./extension.module";
 
 /**
- * register the formatter under the given name.
- * @param type the name
- * @constructor
+ * register the extension.
  */
 export const Extension = () : ClassDecorator => {
     return (type : any) => {

@@ -5,6 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { TestDialogComponent } from './home/test-dialog';
 
+import { AboutDialog } from './about/about.dialog';
+
 import { HomeComponent } from './home/home.component';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -18,6 +20,11 @@ export const localRoutes: Routes = [
   {
     path: 'test-dialog',
     component: TestDialogComponent,
+    children: [],
+  },
+  {
+    path: 'about-dialog',
+    component: AboutDialog,
     children: [],
   },
   {
