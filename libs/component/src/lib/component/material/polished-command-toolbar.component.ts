@@ -118,7 +118,7 @@ class ToolbarCommandMenuElement extends ToolbarElement {
 /* --- Button Global Fixes --- */
 .pct-bar .mdc-button {
     font-family: inherit !important;
-    font-weight: 500 !important;
+    font-weight: 400 !important;
     color: var(--mat-sys-on-surface-variant) !important;
     --mdc-text-button-label-text-color: var(--mat-sys-on-surface-variant);
 }
@@ -146,6 +146,7 @@ class ToolbarCommandMenuElement extends ToolbarElement {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center; 
     flex: 1;
 }
 
@@ -156,7 +157,12 @@ class ToolbarCommandMenuElement extends ToolbarElement {
     padding: 0 12px !important;
     border-radius: 8px !important;
 }
-.pct-btn-top .pct-btn-stack { flex-direction: column; gap: 4px; }
+.pct-btn-top .pct-btn-stack { 
+    flex-direction: column; 
+    gap: 6px; 
+    align-items: center; /* horizontal center */
+    justify-content: center;
+}
 .pct-btn-top .pct-label { font-size: 11px; }
 
 /* --- Left Mode (Pill) --- */
@@ -191,7 +197,7 @@ class ToolbarCommandMenuElement extends ToolbarElement {
 
 /* --- Visuals --- */
 .pct-icon { width: 20px; height: 20px; display: block; }
-.pct-label { line-height: 1; font-weight: 500; }
+.pct-label { line-height: 1; font-weight: 400; }
 
 /* --- Menu --- */
 .pct-dropdown-panel.mat-mdc-menu-panel { min-width: 140px !important; }
