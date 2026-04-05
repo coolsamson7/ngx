@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-material-button',
   template: `
-    <button mat-button (click)="clicked.emit()" [disabled]="disabled">
+    <button mat-button (click)="clicked.emit()" [disabled]="disabled" [color]="color">
       {{ label }}
     </button>
   `,
@@ -13,6 +13,9 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [MatButtonModule]
 })
 export class MaterialButtonComponent implements Button {
+  @Input() appearance: 'icon' | 'text' | 'icon-text' = 'text';
+  @Input() color: 'primary' | 'accent' = 'primary';
+
   @Input() label!: string;
   @Input() disabled = false;
 

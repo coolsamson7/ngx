@@ -1,10 +1,12 @@
-import { Component, Injector } from '@angular/core';
-import { Command, ViewComponent, WithCommands, WithView } from '@ngx/foundation';
+import { Component, Injector, ViewChild } from '@angular/core';
+import { Command, ViewComponent, WithCommands, WithCommandToolbar, WithView } from '@ngx/foundation';
 import { TranslatePipe } from '@ngx/i18n';
 import { AbstractFeature, Feature } from '@ngx/portal';
-import { CommandToolbarComponent, IconComponent, WithCommandToolbar, WithDialogs, WithSnackbar } from '@ngx/ui';
+import { WithDialogs, WithSnackbar } from '@ngx/ui';
+import { CommandToolbarComponent } from '@ngx/component';
 import { WithExtensions } from '../extension/with-extensions';
 import { SampleExtensionPoint } from '../extension/sample.extension';
+import { ButtonComponent } from '@ngx/component';
 
 @Feature({
   id: 'home',
@@ -15,10 +17,11 @@ import { SampleExtensionPoint } from '../extension/sample.extension';
   selector: 'home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  imports: [TranslatePipe, CommandToolbarComponent, ViewComponent, IconComponent],
+  imports: [TranslatePipe, CommandToolbarComponent, ViewComponent, ButtonComponent],
 })
 export class HomeComponent extends WithExtensions(WithView(WithDialogs(WithSnackbar(WithCommandToolbar(WithCommands(AbstractFeature, {inheritCommands: false})))))) {
   extensionPoint! : SampleExtensionPoint
+  @ViewChild(CommandToolbarComponent) override commandToolbar? : CommandToolbarComponent // TODO?????
 
   // constructor
 
@@ -44,6 +47,7 @@ export class HomeComponent extends WithExtensions(WithView(WithDialogs(WithSnack
         .addCommand2Toolbar("ok")
         .addCommand2Toolbar("lockView")
         .addCommand2Toolbar("lockCommand")
+        .addCommand2Toolbar("throwError")
   }
 
   // commands
@@ -89,24 +93,28 @@ export class HomeComponent extends WithExtensions(WithView(WithDialogs(WithSnack
   }
 
    @Command({
-      label: 'Long Running Command',
+      label: 'Lock Command',
       icon: "help",
       lock: "command"
     })
     async lockCommand() {
-        console.log(">")
         await new Promise(resolve => setTimeout(resolve, 1000));
-         console.log("<")
     }
 
     @Command({
-      label: 'Loch View COmmand',
+      label: 'Lock View',
       icon: "help",
       lock: "view"
     })
     async lockView() {
-        console.log(">")
         await new Promise(resolve => setTimeout(resolve, 1000));
-        console.log("<")
+    }
+
+    @Command({
+      label: 'Error',
+      icon: "help"
+    })
+    async throwError() {
+       throw new Error("ouch")
     }
 }

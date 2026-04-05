@@ -7,8 +7,9 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 
 import { CommandMenuButtonComponent } from "./command-menu-button.component";
 import { CommandDescriptor } from "@ngx/foundation";
-import { ToolbarCommandConfig } from "./with-command-toolbar.mixin";
+
 import { CommandButtonComponent } from "./command-button.component";
+import { CommandToolbar, ToolbarCommandConfig } from "../../components";
 
 // either a single command or a menu with commands
 
@@ -25,7 +26,7 @@ abstract class ToolbarElement {
 
   // constructor
 
-  constructor(protected toolbar: CommandToolbarComponent, public name: string, protected parent?: ToolbarElement) {}
+  constructor(protected toolbar: MaterialCommandToolbarComponent, public name: string, protected parent?: ToolbarElement) {}
 
   // public
 
@@ -59,7 +60,7 @@ class ToolbarCommandMenuElement extends ToolbarElement {
 
   // constructor
 
-  constructor(toolbar: CommandToolbarComponent, command: CommandDescriptor, private config: ToolbarCommandConfig, parent?: ToolbarCommandMenuElement) {
+  constructor(toolbar: MaterialCommandToolbarComponent, command: CommandDescriptor, private config: ToolbarCommandConfig, parent?: ToolbarCommandMenuElement) {
     super(toolbar, config.menu!, parent)
 
     if ( !config.icon) {
@@ -95,7 +96,7 @@ class ToolbarCommandElement extends ToolbarElement {
 
   // constructor
 
-  constructor(toolbar: CommandToolbarComponent, public command: CommandDescriptor, parent?: ToolbarElement) {
+  constructor(toolbar: MaterialCommandToolbarComponent, public command: CommandDescriptor, parent?: ToolbarElement) {
     super(toolbar, command.name, parent)
 
     this.type = "command"
@@ -103,7 +104,7 @@ class ToolbarCommandElement extends ToolbarElement {
 }
 
 @Component({
-    selector: 'command-toolbar',
+    selector: 'material-command-toolbar',
     templateUrl: './command-toolbar.component.html',
     //styleUrls: ['./command-toolbar.component.scss'],
     standalone: true,
@@ -125,7 +126,7 @@ class ToolbarCommandElement extends ToolbarElement {
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class CommandToolbarComponent {
+export class MaterialCommandToolbarComponent implements CommandToolbar {
   // input
 
   @Input() label = false

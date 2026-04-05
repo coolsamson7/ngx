@@ -9,7 +9,7 @@ export interface Button {
 }
 
 @Component({
-  selector: 'app-button',
+  selector: 'ngx-button',
   template: `<ng-container #vc></ng-container>`,
   standalone: true
 })

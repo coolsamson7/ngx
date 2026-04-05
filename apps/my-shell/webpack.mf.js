@@ -28,6 +28,8 @@ dts: false,
       '@ngx/foundation',
       '@ngx/portal',
       '@ngx/i18n',
+      '@ngx/ui',
+      '@ngx/component',
       '@ngx/security',
     ];
 

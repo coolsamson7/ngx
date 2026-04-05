@@ -27,6 +27,8 @@ const mfCOnfig = withModuleFederation({
       '@ngx/portal',
       '@ngx/i18n',
       '@ngx/security',
+      '@ngx/ui',
+      '@ngx/component',
     ];
 
     const isSingleton = singletonLibs.some(

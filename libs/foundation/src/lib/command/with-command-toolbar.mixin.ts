@@ -1,7 +1,7 @@
 import { GConstructor ,registerMixins, hasMixin } from "@ngx/common";
 
 import { Component, ViewChild} from "@angular/core";
-import { CommandToolbarComponent } from "./command-toolbar.component";
+import { CommandToolbarComponent } from "@ngx/component";
 import { CommandManager } from "@ngx/foundation";
 import { AbstractFeature } from "@ngx/portal";
 

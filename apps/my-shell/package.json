@@ -16,6 +16,7 @@
     "@angular/core": "^19.0.0",
 
     "@ngx/common": "workspace:*",
+    "@ngx/component": "workspace:*",
     "@ngx/communication": "workspace:*",
     "@ngx/i18n": "workspace:*",
     "@ngx/portal": "workspace:*",

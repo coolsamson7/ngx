@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, Injector, NgModule, DoBootstrap } from '@angular/core';
+import { APP_INITIALIZER, Injector, NgModule, DoBootstrap, Injectable } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import {LIBRARY_METADATA} from './package-meta';
@@ -7,35 +7,22 @@ import { completeIconSet } from './icons/generated/my-icons';
 
 import { localRoutes } from './local.routes';
 
-import { CommandModule } from "@ngx/foundation"
+import { AbstractCommandInterceptor, CommandErrorInterceptor, CommandModule, ExecutionContext } from "@ngx/foundation"
+
+import { ComponentModule, MaterialButtonComponent, MaterialCommandToolbarComponent } from "@ngx/component";
 
 import {
   CanActivateGuard,
   CanDeactivateGuard,
 
   PortalModule,
-  
-  //ServerTranslationLoader,
+
   Shell,
 
   Manifest,
 } from '@ngx/portal';
 
-import {
-  AbstractModule,
- 
-
-  ConsoleTrace,
-
-  TraceLevel,
-  TracerModule,
-  ConfigurationModule,
-  ValueConfigurationSource,
-  getLibraryProviders,
-  createLibraries,
-  ModuleRegistry,
-  AbstractPackage,
-} from '@ngx/common';
+import * as common from '@ngx/common';
 
 import {
   SecurityModule,
@@ -62,7 +49,48 @@ import { SampleAuthentication } from './security/sample-authentication';
 import { SampleAuthorization } from './security/sample-authorization';
 import { ShellRouterModule } from './shell-router.module';
 import { ExtensionModule } from './extension';
+import { ErrorModule } from '@ngx/common';
 
+@Injectable({ providedIn: 'root' })
+export class TraceCommandInterceptor extends AbstractCommandInterceptor {
+  // implement CommandInterceptor
+
+  /**
+   * @inheritdoc
+   */
+  override onCall(executionContext: ExecutionContext): void {
+    console.log("> " + executionContext.command.name)
+  }
+
+  /**
+   * @inheritdoc
+   */
+  override onResult(executionContext: ExecutionContext): void {
+     console.log("< " + executionContext.command.name)
+  }
+
+  /**
+   * @inheritdoc
+   */
+  override onError(executionContext: ExecutionContext): void {
+     console.log("x " + executionContext.command.name)
+  }
+}
+
+@Injectable({ providedIn: 'root' })
+export class ApplicationErrorHandler {
+  // constructor
+
+  constructor() {
+  }
+
+  // handler
+
+  @common.ErrorHandler()
+  handleAnyError(e: any, context: common.ErrorContext) {
+    console.log(e)
+  }
+}
 
 @Shell(LIBRARY_METADATA)
 @NgModule({
@@ -73,9 +101,17 @@ import { ExtensionModule } from './extension';
 
     ExtensionModule,
 
+    // handleAnyError
+
+    ErrorModule.forRoot({
+        handler: [
+          ApplicationErrorHandler
+        ]
+    }),
+
     // configuration
 
-    ConfigurationModule.forRoot(new ValueConfigurationSource(environment)),
+    common.ConfigurationModule.forRoot(new common.ValueConfigurationSource(environment)),
 
     // authentication & authorization
 
@@ -86,12 +122,12 @@ import { ExtensionModule } from './extension';
 
     // tracing
 
-    TracerModule.forRoot({
+    common.TracerModule.forRoot({
       enabled: !environment.production,
-      trace: new ConsoleTrace('%d [%p]: %m %f\n'), // d(ate), l(evel), p(ath), m(message), f(rame)
+      trace: new common.ConsoleTrace('%d [%p]: %m %f\n'), // d(ate), l(evel), p(ath), m(message), f(rame)
       paths: {
-        feature: TraceLevel.FULL,
-        portal: TraceLevel.FULL,
+        feature: common.TraceLevel.FULL,
+        portal: common.TraceLevel.FULL,
       },
     }),
 
@@ -114,7 +150,26 @@ import { ExtensionModule } from './extension';
     // commands
 
     CommandModule.forRoot({
-        interceptors: []
+        interceptors: [
+          TraceCommandInterceptor,
+          CommandErrorInterceptor
+        ]
+    }),
+
+    // components
+
+    ComponentModule.forRoot({
+      button: {
+          type: MaterialButtonComponent,
+          options: {
+              appearance: "icon",
+              color: "primary"
+          }
+      },
+      "command-toolbar": {
+          type: MaterialCommandToolbarComponent,
+          options: {}
+      }
     }),
 
     // ui
@@ -149,13 +204,13 @@ import { ExtensionModule } from './extension';
         multi: true,
       },
 
-    ...getLibraryProviders(),
+    ...common.getLibraryProviders(),
     {
       provide: APP_INITIALIZER,
       useFactory: (injector: Injector) => () => {
-        createLibraries(injector)
+        common.createLibraries(injector)
 
-        injector.get(ModuleRegistry).report()
+        injector.get(common.ModuleRegistry).report()
       },
       deps: [Injector],
       multi: true,
@@ -163,11 +218,11 @@ import { ExtensionModule } from './extension';
   ],
 
 })
-export class ShellModule extends AbstractPackage implements DoBootstrap {
+export class ShellModule extends common.AbstractPackage implements DoBootstrap {
   constructor(injector: Injector) {
     super(injector);
 
-    injector.get(ModuleRegistry).report()
+    injector.get(common.ModuleRegistry).report()
   }
 
   ngDoBootstrap() {

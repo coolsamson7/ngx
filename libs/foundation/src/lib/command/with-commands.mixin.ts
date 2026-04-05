@@ -253,11 +253,6 @@ export function WithCommands<T extends Constructor<AbstractFeature>>(base: T, co
                     translations = translations[prefix]
 
                     if ( translations ) {
-                        // clear old values that only make sense in the context of i18n
-                        // TODO: these are??
-
-                        ["speech"].forEach(name => (<any>commandConfig)[name] = undefined)
-
                         // set new values
 
                         Object.getOwnPropertyNames(translations).forEach(name => {
@@ -270,7 +265,6 @@ export function WithCommands<T extends Constructor<AbstractFeature>>(base: T, co
                                 break;
 
                                 default:
-
                             } // switch
                     })
                     }
