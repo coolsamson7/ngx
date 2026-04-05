@@ -2,7 +2,7 @@
   "name": "my-shell",
   "type": "shell",
   "version": "0.0.1",
-  "commitHash": "b3e13b78812ce8397538da79af2e2c4bd69fcc64",
+  "commitHash": "578269a31b4b4068552ba621723adbed4bccae84",
   "module": "ShellModule",
   "features": [
     {
@@ -16,11 +16,27 @@
       "component": "AboutDialog"
     },
     {
+      "id": "crud-preferences",
+      "label": "crud-preferences",
+      "component": "SampleCrudPreferencesComponent",
+      "tags": ["preferences"]
+    },
+    {
       "id": "home",
       "label": "home",
-      "i18n": ["shell", "portal"],
       "component": "HomeComponent",
       "isDefault": true
+    },
+    {
+      "id": "preferences-1",
+      "label": "preferences-1",
+      "component": "SamplePreferencesComponent",
+      "tags": ["preferences"]
+    },
+    {
+      "id": "preferences-dialog",
+      "label": "preferences-dialog",
+      "component": "PreferencesDialog"
     },
     {
       "id": "private-portal",

@@ -1,0 +1,12 @@
+<!-- sample-preference.html -->
+<div class="preferences-page">
+    <div class="field">
+        <label for="name">Name</label>
+        <input id="name" type="text" [(ngModel)]="name" (ngModelChange)="setDirty()" />
+    </div>
+
+    <div class="field">
+        <label for="surname">Surname</label>
+        <input id="surname" type="text" [(ngModel)]="surname" (ngModelChange)="setDirty()" />
+    </div>
+</div>

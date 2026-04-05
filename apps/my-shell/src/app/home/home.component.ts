@@ -48,6 +48,7 @@ export class HomeComponent extends WithExtensions(WithView(WithDialogs(WithSnack
         .addCommand2Toolbar("lockView", {menu: "more", icon: "help", tooltip: "Lock", label: "Lock" })
         .addCommand2Toolbar("lockCommand", {menu: "more", icon: "help", tooltip: "Lock", label: "Lock" })
         .addCommand2Toolbar("throwError")
+        .addCommand2Toolbar("openPreferences")
   }
 
   // commands
@@ -106,6 +107,20 @@ export class HomeComponent extends WithExtensions(WithView(WithDialogs(WithSnack
     })
     async lockView() {
         await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+
+ @Command({
+      label: 'Preferences',
+      lock: "view"
+    })
+    async openPreferences() {
+          this.openDialog({
+              title: "Preferences",
+              dialog: "preferences-dialog",
+              buttons: ["ok", "cancel"]
+            }).subscribe(result => {
+              console.log("Dialog result:", result)
+            });
     }
 
     @Command({

@@ -1,0 +1,43 @@
+/* preferences-dialog.scss */
+.preferences-dialog {
+  display: flex;
+  height: 100%;
+  min-height: 480px;
+
+  &__nav {
+    width: 200px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--border-color);
+    padding: 8px 0;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      padding: 10px 16px;
+      cursor: pointer;
+      border-radius: 4px;
+      margin: 2px 8px;
+      color: var(--text-secondary);
+
+      &:hover {
+        background: var(--hover-bg);
+      }
+
+      &.active {
+        background: var(--primary-light);
+        color: var(--primary);
+        font-weight: 500;
+      }
+    }
+  }
+
+  &__content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+  }
+}

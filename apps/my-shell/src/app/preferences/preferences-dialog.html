@@ -1,0 +1,22 @@
+<!-- preferences-dialog.html -->
+<div class="preferences-dialog">
+
+    <!-- Left: page list -->
+    <nav class="preferences-dialog__nav">
+        <ul>
+            @for (page of pages; track page.id) {
+            <li
+                    [class.active]="page === selectedPage"
+                    (click)="selectFeature(page)">
+                {{ page.label }}
+            </li>
+            }
+        </ul>
+    </nav>
+
+    <!-- Right: selected page -->
+    <main class="preferences-dialog__content">
+        <feature-outlet [feature]="selectedPage.id" />
+    </main>
+
+</div>
