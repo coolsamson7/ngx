@@ -10,7 +10,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { FeatureOutletDirective } from "@ngx/portal"; // adjust if needed
 import { CommandAdministration, CommandDescriptor, ExecutionContext } from "@ngx/foundation";
-import type { OpenDialogConfig } from "../../ui";
+import { VetoError, type OpenDialogConfig } from "../../ui";
 import { TranslatePipe } from "@ngx/i18n";
 
 @Component({
@@ -78,7 +78,7 @@ export class FeatureDialogComponent {
 
       command.addListener({
         onCall(context: ExecutionContext) {
-         /* nothin to see */
+         /* nothin' to see */
         },
 
         onResult(context: ExecutionContext) {
@@ -86,6 +86,9 @@ export class FeatureDialogComponent {
         },
 
         onError(context: ExecutionContext) {
+          if (context.error instanceof VetoError)
+             return; // stay open
+
           dialogRef.close(context.error); // is that right?
         }
       });

@@ -3,7 +3,7 @@ import { Command, WithCommands } from "@ngx/foundation";
 import { AbstractFeature, Feature, FeatureData, FeatureRegistry, FeatureOutletDirective } from "@ngx/portal";
 
 import { AbstractPreferencesPage } from "./preferences-feature";
-import { WithDialogs } from "@ngx/ui";
+import { VetoError, WithDialogs } from "@ngx/ui";
 import { firstValueFrom } from "rxjs";
 import { NgFor } from "@angular/common";
 
@@ -77,15 +77,18 @@ export class PreferencesDialog extends WithDialogs(WithCommands(AbstractFeature)
       i18n: 'shell:ok',
     })
     async ok() {
-      if (this.selectedPageFeature?.isDirty()) {
-          await this.selectedPageFeature.save();
-      }
+      const proceed = await this.checkDirty();
+      
+      if (!proceed) 
+        throw new VetoError();
+
+      return "ok"
     }
 
     @Command({
       i18n: 'shell:cancel',
     })
     cancel() {
-      return "ok"
+      return "cancel"
     }
 }

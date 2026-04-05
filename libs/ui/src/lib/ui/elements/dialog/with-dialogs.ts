@@ -5,6 +5,10 @@ import { ConfirmationDialogBuilder, OpenDialogConfig, OpenDialogRequest } from "
 import { AbstractFeature } from "@ngx/portal";
 import { Observable } from "rxjs";
 
+export class VetoError {
+  readonly isVeto = true;
+}
+
 export interface Dialogs {
   confirmationDialog() : ConfirmationDialogBuilder
 
