@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { OpenDialogRequest, UIHandler } from "../../ui";
 import { MatDialog } from "@angular/material/dialog";
 import { FeatureDialogComponent } from "./feature-dialog";
-import { tap } from "rxjs";
+import { take, tap } from "rxjs";
 import { ShortcutManager } from "@ngx/foundation";
 
 @Injectable()
@@ -16,6 +16,7 @@ export class OpenDialogHandler implements UIHandler<OpenDialogRequest> {
      return this.dialog.open(FeatureDialogComponent,  { data: req.config })
                 .afterClosed()
                 .pipe(
+                  take(1),
                   // call listener
                   tap(() => this.shortcutManager.popLevel())
                 )

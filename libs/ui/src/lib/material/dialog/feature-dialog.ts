@@ -95,7 +95,7 @@ export class FeatureDialogComponent {
     }
   }
 
-  onClick(command: CommandDescriptor) {command.run()
+  onClick(command: CommandDescriptor) {
     command.run(this.instance);
   }
 }

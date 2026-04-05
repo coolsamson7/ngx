@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Observable, tap } from "rxjs";
+import { Observable, take, tap } from "rxjs";
 import { ConfirmationDialogRequest } from "../../ui/elements";
 import { UIHandler } from "../../ui";
 import { MatDialog } from "@angular/material/dialog";
@@ -21,6 +21,7 @@ export class ConfirmationDialogHandler implements UIHandler<ConfirmationDialogRe
       return this.dialog.open(ConfirmationDialog,  { data: req.config })
             .afterClosed()
             .pipe(
+              take(1),
               tap(() =>  this.shortcutManager.popLevel())
             )
   }

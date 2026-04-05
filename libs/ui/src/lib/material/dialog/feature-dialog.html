@@ -10,6 +10,7 @@
 <mat-dialog-actions align="end">
     <button mat-button mat-raised-button *ngFor="let command of commands" (click)="onClick(command)"
             [color]="isDefault(command) ? 'primary' : 'basic'"
+            [disabled]="!command.enabled"
             [matTooltip]="tooltip(command)">
         {{command.label || (command.i18n! | translate)}}
     </button>

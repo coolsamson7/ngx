@@ -31,30 +31,39 @@ export class PreferencesDialog extends WithDialogs(WithCommands(AbstractFeature)
 
         this.pages = featureRegistry.finder().withTag("preferences").find();
         this.selectedPage = this.pages[0]
+
+        this.updateCommandState();
     }
 
     // private
 
     private async checkDirty(): Promise<boolean> {
-          if (!this.selectedPageFeature?.isDirty())
-            return true;
+        if (!this.selectedPageFeature?.isDirty())
+          return true;
 
-          const confirmed = await firstValueFrom(
-            this.confirmationDialog()
-              .title("Unsaved Changes")
-              .message("You have unsaved changes. Do you want to save them?")
-              .okCancel()
-              .show()
-          );
+        const choice = await firstValueFrom(
+          this.confirmationDialog()
+            .title("Unsaved Changes")
+            .message("You have unsaved changes. \nDo you want to save them?")
+            .button({ label: "Save", result: "save" })
+            .button({ label: "Discard", result: "discard" })
+            .button({ label: "Cancel", result: "cancel" })
+            .show()
+        );
 
-          if (confirmed) {
-            await this.selectedPageFeature!.save();  // works whether save() is sync or async Promise
-          }
+        if (choice === "save") {
+          await this.selectedPageFeature!.save();  // works whether save() is sync or async Promise
+          return true
+        }
 
-          return confirmed;
-      }
+        return choice === "discard";
+    }
 
     // callbacks
+
+    setDirty(dirty: boolean = false) {
+      this.updateCommandState();
+    }
 
     async selectFeature(feature: FeatureData) {
       if (feature === this.selectedPage) return;
@@ -69,6 +78,14 @@ export class PreferencesDialog extends WithDialogs(WithCommands(AbstractFeature)
 
     selectPage(page: AbstractPreferencesPage) {
       this.selectedPageFeature = page
+    }
+
+    // override
+
+    updateCommandState() {
+      this.setCommandEnabled("ok", true)
+      this.setCommandEnabled("cancel", true)
+      this.setCommandEnabled("apply", this.selectedPageFeature?.isDirty() ?? false)
     }
 
     // commands
@@ -90,5 +107,13 @@ export class PreferencesDialog extends WithDialogs(WithCommands(AbstractFeature)
     })
     cancel() {
       return "cancel"
+    }
+
+    @Command({ i18n: 'shell:apply' })
+    async apply() {
+      if (this.selectedPageFeature?.isDirty())
+        await this.selectedPageFeature.save();
+
+      throw new VetoError(); // stay open
     }
 }

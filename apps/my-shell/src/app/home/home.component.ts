@@ -117,7 +117,7 @@ export class HomeComponent extends WithExtensions(WithView(WithDialogs(WithSnack
           this.openDialog({
               title: "Preferences",
               dialog: "preferences-dialog",
-              buttons: ["ok", "cancel"]
+              buttons: ["ok", "apply", "cancel"]
             }).subscribe(result => {
               console.log("Dialog result:", result)
             });
