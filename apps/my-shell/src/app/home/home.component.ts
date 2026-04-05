@@ -45,8 +45,8 @@ export class HomeComponent extends WithExtensions(WithView(WithDialogs(WithSnack
         .addCommand2Toolbar("open")
         .addCommand2Toolbar("hello")
         .addCommand2Toolbar("ok")
-        .addCommand2Toolbar("lockView")
-        .addCommand2Toolbar("lockCommand")
+        .addCommand2Toolbar("lockView", {menu: "more", icon: "help", tooltip: "Lock", label: "Lock" })
+        .addCommand2Toolbar("lockCommand", {menu: "more", icon: "help", tooltip: "Lock", label: "Lock" })
         .addCommand2Toolbar("throwError")
   }
 
@@ -93,8 +93,7 @@ export class HomeComponent extends WithExtensions(WithView(WithDialogs(WithSnack
   }
 
    @Command({
-      label: 'Lock Command',
-      icon: "help",
+      label: 'Command',
       lock: "command"
     })
     async lockCommand() {
@@ -102,8 +101,7 @@ export class HomeComponent extends WithExtensions(WithView(WithDialogs(WithSnack
     }
 
     @Command({
-      label: 'Lock View',
-      icon: "help",
+      label: 'View',
       lock: "view"
     })
     async lockView() {

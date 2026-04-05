@@ -10,7 +10,6 @@ export interface ToolbarCommandConfig { // TODO
 }
 
 export interface CommandToolbar {
-  label: boolean;
   addCommand(command: CommandDescriptor, config : ToolbarCommandConfig) : () => void
 }
 

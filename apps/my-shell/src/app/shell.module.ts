@@ -171,7 +171,7 @@ export class ApplicationErrorHandler {
           options: {
               style:             'tray',    // 'tray' | 'pill' | 'compact'
               iconPosition:      'top',     // 'top'  | 'left' | 'none'
-              labelMode:         'tooltip',    // 'show' | 'hide' | 'tooltip'
+              labelMode:         'show',    // 'show' | 'hide' | 'tooltip'
               shortcutInTooltip: true
           }
       }
