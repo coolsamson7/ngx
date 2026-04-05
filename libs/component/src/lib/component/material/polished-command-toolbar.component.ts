@@ -16,26 +16,11 @@ import { CommandToolbar, ToolbarCommandConfig } from "../components";
 import { IconComponent } from "@ngx/ui";
 
 // ---------------------------------------------------------------------------
-// Options
-// ---------------------------------------------------------------------------
-
-export type ToolbarStyle = 'tray' | 'pill' | 'compact';
-export type IconPosition = 'top' | 'left' | 'none';
-export type LabelMode    = 'show' | 'hide' | 'tooltip';
-
-export interface PolishedToolbarOptions {
-    style?:             ToolbarStyle;
-    iconPosition?:      IconPosition;
-    labelMode?:         LabelMode;
-    shortcutInTooltip?: boolean;
-}
-
-// ---------------------------------------------------------------------------
-// Internal element model
+// Internal element models
 // ---------------------------------------------------------------------------
 
 abstract class ToolbarElement {
-    abstract type: 'command' | 'menu';
+    type: 'command' | 'menu' = 'command';
     abstract get icon():     string;
     abstract get tooltip():  string;
     abstract get label():    string;
@@ -49,201 +34,185 @@ abstract class ToolbarElement {
 
     revert() {
         const i = this.toolbar.elements.indexOf(this);
-        if (this.parent)
-            this.toolbar.elements[i] = this.parent;
-        else
-            this.toolbar.elements.splice(i, 1);
+        if (this.parent) this.toolbar.elements[i] = this.parent;
+        else this.toolbar.elements.splice(i, 1);
         this.toolbar['cdr'].markForCheck();
     }
 }
 
 class ToolbarCommandElement extends ToolbarElement {
-    override type: 'command' = 'command';
     override get icon()     { return this.command.icon    ?? ''; }
     override get label()    { return this.command.label   ?? ''; }
     override get tooltip()  { return this.command.tooltip ?? ''; }
     override get shortcut() { return this.command.shortcut; }
 
-    constructor(
-        toolbar: PolishedCommandToolbarComponent,
-        public command: CommandDescriptor,
-        parent?: ToolbarElement
-    ) {
+    constructor(toolbar: PolishedCommandToolbarComponent, public command: CommandDescriptor, parent?: ToolbarElement) {
         super(toolbar, command.name, parent);
+        this.type = 'command';
     }
 }
 
 class ToolbarCommandMenuElement extends ToolbarElement {
-    override type: 'menu' = 'menu';
     commands: CommandDescriptor[] = [];
-
     override get icon()     { return this.config.icon    ?? ''; }
-    override get label()    { return this.config.label   ?? (this.name ?? ''); }
+    override get label()    { return this.config.label   ?? this.name; }
     override get tooltip()  { return this.config.tooltip ?? this.label; }
     override get shortcut() { return undefined; }
 
-    constructor(
-        toolbar: PolishedCommandToolbarComponent,
-        command: CommandDescriptor,
-        private config: ToolbarCommandConfig,
-        existingMenu?: ToolbarCommandMenuElement
-    ) {
-        // Use config.menu (e.g., "XY") as the name/ID for grouping
-        super(toolbar, config.menu!, existingMenu);
-
-        if (!config.icon)  this.config.icon  = existingMenu ? existingMenu.icon  : command.icon;
-
-        if (existingMenu) {
-            this.commands = [...existingMenu.commands, command];
-        } else {
-            this.commands = [command];
-        }
+    constructor(toolbar: PolishedCommandToolbarComponent, command: CommandDescriptor, private config: ToolbarCommandConfig, parent?: ToolbarCommandMenuElement) {
+        super(toolbar, config.menu!, parent);
+        this.type = 'menu';
+        if (parent) this.commands.push(...parent.commands);
+        this.commands.push(command);
     }
 }
-
-// ---------------------------------------------------------------------------
-// Component
-// ---------------------------------------------------------------------------
 
 @Component({
     selector: 'polished-command-toolbar',
     standalone: true,
-    imports: [
-        CommonModule,
-        MatButtonModule,
-        MatIconModule,
-        MatTooltipModule,
-        MatMenuModule,
-        IconComponent
-    ],
+    imports: [CommonModule, MatButtonModule, MatIconModule, MatTooltipModule, MatMenuModule, IconComponent],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
 <div class="pct-bar" [ngClass]="barClass">
-
   <ng-container *ngFor="let el of elements; trackBy: trackByName">
 
-    <ng-container *ngIf="el.type === 'command'">
-      <ng-container *ngTemplateOutlet="cmdBtn; context: { $implicit: asCommand(el) }"/>
-    </ng-container>
-
-    <ng-container *ngIf="el.type === 'menu'">
-      <button mat-button
-        [matMenuTriggerFor]="menu"
-        [ngClass]="[btnClass, 'pct-menu-trigger']"
-        [matTooltip]="el.tooltip"
-        matTooltipPosition="below">
-
-        <div class="pct-btn-content">
-            <ng-container *ngTemplateOutlet="iconTpl; context: { icon: el.icon }"/>
-            <span *ngIf="opts.labelMode === 'show'" class="pct-label">{{ el.label }}</span>
-            <mat-icon class="pct-dropdown-arrow">arrow_drop_down</mat-icon>
+    <button mat-button
+      [ngClass]="[btnClass, el.type === 'menu' ? 'pct-menu-trigger' : '']"
+      [disabled]="el.type === 'command' ? !asCommand(el).command.enabled : false"
+      (click)="el.type === 'command' ? asCommand(el).command.run() : null"
+      [matMenuTriggerFor]="el.type === 'menu' ? menu : null"
+      [matTooltip]="el.type === 'command' ? cmdTooltip(asCommand(el)) : el.tooltip"
+      matTooltipPosition="below">
+      
+      <div class="pct-btn-body">
+        <div class="pct-btn-stack">
+          <svg-icon *ngIf="el.icon && opts.iconPosition !== 'none'" [name]="el.icon" class="pct-icon"></svg-icon>
+          <span *ngIf="opts.labelMode === 'show'" class="pct-label">{{ el.label }}</span>
         </div>
-      </button>
 
-      <mat-menu #menu="matMenu" class="pct-custom-menu">
-        <button mat-menu-item
-          *ngFor="let cmd of asMenu(el).commands"
-          [disabled]="!cmd.enabled"
-          (click)="cmd.run()">
-          <svg-icon *ngIf="cmd.icon" [name]="cmd.icon" class="pct-menu-icon"/>
-          <span>{{ cmd.label }}</span>
-          <span *ngIf="cmd.shortcut" class="pct-menu-shortcut">{{ cmd.shortcut }}</span>
-        </button>
-      </mat-menu>
-    </ng-container>
+        <mat-icon *ngIf="el.type === 'menu'" class="pct-arrow">arrow_drop_down</mat-icon>
+      </div>
+
+    </button>
+
+    <mat-menu #menu="matMenu" class="pct-dropdown-panel">
+      <button mat-menu-item 
+        *ngFor="let cmd of (el.type === 'menu' ? asMenu(el).commands : [])"
+        [disabled]="!cmd.enabled"
+        (click)="cmd.run()">
+        <svg-icon *ngIf="cmd.icon" [name]="cmd.icon" class="pct-menu-icon"></svg-icon>
+        <span class="pct-menu-label">{{ cmd.label }}</span>
+        <span *ngIf="cmd.shortcut" class="pct-menu-shortcut">{{ cmd.shortcut }}</span>
+      </button>
+    </mat-menu>
 
   </ng-container>
 </div>
-
-<ng-template #cmdBtn let-el>
-  <button mat-button
-    [ngClass]="btnClass"
-    [disabled]="!el.command.enabled"
-    (click)="el.command.run()"
-    [matTooltip]="cmdTooltip(el)"
-    matTooltipPosition="below">
-    <div class="pct-btn-content">
-        <ng-container *ngTemplateOutlet="iconTpl; context: { icon: el.icon }"/>
-        <span *ngIf="opts.labelMode === 'show'" class="pct-label">{{ el.label }}</span>
-    </div>
-  </button>
-</ng-template>
-
-<ng-template #iconTpl let-icon="icon">
-  <svg-icon *ngIf="icon && opts.iconPosition !== 'none'" [name]="icon" class="pct-icon"/>
-</ng-template>
     `,
     styles: [`
-polished-command-toolbar { display: contents; }
+/* --- Container --- */
+.pct-bar { display: inline-flex; align-items: center; gap: 4px; padding: 4px; }
+.pct-bar.pct-tray { background: var(--mat-sys-surface-container-low); border: 1px solid var(--mat-sys-outline-variant); border-radius: 12px; }
 
-.pct-bar {
-    display:     inline-flex;
-    align-items: center;
-    gap:         2px;
-    padding:     3px 6px;
+/* --- Button Global Fixes --- */
+.pct-bar .mdc-button {
+    font-family: inherit !important;
+    font-weight: 500 !important;
+    color: var(--mat-sys-on-surface-variant) !important;
+    --mdc-text-button-label-text-color: var(--mat-sys-on-surface-variant);
 }
-.pct-bar.pct-tray {
-    background:    var(--mat-sys-surface-container-low);
-    border:        1px solid var(--mat-sys-outline-variant);
-    border-radius: 10px;
-}
+.pct-bar .mdc-button:hover { color: var(--mat-sys-on-surface) !important; }
 
-/* ── Content Wrapper ── */
-.pct-btn-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* Remove the "Blue" and "Bold" defaults */
+.pct-bar .mdc-button__label {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     width: 100%;
     height: 100%;
 }
 
-.pct-btn-top .pct-btn-content { flex-direction: column; gap: 4px; }
-.pct-btn-left .pct-btn-content { flex-direction: row; gap: 6px; }
+/* --- Layout Body --- */
+.pct-btn-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
 
-/* ── Specific Button Styles ── */
+.pct-btn-stack {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+/* --- Top Mode (Tray) --- */
 .pct-btn-top {
     height: 52px;
-    min-width: 64px;
-    padding: 0 8px;
-    font-size: 11px;
+    min-width: 60px;
+    padding: 0 12px !important;
+    border-radius: 8px !important;
 }
+.pct-btn-top .pct-btn-stack { flex-direction: column; gap: 4px; }
+.pct-btn-top .pct-label { font-size: 11px; }
+
+/* --- Left Mode (Pill) --- */
 .pct-btn-left {
     height: 32px;
-    border-radius: 16px;
-    font-size: 13px;
+    padding: 0 16px !important;
+    border-radius: 16px !important;
+    border: 1px solid var(--mat-sys-outline-variant);
+}
+.pct-btn-left .pct-btn-stack { flex-direction: row; gap: 8px; }
+.pct-btn-left .pct-label { font-size: 13px; }
+
+/* --- The Arrow --- */
+.pct-arrow {
+    font-size: 18px !important;
+    width: 18px !important;
+    height: 18px !important;
+    margin: 0 !important;
+    opacity: 0.6;
 }
 
-/* ── Menu Specifics ── */
-.pct-dropdown-arrow {
-    margin-left: -4px;
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-}
-.pct-btn-top .pct-dropdown-arrow {
+/* In Top mode, we want the arrow to the right of the whole stack */
+.pct-btn-top .pct-arrow {
     position: absolute;
-    right: 2px;
+    right: -8px;
     top: 50%;
     transform: translateY(-50%);
 }
 
-.pct-icon { width: 20px; height: 20px; flex-shrink: 0; }
-.pct-menu-icon { width: 18px; height: 18px; margin-right: 8px; }
-.pct-menu-shortcut { margin-left: auto; padding-left: 16px; opacity: 0.6; font-size: 11px; }
+/* In Left mode, we just let it flow after the text */
+.pct-btn-left .pct-arrow { margin-left: 2px !important; }
+
+/* --- Visuals --- */
+.pct-icon { width: 20px; height: 20px; display: block; }
+.pct-label { line-height: 1; font-weight: 500; }
+
+/* --- Menu --- */
+.pct-dropdown-panel.mat-mdc-menu-panel { min-width: 140px !important; }
+.pct-dropdown-panel .mat-mdc-menu-item {
+    height: 36px !important;
+    min-height: 36px !important;
+    font-size: 13px !important;
+    font-family: inherit !important;
+}
     `]
 })
 export class PolishedCommandToolbarComponent implements CommandToolbar {
-    
-    @Input() options: PolishedToolbarOptions = {};
+    @Input() options: any = {};
     elements: ToolbarElement[] = [];
     private cdr = inject(ChangeDetectorRef);
 
-    get opts(): Required<PolishedToolbarOptions> {
+    get opts() {
         return {
-            style:             this.options.style             ?? 'tray',
-            iconPosition:      this.options.iconPosition      ?? 'top',
-            labelMode:         this.options.labelMode         ?? 'show',
+            style: this.options.style ?? 'tray',
+            iconPosition: this.options.iconPosition ?? 'top',
+            labelMode: this.options.labelMode ?? 'show',
             shortcutInTooltip: this.options.shortcutInTooltip ?? true,
         };
     }
@@ -252,7 +221,9 @@ export class PolishedCommandToolbarComponent implements CommandToolbar {
     get btnClass() { return `pct-btn-${this.opts.iconPosition}`; }
 
     cmdTooltip(el: ToolbarCommandElement): string {
-        const parts = [this.opts.labelMode === 'tooltip' ? el.label : (el.tooltip || el.label)];
+        const parts: string[] = [];
+        if (this.opts.labelMode === 'tooltip') parts.push(el.label);
+        else if (el.tooltip) parts.push(el.tooltip);
         if (this.opts.shortcutInTooltip && el.shortcut) parts.push(`(${el.shortcut})`);
         return parts.join(' ');
     }
@@ -262,29 +233,19 @@ export class PolishedCommandToolbarComponent implements CommandToolbar {
     trackByName(_: number, el: ToolbarElement) { return el.name; }
 
     addCommand(command: CommandDescriptor, config: ToolbarCommandConfig): () => void {
-        const name = config.menu || command.name;
+        const name = config.menu ?? command.name;
         const index = this.elements.findIndex(el => el.name === name);
-
         let newElement: ToolbarElement;
 
         if (config.menu) {
-            // Group into menu
             const existing = index >= 0 ? this.elements[index] : undefined;
-            newElement = new ToolbarCommandMenuElement(
-                this,
-                command,
-                config,
-                existing instanceof ToolbarCommandMenuElement ? existing : undefined
-            );
-
-            if (index >= 0) this.elements[index] = newElement;
-            else this.elements.push(newElement);
+            newElement = new ToolbarCommandMenuElement(this, command, config, existing instanceof ToolbarCommandMenuElement ? existing : undefined);
         } else {
-            // Standard command
             newElement = new ToolbarCommandElement(this, command, index >= 0 ? this.elements[index] : undefined);
-            if (index >= 0) this.elements[index] = newElement;
-            else this.elements.push(newElement);
         }
+
+        if (index >= 0) this.elements[index] = newElement;
+        else this.elements.push(newElement);
 
         this.cdr.markForCheck();
         return () => { newElement.revert(); };
