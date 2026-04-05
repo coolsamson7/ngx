@@ -9,7 +9,7 @@ import { localRoutes } from './local.routes';
 
 import { AbstractCommandInterceptor, CommandErrorInterceptor, CommandModule, ExecutionContext } from "@ngx/foundation"
 
-import { ComponentModule, MaterialButtonComponent, MaterialCommandToolbarComponent } from "@ngx/component";
+import { ComponentModule, MaterialButtonComponent, MaterialCommandToolbarComponent, PolishedCommandToolbarComponent } from "@ngx/component";
 
 import {
   CanActivateGuard,
@@ -156,7 +156,7 @@ export class ApplicationErrorHandler {
         ]
     }),
 
-    // components
+    // configure components
 
     ComponentModule.forRoot({
       button: {
@@ -167,12 +167,17 @@ export class ApplicationErrorHandler {
           }
       },
       "command-toolbar": {
-          type: MaterialCommandToolbarComponent,
-          options: {}
+          type: PolishedCommandToolbarComponent,
+          options: {
+              style:             'tray',    // 'tray' | 'pill' | 'compact'
+              iconPosition:      'top',     // 'top'  | 'left' | 'none'
+              labelMode:         'tooltip',    // 'show' | 'hide' | 'tooltip'
+              shortcutInTooltip: true
+          }
       }
     }),
 
-    // ui
+    // ui responsible for dialogs and toasts
 
     MaterialUIModule,
 
