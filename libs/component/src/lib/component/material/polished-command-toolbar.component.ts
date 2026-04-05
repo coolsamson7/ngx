@@ -19,9 +19,9 @@ import { IconComponent } from "@ngx/ui";
 // Options
 // ---------------------------------------------------------------------------
 
-export type ToolbarStyle  = 'tray' | 'pill' | 'compact';
-export type IconPosition  = 'top' | 'left' | 'none';
-export type LabelMode     = 'show' | 'hide' | 'tooltip';
+export type ToolbarStyle = 'tray' | 'pill' | 'compact';
+export type IconPosition = 'top' | 'left' | 'none';
+export type LabelMode    = 'show' | 'hide' | 'tooltip';
 
 export interface PolishedToolbarOptions {
     /** visual style of the bar                    default: 'tray'  */
@@ -131,9 +131,8 @@ class ToolbarCommandMenuElement extends ToolbarElement {
 
     <!-- menu -->
     <ng-container *ngIf="el.type === 'menu'">
-      <button
+      <button mat-button
         [matMenuTriggerFor]="menu"
-        class="pct-btn"
         [ngClass]="btnClass"
         [matTooltip]="menuTooltip(el)"
         matTooltipPosition="below">
@@ -147,7 +146,7 @@ class ToolbarCommandMenuElement extends ToolbarElement {
           [disabled]="!cmd.enabled"
           (click)="cmd.run()">
           <svg-icon *ngIf="cmd.icon" [name]="cmd.icon" class="pct-menu-icon"/>
-          {{ cmd.label }}
+          <span>{{ cmd.label }}</span>
           <span *ngIf="cmd.shortcut" class="pct-menu-shortcut">{{ cmd.shortcut }}</span>
         </button>
       </mat-menu>
@@ -158,8 +157,7 @@ class ToolbarCommandMenuElement extends ToolbarElement {
 
 <!-- command button template -->
 <ng-template #cmdBtn let-el>
-  <button
-    class="pct-btn"
+  <button mat-button
     [ngClass]="btnClass"
     [disabled]="!el.command.enabled"
     (click)="el.command.run()"
@@ -178,98 +176,99 @@ class ToolbarCommandMenuElement extends ToolbarElement {
     styles: [`
 polished-command-toolbar { display: contents; }
 
+/* ── bar ── */
 .pct-bar {
     display:     inline-flex;
     align-items: center;
     gap:         2px;
     padding:     3px 6px;
 }
-
 .pct-bar.pct-tray {
-    background:    var(--mat-sys-surface-variant, rgba(0,0,0,.04));
-    border:        0.5px solid var(--mat-sys-outline-variant, rgba(0,0,0,.1));
+    background:    var(--mat-sys-surface-container-low);
+    border:        1px solid var(--mat-sys-outline-variant);
     border-radius: 10px;
     padding:       4px 6px;
 }
-.pct-bar.pct-pill    { gap: 4px; }
-.pct-bar.pct-compact { gap: 1px; }
+.pct-bar.pct-pill    { gap: 6px; }
+.pct-bar.pct-compact { gap: 0; }
 
-/* button base */
-.pct-btn {
-    all:             unset;
-    box-sizing:      border-box;
-    display:         inline-flex;
-    align-items:     center;
-    justify-content: center;
-    cursor:          pointer;
-    white-space:     nowrap;
-    color:           var(--mat-sys-on-surface-variant, rgba(0,0,0,.6));
-    transition:      background 0.12s, color 0.12s, border-color 0.12s;
-}
-.pct-btn:disabled      { opacity: 0.38; pointer-events: none; }
-.pct-btn:focus-visible { outline: 2px solid var(--mat-sys-primary); outline-offset: 2px; }
-
-/* icon on top */
-.pct-btn.pct-icon-top {
+/* ── override mat-button's internal label wrapper ── */
+/* this is the key fix for icon-top: the MDC label is a flex row by default */
+.pct-btn-top .mdc-button__label {
+    display:        flex;
     flex-direction: column;
-    gap:            3px;
-    padding:        6px 10px;
-    border-radius:  8px;
-    min-width:      48px;
-    font-size:      11px;
-    line-height:    1;
+    align-items:    center;
+    gap:            4px;
 }
-.pct-btn.pct-icon-top:hover {
-    background: var(--mat-sys-surface, white);
-    color:      var(--mat-sys-on-surface, black);
-}
-
-/* icon on left (pill) */
-.pct-btn.pct-icon-left {
+.pct-btn-left .mdc-button__label {
+    display:        flex;
     flex-direction: row;
+    align-items:    center;
     gap:            6px;
-    padding:        0 14px;
-    height:         32px;
-    border:         0.5px solid var(--mat-sys-outline-variant, rgba(0,0,0,.2));
-    border-radius:  999px;
-    font-size:      12px;
-    line-height:    1;
-    background:     var(--mat-sys-surface, white);
 }
-.pct-btn.pct-icon-left:hover {
-    color:        var(--mat-sys-on-surface, black);
-    border-color: var(--mat-sys-outline, rgba(0,0,0,.4));
-}
-
-/* icon hidden */
-.pct-btn.pct-icon-none {
+.pct-btn-none .mdc-button__label {
+    display:        flex;
     flex-direction: row;
-    gap:            0;
-    padding:        5px 8px;
-    border-radius:  6px;
-    font-size:      11px;
-    line-height:    1;
-    min-width:      44px;
-    color:          var(--mat-sys-on-surface-variant, rgba(0,0,0,.45));
-}
-.pct-btn.pct-icon-none:hover {
-    background: var(--mat-sys-surface-variant, rgba(0,0,0,.04));
-    color:      var(--mat-sys-on-surface-variant, rgba(0,0,0,.6));
+    align-items:    center;
 }
 
-.pct-icon  { width: 16px; height: 16px; display: block; flex-shrink: 0; }
-.pct-label { line-height: 1; }
+/* ── icon-top style ── */
+.pct-btn-top {
+    height:      52px;
+    min-width:   56px;
+    padding:     0 8px;
+    border-radius: 8px;
+    font-size:   12px;
+    line-height: 1;
+    letter-spacing: 0;
+    color: var(--mat-sys-on-surface-variant);
+}
+.pct-btn-top:hover { color: var(--mat-sys-on-surface); }
 
+/* ── pill (icon-left) style ── */
+.pct-btn-left {
+    height:        32px;
+    padding:       0 16px 0 12px;
+    border-radius: 999px;
+    border:        1px solid var(--mat-sys-outline-variant);
+    font-size:     13px;
+    letter-spacing: 0.01em;
+    color: var(--mat-sys-on-surface-variant);
+}
+.pct-btn-left:hover {
+    border-color: var(--mat-sys-outline);
+    color:        var(--mat-sys-on-surface);
+}
+
+/* ── compact (icon-none / label-only) style ── */
+.pct-btn-none {
+    height:        36px;
+    padding:       0 12px;
+    border-radius: 6px;
+    font-size:     13px;
+    letter-spacing: 0.01em;
+    color: var(--mat-sys-on-surface-variant);
+}
+.pct-btn-none:hover { color: var(--mat-sys-on-surface); }
+
+/* ── icon ── */
+.pct-icon { width: 18px; height: 18px; display: block; flex-shrink: 0; }
+
+/* ── label ── */
+.pct-label { line-height: 1.2; }
+
+/* ── separator ── */
 .pct-sep {
-    width:       0.5px;
+    width:       1px;
     height:      24px;
-    background:  var(--mat-sys-outline-variant, rgba(0,0,0,.1));
+    background:  var(--mat-sys-outline-variant);
     margin:      0 4px;
     flex-shrink: 0;
 }
 
-.pct-menu-icon     { width: 16px; height: 16px; margin-right: 8px; vertical-align: middle; }
-.pct-menu-shortcut { margin-left: auto; padding-left: 24px; font-size: 11px; opacity: 0.5; }
+/* ── menu items ── */
+.pct-menu-icon     { width: 18px; height: 18px; margin-right: 8px; vertical-align: middle; }
+.pct-menu-shortcut { margin-left: auto; padding-left: 24px; font-size: 12px; color: var(--mat-sys-on-surface-variant); }
     `]
 })
 export class PolishedCommandToolbarComponent implements CommandToolbar {
@@ -294,8 +293,9 @@ export class PolishedCommandToolbarComponent implements CommandToolbar {
         return `pct-${this.opts.style}`;
     }
 
+    /** Drives both the host class and the mdc-button__label flex direction */
     get btnClass(): string {
-        return `pct-icon-${this.opts.iconPosition}`;
+        return `pct-btn-${this.opts.iconPosition}`;
     }
 
     cmdTooltip(el: ToolbarCommandElement): string {
