@@ -5,7 +5,7 @@ import { AbstractPreferencesPage } from "../preferences-feature";
 import { FormsModule } from "@angular/forms";
 
 @Feature({
-  id: 'preferences-1',
+  id: 'sample-crud-preferences',
   tags: ["preferences"]
 })
 @Component({

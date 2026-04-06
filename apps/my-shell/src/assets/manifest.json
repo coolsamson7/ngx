@@ -2,7 +2,7 @@
   "name": "my-shell",
   "type": "shell",
   "version": "0.0.1",
-  "commitHash": "578269a31b4b4068552ba621723adbed4bccae84",
+  "commitHash": "a46c239356f7cadae04b6d1a32af502e7de112f4",
   "module": "ShellModule",
   "features": [
     {
@@ -16,22 +16,17 @@
       "component": "AboutDialog"
     },
     {
-      "id": "crud-preferences",
-      "label": "crud-preferences",
-      "component": "SampleCrudPreferencesComponent",
-      "tags": ["preferences"]
+      "id": "feature-browser",
+      "label": "Feature Browser",
+      "component": "InspectorPageComponent",
+      "tags": ["navigation"],
+      "visibility": ["public", "private"]
     },
     {
       "id": "home",
       "label": "home",
       "component": "HomeComponent",
       "isDefault": true
-    },
-    {
-      "id": "preferences-1",
-      "label": "preferences-1",
-      "component": "SamplePreferencesComponent",
-      "tags": ["preferences"]
     },
     {
       "id": "preferences-dialog",
@@ -60,6 +55,18 @@
       "tags": ["portal"],
       "visibility": ["public"],
       "module": "PublicPortalModule"
+    },
+    {
+      "id": "sample-crud-preferences",
+      "label": "sample-crud-preferences",
+      "component": "SampleCrudPreferencesComponent",
+      "tags": ["preferences"]
+    },
+    {
+      "id": "sample-preferences",
+      "label": "sample-preferences",
+      "component": "SamplePreferencesComponent",
+      "tags": ["preferences"]
     },
     {
       "id": "**",

@@ -7,13 +7,15 @@ import { TestDialogComponent } from './home/test-dialog';
 
 import { AboutDialog } from './about/about.dialog';
 
-import { SampleCrudPreferencesComponent } from './preferences/sample/sample-crud-preference';
+import { InspectorPageComponent } from './feature-browser/feature-browser.component';
 
 import { HomeComponent } from './home/home.component';
 
-import { SamplePreferencesComponent } from './preferences/sample/sample-preference';
-
 import { PreferencesDialog } from './preferences/preferences-dialog';
+
+import { SampleCrudPreferencesComponent } from './preferences/sample/sample-crud-preference';
+
+import { SamplePreferencesComponent } from './preferences/sample/sample-preference';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
@@ -34,18 +36,13 @@ export const localRoutes: Routes = [
     children: [],
   },
   {
-    path: 'crud-preferences',
-    component: SampleCrudPreferencesComponent,
+    path: 'feature-browser',
+    component: InspectorPageComponent,
     children: [],
   },
   {
     path: 'home',
     component: HomeComponent,
-    children: [],
-  },
-  {
-    path: 'preferences-1',
-    component: SamplePreferencesComponent,
     children: [],
   },
   {
@@ -66,6 +63,16 @@ export const localRoutes: Routes = [
       import('./public-portal/public-portal.module').then(
         (m) => m.PublicPortalModule,
       ),
+  },
+  {
+    path: 'sample-crud-preferences',
+    component: SampleCrudPreferencesComponent,
+    children: [],
+  },
+  {
+    path: 'sample-preferences',
+    component: SamplePreferencesComponent,
+    children: [],
   },
 
   {

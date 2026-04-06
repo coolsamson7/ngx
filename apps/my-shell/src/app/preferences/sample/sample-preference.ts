@@ -6,7 +6,7 @@ import { ModuleMetadata, ModuleRegistry } from "@ngx/common";
 
 
 @Feature({
-  id: 'preferences-1',
+  id: 'sample-preferences',
   tags: ["preferences"]
 })
 @Component({
