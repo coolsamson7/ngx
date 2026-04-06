@@ -1,9 +1,9 @@
 import { Component, Injector, ViewChild } from '@angular/core';
-import { Command, ViewComponent, WithCommands, WithCommandToolbar, WithView } from '@ngx/foundation';
+import { Command, ViewComponent, WithCommands, WithView } from '@ngx/foundation';
 import { TranslatePipe } from '@ngx/i18n';
 import { AbstractFeature, Feature } from '@ngx/portal';
 import { WithDialogs, WithSnackbar } from '@ngx/ui';
-import { CommandToolbarComponent } from '@ngx/component';
+import { CommandToolbarComponent, WithCommandToolbar } from '@ngx/component';
 import { WithExtensions } from '../extension/with-extensions';
 import { SampleExtensionPoint } from '../extension/sample.extension';
 import { ButtonComponent } from '@ngx/component';

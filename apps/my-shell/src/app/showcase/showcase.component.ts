@@ -4,12 +4,13 @@ import {
     OnInit,
     OnDestroy,
     ChangeDetectionStrategy,
-    ChangeDetectorRef
+    ChangeDetectorRef,
+    Injector
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router, NavigationEnd, RouterOutlet } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
-import { Feature, FeatureRegistry } from '@ngx/portal';
+import { AbstractFeature, Feature, FeatureRegistry } from '@ngx/portal';
 import { ShowcaseRegistry } from './showcase-registry';
 import type { ShowcaseAsset } from '@ngx/portal';
 
@@ -38,7 +39,7 @@ export type ViewMode  = 'preview' | 'split' | 'code';
     styleUrls:       ['./showcase.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ShowcasePageComponent implements OnInit, OnDestroy {
+export class ShowcasePageComponent extends AbstractFeature implements OnInit, OnDestroy {
 
     private featureRegistry  = inject(FeatureRegistry);
     private showcaseRegistry = inject(ShowcaseRegistry);
@@ -52,6 +53,12 @@ export class ShowcasePageComponent implements OnInit, OnDestroy {
     view:       ViewMode  = 'split';
     activeTab:  ActiveTab = 'preview';
     urlContents: Record<number, string> = {};
+
+
+    constructor(injector: Injector) {
+        super(injector);
+    }
+    
 
     // ── derived ──
 
@@ -125,7 +132,9 @@ export class ShowcasePageComponent implements OnInit, OnDestroy {
 
     // ── lifecycle ──
 
-    ngOnInit(): void {
+    override ngOnInit(): void {
+        super.ngOnInit();
+
         this.routerSub = this.router.events
             .pipe(filter(e => e instanceof NavigationEnd))
             .subscribe(() => {
@@ -138,7 +147,9 @@ export class ShowcasePageComponent implements OnInit, OnDestroy {
         this.loadUrlAssets();
     }
 
-    ngOnDestroy(): void {
+    override ngOnDestroy(): void {
+        super.ngOnDestroy();
+
         this.routerSub?.unsubscribe();
     }
 
@@ -170,7 +181,7 @@ export class ShowcasePageComponent implements OnInit, OnDestroy {
     // ── interactions ──
 
     navigate(path: string): void {
-        this.router.navigate(['/showcases', path]);
+        this.router.navigate(path.split('.'));
     }
 
     setView(view: ViewMode): void {

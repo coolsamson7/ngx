@@ -1,13 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { DelegatingComponent } from '../delegating-component';
 import { CommandDescriptor } from '@ngx/foundation';
+import { ToolbarCommandConfig } from '../../with-command-toolbar.mixin';
 
-export interface ToolbarCommandConfig { // TODO 
+/*export interface ToolbarCommandConfig { // TODO
   menu?: string,
   icon?: string,
   label?: string,
   tooltip?: string
-}
+}*/
 
 export interface CommandToolbar {
   addCommand(command: CommandDescriptor, config : ToolbarCommandConfig) : () => void

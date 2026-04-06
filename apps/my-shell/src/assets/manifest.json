@@ -2,7 +2,7 @@
   "name": "my-shell",
   "type": "shell",
   "version": "0.0.1",
-  "commitHash": "e91cac633e069b5d227aa5d7ba43b645212b69b9",
+  "commitHash": "af1dd6a370e055c151402e661382ecf4daba16b3",
   "module": "ShellModule",
   "features": [
     {

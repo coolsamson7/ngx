@@ -7,6 +7,7 @@ export class ShowcaseRegistry {
     private featureRegistry = inject(FeatureRegistry);
 
     async startup(): Promise<void> {
+        console.log("ShowcaseRegistry starting up...");
         const showcases = this.featureRegistry.finder().withTag('showcase').find();
 
         for (const showcase of showcases) {
@@ -28,12 +29,15 @@ export class ShowcaseRegistry {
     }
 
     private async loadFile(filename: string): Promise<string | undefined> {
-        try {
-            const mod = await import(`./showcases/${filename}?raw`);
-            return mod.default ?? mod;
-        } catch {
+       try {
+        const res = await fetch(`assets/showcases/${filename}`);
+        if (!res.ok) 
             return undefined;
-        }
+
+        return await res.text();   // ✅ THIS is the important part
+    } catch {
+        return undefined;
+    }
     }
 
     private async loadSourceFile(manifestPath: string): Promise<string | undefined> {

@@ -8,5 +8,6 @@ export * from "./collections"
 export * from "./configuration"
 export * from "./message-bus"
 export * from "./error"
+export * from "./shortcuts"
 
 import "./package"

@@ -1,9 +1,11 @@
 import { GConstructor ,registerMixins, hasMixin } from "@ngx/common";
 
 import { Component, ViewChild} from "@angular/core";
-import { CommandToolbarComponent } from "@ngx/component";
+
 import { CommandManager } from "@ngx/foundation";
 import { AbstractFeature } from "@ngx/portal";
+import { CommandToolbarComponent } from "./component/components/command-toolbar.component";
+
 
 export interface ToolbarCommandConfig {
   menu?: string,

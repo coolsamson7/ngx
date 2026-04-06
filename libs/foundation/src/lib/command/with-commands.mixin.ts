@@ -8,10 +8,10 @@ import { CommandDescriptor } from "./command-descriptor";
 import { CommandFactory } from "./command-factory";
 import { CommandInterceptor } from "./command-interceptor";
 import { Command } from "./command.decorator";
-import { CommandManager } from "./command-manager";
+import { CommandAdministration, CommandFilter, CommandManager } from "./command-manager";
 import { ExecutionContext } from "./execution-context";
 import { CommandError } from "./command-error";
-import { ShortcutManager } from "../shortcuts";
+import { ShortcutManager } from "@ngx/common";
 import { LocaleManager, OnLocaleChange } from "@ngx/i18n";
 import { Observable, of } from "rxjs";
 import { Translator } from "@ngx/i18n";
@@ -27,32 +27,6 @@ export interface WithCommandsConfig {
     inheritCommands: boolean
 }
 
-/**
- * a <code>CommandFilter</code> controls, what commands are returned by the method getCommands
- */
-export interface CommandFilter {
-    /**
-     * if <code>true</code> inherited commands are returned as well
-     */
-    inherited?: boolean;
-    /**
-     * an optional group of commands
-     */
-    group?: string;
-  }
-
-
-export interface CommandAdministration extends CommandManager {
-    getCommands(filter: CommandFilter): CommandDescriptor[]
-
-    currentExecutionContext?: ExecutionContext;
-
-    pendingExecutions(): boolean
-
-    pushExecutionContext(context: ExecutionContext): void
-
-    popExecutionContext(context: ExecutionContext): void
-}
 
 export function WithCommands<T extends Constructor<AbstractFeature>>(base: T, config: WithCommandsConfig = {inheritCommands: false} ) :Constructor<CommandManager & OnLocaleChange> &  T  {
     class WithCommandsClass extends base implements CommandAdministration, OnLocaleChange {

@@ -3,7 +3,7 @@ import { TraceLevel, Tracer } from "@ngx/common";
 import { CommandConfig } from "./command-config";
 import { CommandInterceptor } from "./command-interceptor";
 import { ExecutionContext } from "./execution-context";
-import { CommandAdministration } from "./with-commands.mixin";
+import { CommandAdministration } from "./command-manager";
 
 /**
  * a <code>CommandListener</code> can be used in order to be informed about success or failure of a command execution.

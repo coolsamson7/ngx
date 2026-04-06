@@ -1,5 +1,5 @@
 import { CommandDescriptor } from "./command-descriptor";
-import { CommandAdministration } from "./with-commands.mixin";
+import { CommandAdministration } from "./command-manager";
 
 export class ExecutionContext {
     // instance data

@@ -8,7 +8,7 @@ import { CommandDescriptor, CommandListener, CommandManager, ExecutionContext, W
 import { AbstractFeature } from "@ngx/portal";
 import { hasMixin } from "@ngx/common";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { IconComponent } from "@ngx/ui";
+import { IconComponent } from "../../../icon";
 
 @Component({
     selector: 'command-button',

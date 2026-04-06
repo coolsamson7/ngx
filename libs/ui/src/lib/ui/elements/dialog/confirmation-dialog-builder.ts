@@ -1,7 +1,6 @@
 import { Observable } from "rxjs";
 import { UIRequest } from "../../ui-request";
 import { UIExecutor } from "../../ui-executor";
-import { CommandDescriptor } from "@ngx/foundation";
 
 export interface ButtonConfiguration {
     label?: string

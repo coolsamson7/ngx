@@ -1,6 +1,6 @@
  
 import { Component, HostListener } from '@angular/core';
-import { ShortcutManager } from '@ngx/foundation';
+import { ShortcutManager } from '@ngx/common';
 import { FeatureData, FeatureRegistry, FeatureOutletDirective } from '@ngx/portal';
 import {
   SessionManager,

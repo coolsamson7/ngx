@@ -19,7 +19,7 @@ import { SamplePreferencesComponent } from './preferences/sample/sample-preferen
 
 import { ShowcasePageComponent } from './showcase/showcase.component';
 
-import { SampleShowcaseComponent } from './showcase/sample/sample-showcase.component';
+import { SampleShowcaseComponent } from './showcases/sample/sample-showcase.component';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 

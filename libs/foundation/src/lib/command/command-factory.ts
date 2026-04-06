@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import { CommandConfig } from './command-config';
 import { Injectable, InjectFlags, Injector } from '@angular/core';
 import { TraceLevel, Tracer } from '@ngx/common';
@@ -6,7 +5,7 @@ import { CommandDescriptor } from './command-descriptor';
 import { CommandConfigToken } from './command.module';
 import { AbstractCommandInterceptor, CommandInterceptor } from './command-interceptor';
 import { ExecutionContext } from './execution-context';
-import { CommandAdministration } from './with-commands.mixin';
+import { CommandAdministration } from './command-manager';
 
 /**
  * this interceptor is there to set and restore the current execution context

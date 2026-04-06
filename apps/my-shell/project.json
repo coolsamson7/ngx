@@ -36,6 +36,11 @@
           },
           {
             "glob": "**/*",
+            "input": "apps/my-shell/src/app/showcases",
+            "output": "assets/showcases"
+          },
+          {
+            "glob": "**/*",
             "input": "apps/my-shell/public"
           }
         ],

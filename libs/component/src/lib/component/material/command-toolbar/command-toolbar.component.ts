@@ -9,7 +9,8 @@ import { CommandMenuButtonComponent } from "./command-menu-button.component";
 import { CommandDescriptor } from "@ngx/foundation";
 
 import { CommandButtonComponent } from "./command-button.component";
-import { CommandToolbar, ToolbarCommandConfig } from "../../components";
+import { CommandToolbar } from "../../components";
+import { ToolbarCommandConfig } from "../../../with-command-toolbar.mixin";
 
 // either a single command or a menu with commands
 

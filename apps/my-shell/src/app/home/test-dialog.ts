@@ -1,8 +1,6 @@
 import { Component, Injector } from '@angular/core';
 import { Command, WithCommands } from '@ngx/foundation';
-import { TranslatePipe } from '@ngx/i18n';
 import { AbstractFeature, Feature } from '@ngx/portal';
-import { WithDialogs, WithSnackbar } from '@ngx/ui';
 
 @Feature({
   id: 'test-dialog',

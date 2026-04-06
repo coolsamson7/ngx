@@ -4,7 +4,8 @@ import { ConfirmationDialogRequest } from "../../ui/elements";
 import { UIHandler } from "../../ui";
 import { MatDialog } from "@angular/material/dialog";
 import { ConfirmationDialog } from "./confirmation-dialog";
-import { ShortcutManager } from "@ngx/foundation";
+import { ShortcutManager } from "@ngx/common";
+
 
 @Injectable()
 export class ConfirmationDialogHandler implements UIHandler<ConfirmationDialogRequest> {

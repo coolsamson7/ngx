@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { Feature } from '@ngx/portal';
-import { MarkdownToHtmlPipe } from '../markdown.pipe';
+import { Component, Injector } from '@angular/core';
+import { AbstractFeature, Feature } from '@ngx/portal';
+//import { MarkdownToHtmlPipe } from '../markdown.pipe';
 
 @Feature({
   id: "sample-showcase",
@@ -36,5 +36,8 @@ import { MarkdownToHtmlPipe } from '../markdown.pipe';
     templateUrl:     './sample-showcase.component.html',
     styleUrls:       ['./sample-showcase.component.scss'],
 })
-export class SampleShowcaseComponent {
+export class SampleShowcaseComponent extends AbstractFeature {
+  constructor(injector: Injector) {
+    super(injector);
+  }
 }

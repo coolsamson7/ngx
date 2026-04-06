@@ -3,7 +3,8 @@ import { OpenDialogRequest, UIHandler } from "../../ui";
 import { MatDialog } from "@angular/material/dialog";
 import { FeatureDialogComponent } from "./feature-dialog";
 import { take, tap } from "rxjs";
-import { ShortcutManager } from "@ngx/foundation";
+import { ShortcutManager } from "@ngx/common";
+
 
 @Injectable()
 export class OpenDialogHandler implements UIHandler<OpenDialogRequest> {

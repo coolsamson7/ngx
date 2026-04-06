@@ -12,8 +12,11 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { CommandDescriptor } from "@ngx/foundation";
-import { CommandToolbar, ToolbarCommandConfig } from "../components";
-import { IconComponent } from "@ngx/ui";
+
+
+import {CommandToolbar} from "../components";
+import { ToolbarCommandConfig } from "../../with-command-toolbar.mixin";
+import { IconComponent } from "../../icon";
 
 // ---------------------------------------------------------------------------
 // Internal element models

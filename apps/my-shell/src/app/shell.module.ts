@@ -9,7 +9,7 @@ import { localRoutes } from './local.routes';
 
 import { AbstractCommandInterceptor, CommandErrorInterceptor, CommandModule, ExecutionContext } from "@ngx/foundation"
 
-import { ComponentModule, MaterialButtonComponent, MaterialCommandToolbarComponent, PolishedCommandToolbarComponent } from "@ngx/component";
+import { ComponentModule, MaterialButtonComponent, PolishedCommandToolbarComponent } from "@ngx/component";
 
 import {
   CanActivateGuard,
@@ -37,9 +37,12 @@ import {
 } from '@ngx/i18n';
 
 import {
-  IconRegistry,
   MaterialUIModule,
 } from '@ngx/ui';
+
+import {
+  IconRegistry
+} from '@ngx/component';
 
 import { Route } from '@angular/router';
 
@@ -236,7 +239,7 @@ export class FooterTrace extends Trace {
       },
       deps: [Injector],
       multi: true,
-    },
+    }
   ],
 
 })
