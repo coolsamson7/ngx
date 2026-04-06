@@ -10,6 +10,9 @@ import { ButtonComponent } from '@ngx/component';
 
 @Feature({
   id: 'home',
+  label: 'Home',
+  tags: ['navigation'],
+  visibility: ['public', 'private'],
   isDefault: true,
 })
 @Component({
