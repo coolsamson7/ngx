@@ -286,6 +286,14 @@ export class FeatureFinder {
         return this
     }
 
+    withoutParent(): FeatureFinder {
+        this.filter += " without parent "
+
+        this.filters.push((feature) => feature.parent == null);
+
+        return this;
+    }
+
     // public
 
     findOne() : FeatureData {
