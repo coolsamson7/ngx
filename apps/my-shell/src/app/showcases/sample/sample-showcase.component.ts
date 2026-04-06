@@ -14,17 +14,22 @@ import { AbstractFeature, Feature } from '@ngx/portal';
         description: 'A sample',
         group:       'Core',
         order:       1,
-        docs:      'sample-showcase.md',
+        docs:      'sample/sample-showcase.md',
         assets: [
           {
             type:    'ts',
             label:   'Source',
-            path: 'sample-showcase.ts',
+            path: 'sample/sample-showcase.component.ts',
           },
           {
             type:  'html',
-            label: 'HTMP',
-            url:   'sample-showcase.html',
+            label: 'HTML',
+            url:   'sample/sample-showcase.component.html',
+          },
+             {
+            type:  'scss',
+            label: 'SCSS',
+            url:   'sample/sample-showcase.component.scss',
           },
         ]
       }

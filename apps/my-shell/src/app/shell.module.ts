@@ -9,7 +9,7 @@ import { localRoutes } from './local.routes';
 
 import { AbstractCommandInterceptor, CommandErrorInterceptor, CommandModule, ExecutionContext } from "@ngx/foundation"
 
-import { ComponentModule, MaterialButtonComponent, PolishedCommandToolbarComponent } from "@ngx/component";
+import { ComponentModule, IconRegistry, MaterialButtonComponent, MaterialCommandToolbarComponent, PolishedCommandToolbarComponent } from "@ngx/component";
 
 import {
   CanActivateGuard,
@@ -40,10 +40,6 @@ import {
   MaterialUIModule,
 } from '@ngx/ui';
 
-import {
-  IconRegistry
-} from '@ngx/component';
-
 import { Route } from '@angular/router';
 
 import * as localManifest from '../assets/manifest.json';
@@ -54,6 +50,7 @@ import { ShellRouterModule } from './shell-router.module';
 import { ExtensionModule } from './extension';
 import { ErrorModule, Trace, TraceEntry } from '@ngx/common';
 import { BehaviorSubject } from 'rxjs';
+import { ShowcaseRegistry } from './showcase/showcase-registry';
 
 @Injectable({ providedIn: 'root' })
 export class TraceCommandInterceptor extends AbstractCommandInterceptor {
@@ -112,6 +109,10 @@ export class FooterTrace extends Trace {
   }
 }
 
+export function initShowcases(registry: ShowcaseRegistry) {
+  return () => registry.startup(); // must return function
+}
+
 @Shell(LIBRARY_METADATA)
 @NgModule({
   declarations: [],
@@ -161,7 +162,7 @@ export class FooterTrace extends Trace {
     // localization
 
     I18nModule.forRoot({
-      loader: { 
+      loader: {
         type: AssetTranslationLoader,
         path: 'assets/i18n/'
       },
@@ -206,7 +207,7 @@ export class FooterTrace extends Trace {
     PortalModule.forRoot({
       loader: {
         //server: {},
-        local: { 
+        local: {
           remotes: [
             "http://localhost:4201",
           ]
@@ -239,6 +240,12 @@ export class FooterTrace extends Trace {
       },
       deps: [Injector],
       multi: true,
+    },
+     {
+      provide: APP_INITIALIZER,
+      useFactory: initShowcases,
+      deps: [ShowcaseRegistry],
+      multi: true
     }
   ],
 

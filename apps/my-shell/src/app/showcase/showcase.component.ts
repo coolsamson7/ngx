@@ -14,16 +14,8 @@ import { AbstractFeature, Feature, FeatureRegistry } from '@ngx/portal';
 import { ShowcaseRegistry } from './showcase-registry';
 import type { ShowcaseAsset } from '@ngx/portal';
 
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
 export type ActiveTab = 'preview' | 'docs' | number;
 export type ViewMode  = 'preview' | 'split' | 'code';
-
-// ---------------------------------------------------------------------------
-// Component
-// ---------------------------------------------------------------------------
 
 @Feature({
   id: 'showcases',
@@ -49,97 +41,42 @@ export class ShowcasePageComponent extends AbstractFeature implements OnInit, On
     private routerSub?: Subscription;
 
     // ── state ──
-
-    view:       ViewMode  = 'split';
-    activeTab:  ActiveTab = 'preview';
+    showcases: any[] = [];
+    selectedId?: string;
+    selectedShowcase?: any;
+    assets: ShowcaseAsset[] = [];
+    docs?: string;
+    hasDocs = false;
+    selectedLabel = '';
+    selectedDescription?: string;
+    activeAssetIndex: number | null = null;
+    activeAsset: ShowcaseAsset | null = null;
+    showPreview = true;
+    showDocs = false;
+    showCode = true;
+    bodyClass = 'sc-body';
+    noSource = false;
+    view: ViewMode = 'split';
+    activeTab: ActiveTab = 'preview';
     urlContents: Record<number, string> = {};
+    copiedIndex: number | null = null;
 
-
-    constructor(injector: Injector) {
+    constructor(injector: Injector, registry: ShowcaseRegistry) {
         super(injector);
+        registry.startup();
     }
-    
-
-    // ── derived ──
-
-    get showcases() {
-        return this.featureRegistry.finder().withTag('showcase').find();
-    }
-
-    get selectedId(): string | undefined {
-        const segments = this.router.url.split('/');
-        return segments[2] || undefined;
-    }
-
-    get selectedShowcase() {
-        return this.showcases.find(s => s.path === this.selectedId);
-    }
-
-    get assets(): ShowcaseAsset[] {
-        if (!this.selectedShowcase) return [];
-        return this.showcaseRegistry.getAssets(this.selectedShowcase.id, this.featureRegistry);
-    }
-
-    get docs(): string | undefined {
-        if (!this.selectedShowcase) return undefined;
-        return this.showcaseRegistry.getDocs(this.selectedShowcase.id, this.featureRegistry);
-    }
-
-    get hasDocs(): boolean { return !!this.docs; }
-
-    get selectedLabel(): string {
-        return this.selectedShowcase?.showcase?.title
-            || this.selectedShowcase?.label
-            || this.selectedShowcase?.id
-            || '';
-    }
-
-    get selectedDescription(): string | undefined {
-        return this.selectedShowcase?.showcase?.description;
-    }
-
-    get activeAssetIndex(): number | null {
-        if (typeof this.activeTab === 'number') return this.activeTab;
-        return this.assets.length > 0 ? 0 : null;
-    }
-
-    get activeAsset(): ShowcaseAsset | null {
-        return this.activeAssetIndex !== null ? this.assets[this.activeAssetIndex] : null;
-    }
-
-    get showPreview(): boolean {
-        return (this.activeTab === 'preview' || typeof this.activeTab === 'number')
-            && (this.view === 'split' || this.view === 'preview');
-    }
-
-    get showCode(): boolean {
-        return !!this.activeAsset
-            && this.activeTab !== 'docs'
-            && (this.view === 'split' || this.view === 'code');
-    }
-
-    get showDocs(): boolean {
-        return this.activeTab === 'docs' && this.hasDocs;
-    }
-
-    get bodyClass(): string {
-        return this.view === 'code' && !this.showDocs ? 'sc-body code-only' : 'sc-body';
-    }
-
-    get noSource(): boolean {
-        return !this.showDocs && (this.view === 'split' || this.view === 'code') && !this.activeAsset;
-    }
-
-    // ── lifecycle ──
 
     override ngOnInit(): void {
         super.ngOnInit();
+        this.showcases = this.featureRegistry.finder().withTag('showcase').find();
+        this.updateSelected(this.router.url);
 
         this.routerSub = this.router.events
             .pipe(filter(e => e instanceof NavigationEnd))
-            .subscribe(() => {
+            .subscribe((event: any) => {
                 this.activeTab   = 'preview';
                 this.urlContents = {};
+                this.updateSelected(event.urlAfterRedirects || event.url);
                 this.loadUrlAssets();
                 this.cdr.markForCheck();
             });
@@ -149,23 +86,51 @@ export class ShowcasePageComponent extends AbstractFeature implements OnInit, On
 
     override ngOnDestroy(): void {
         super.ngOnDestroy();
-
         this.routerSub?.unsubscribe();
     }
 
-    // ── asset loading ──
+    private updateSelected(url: string) {
+        this.selectedId = url.slice(1).replace("/", '.');
+
+        this.selectedShowcase = this.showcases.find(s => s.path === this.selectedId);
+
+        if (this.selectedShowcase) {
+            this.assets = this.showcaseRegistry.getAssets(this.selectedShowcase.path, this.featureRegistry);
+            this.docs = this.showcaseRegistry.getDocs(this.selectedShowcase.path, this.featureRegistry);
+            this.hasDocs = !!this.docs;
+            this.selectedLabel = this.selectedShowcase.showcase?.title
+                || this.selectedShowcase.label
+                || this.selectedShowcase.id
+                || '';
+            this.selectedDescription = this.selectedShowcase.showcase?.description;
+
+            this.activeAssetIndex = (typeof this.activeTab === 'number')
+                ? this.activeTab
+                : this.assets.length > 0 ? 0 : null;
+            this.activeAsset = this.activeAssetIndex !== null ? this.assets[this.activeAssetIndex] : null;
+
+            this.showPreview = (this.activeTab === 'preview' || typeof this.activeTab === 'number')
+                && (this.view === 'split' || this.view === 'preview');
+            this.showCode = !!this.activeAsset && this.activeTab !== 'docs'
+                && (this.view === 'split' || this.view === 'code');
+            this.showDocs = this.activeTab === 'docs' && this.hasDocs;
+
+            this.bodyClass = this.view === 'code' && !this.showDocs ? 'sc-body code-only' : 'sc-body';
+            this.noSource = !this.showDocs && (this.view === 'split' || this.view === 'code') && !this.activeAsset;
+        }
+    }
 
     private loadUrlAssets(): void {
         this.assets.forEach((asset, i) => {
             if (asset.url && this.urlContents[i] === undefined) {
-                fetch(asset.url)
+                fetch("/assets/showcases/" + asset.url)
                     .then(r => r.text())
                     .then(text => {
-                        this.urlContents = { ...this.urlContents, [i]: text };
+                        this.urlContents[i] = text;
                         this.cdr.markForCheck();
                     })
                     .catch(() => {
-                        this.urlContents = { ...this.urlContents, [i]: `// failed to load ${asset.url}` };
+                        this.urlContents[i] = `// failed to load assets/${asset.url}`;
                         this.cdr.markForCheck();
                     });
             }
@@ -174,11 +139,9 @@ export class ShowcasePageComponent extends AbstractFeature implements OnInit, On
 
     getAssetContent(asset: ShowcaseAsset, index: number): string {
         if (asset.content) return asset.content;
-        if (asset.url)     return this.urlContents[index] ?? 'Loading…';
+        if (asset.url) return this.urlContents[index] ?? 'Loading…';
         return '';
     }
-
-    // ── interactions ──
 
     navigate(path: string): void {
         this.router.navigate(path.split('.'));
@@ -186,11 +149,13 @@ export class ShowcasePageComponent extends AbstractFeature implements OnInit, On
 
     setView(view: ViewMode): void {
         this.view = view;
+        this.updateSelected(this.router.url);
         this.cdr.markForCheck();
     }
 
     setActiveTab(tab: ActiveTab): void {
         this.activeTab = tab;
+        this.updateSelected(this.router.url);
         this.cdr.markForCheck();
     }
 
@@ -204,10 +169,6 @@ export class ShowcasePageComponent extends AbstractFeature implements OnInit, On
 
     trackByIndex(i: number): number { return i; }
     trackById(_: number, s: any): string { return s.id; }
-
-    // ── copy ──
-
-    copiedIndex: number | null = null;
 
     copyContent(content: string, index: number): void {
         navigator.clipboard.writeText(content).then(() => {
