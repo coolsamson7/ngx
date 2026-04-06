@@ -2,7 +2,7 @@
   "name": "my-shell",
   "type": "shell",
   "version": "0.0.1",
-  "commitHash": "a46c239356f7cadae04b6d1a32af502e7de112f4",
+  "commitHash": "e91cac633e069b5d227aa5d7ba43b645212b69b9",
   "module": "ShellModule",
   "features": [
     {
@@ -24,8 +24,10 @@
     },
     {
       "id": "home",
-      "label": "home",
+      "label": "Home",
       "component": "HomeComponent",
+      "tags": ["navigation"],
+      "visibility": ["public", "private"],
       "isDefault": true
     },
     {
@@ -67,6 +69,22 @@
       "label": "sample-preferences",
       "component": "SamplePreferencesComponent",
       "tags": ["preferences"]
+    },
+    {
+      "id": "showcases",
+      "label": "Showcases",
+      "component": "ShowcasePageComponent",
+      "tags": ["navigation"],
+      "visibility": ["public", "private"],
+      "children": [
+        {
+          "id": "sample-showcase",
+          "label": "sample-showcase",
+          "component": "SampleShowcaseComponent",
+          "tags": ["showcase"],
+          "visibility": ["private", "public"]
+        }
+      ]
     },
     {
       "id": "**",

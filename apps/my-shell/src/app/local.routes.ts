@@ -17,6 +17,10 @@ import { SampleCrudPreferencesComponent } from './preferences/sample/sample-crud
 
 import { SamplePreferencesComponent } from './preferences/sample/sample-preference';
 
+import { ShowcasePageComponent } from './showcase/showcase.component';
+
+import { SampleShowcaseComponent } from './showcase/sample/sample-showcase.component';
+
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 export const localRoutes: Routes = [
@@ -73,6 +77,17 @@ export const localRoutes: Routes = [
     path: 'sample-preferences',
     component: SamplePreferencesComponent,
     children: [],
+  },
+  {
+    path: 'showcases',
+    component: ShowcasePageComponent,
+    children: [
+      {
+        path: 'sample-showcase',
+        component: SampleShowcaseComponent,
+        children: [],
+      },
+    ],
   },
 
   {
