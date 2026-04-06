@@ -1,0 +1,173 @@
+<div class="sc-root">
+
+    <!-- ── Sidebar ── -->
+    <aside class="sc-sidebar">
+        <div class="sc-sidebar-header">
+            <div class="sc-logo">
+                <div class="sc-logo-mark">
+                    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="1" y="1" width="10" height="10" rx="2"/>
+                        <path d="M1 4.5h10"/>
+                    </svg>
+                </div>
+                <span class="sc-logo-text">Showcase</span>
+            </div>
+            <span class="sc-badge">{{ showcases.length }} components</span>
+        </div>
+
+        <p class="sc-sidebar-section-label">Components</p>
+
+        <div class="sc-sidebar-list">
+            <div
+                    *ngFor="let s of showcases; trackBy: trackById"
+                    class="sc-item"
+                    [class.active]="s.path === selectedId"
+                    (click)="navigate(s.path!)">
+                <span class="sc-item-dot"></span>
+                {{ s.label || s.id }}
+            </div>
+        </div>
+    </aside>
+
+    <!-- ── Main ── -->
+    <main class="sc-main">
+
+        <!-- ── Topbar ── -->
+        <div class="sc-topbar">
+
+            <!-- Breadcrumb -->
+            <div class="sc-breadcrumb">
+                Showcases
+                <span class="sc-breadcrumb-sep">/</span>
+                <span>{{ selectedLabel || '—' }}</span>
+            </div>
+
+            <!-- Asset tabs -->
+            <div class="sc-asset-tabs" *ngIf="selectedId">
+
+                <button
+                        class="sc-tab-btn"
+                        [class.active]="isTabActive('preview')"
+                        (click)="setActiveTab('preview')">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M1 6s2-4 5-4 5 4 5 4-2 4-5 4-5-4-5-4z" stroke-linejoin="round"/>
+                        <circle cx="6" cy="6" r="1.5"/>
+                    </svg>
+                    Preview
+                </button>
+
+                <button *ngIf="hasDocs"
+                        class="sc-tab-btn"
+                        [class.active]="isTabActive('docs')"
+                        (click)="setActiveTab('docs')">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M2 1h6l3 3v7a1 1 0 01-1 1H2a1 1 0 01-1-1V2a1 1 0 011-1z"/>
+                        <path d="M8 1v3h3M3 6h6M3 8.5h4" stroke-linecap="round"/>
+                    </svg>
+                    Docs
+                </button>
+
+                <button
+                        *ngFor="let asset of assets; let i = index; trackBy: trackByIndex"
+                        class="sc-tab-btn"
+                        [class.active]="isTabActive(i)"
+                        (click)="setActiveTab(i)">
+                    <span class="sc-tab-type">{{ asset.type }}</span>
+                    {{ asset.label }}
+                </button>
+
+            </div>
+
+            <!-- View mode toggle -->
+            <div class="sc-topbar-actions">
+                <button class="sc-tab-btn" [class.active]="view === 'preview'" (click)="setView('preview')" title="Preview only">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M1 6s2-4 5-4 5 4 5 4-2 4-5 4-5-4-5-4z" stroke-linejoin="round"/>
+                        <circle cx="6" cy="6" r="1.5"/>
+                    </svg>
+                </button>
+                <button class="sc-tab-btn" [class.active]="view === 'split'" (click)="setView('split')" title="Split view">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="1" y="1" width="10" height="10" rx="1.5"/>
+                        <path d="M1 6h10"/>
+                    </svg>
+                </button>
+                <button class="sc-tab-btn" [class.active]="view === 'code'" (click)="setView('code')" title="Code only">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M4 3L1 6l3 3M8 3l3 3-3 3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- ── Description bar ── -->
+        <div *ngIf="selectedDescription" class="sc-desc-bar">
+            {{ selectedDescription }}
+        </div>
+
+        <!-- ── Body ── -->
+        <ng-container *ngIf="selectedId; else emptyState">
+            <div [class]="bodyClass">
+
+                <!-- Docs pane docs | markdownToHtml TODO-->
+                <div *ngIf="showDocs" class="sc-docs-pane">
+                    <div [innerHTML]="docs"></div>
+                </div>
+
+                <!-- Live preview -->
+                <div *ngIf="showPreview" class="sc-preview-pane">
+                    <span class="sc-preview-label">Live preview</span>
+                    <div class="sc-preview-inner">
+                        <router-outlet/>
+                    </div>
+                </div>
+
+                <!-- Code pane -->
+                <div *ngIf="showCode && activeAsset" class="sc-code-pane">
+                    <div class="sc-code-toolbar">
+                        <div class="sc-code-toolbar-dots">
+                            <div class="sc-code-dot sc-code-dot-r"></div>
+                            <div class="sc-code-dot sc-code-dot-y"></div>
+                            <div class="sc-code-dot sc-code-dot-g"></div>
+                        </div>
+                        <span class="sc-code-filename">{{ activeAsset.label }}</span>
+                        <span class="sc-code-lang">{{ activeAsset.type.toUpperCase() }}</span>
+                        <button
+                                class="sc-copy-btn"
+                                [class.sc-copy-btn--copied]="copiedIndex === activeAssetIndex"
+                                (click)="copyContent(getAssetContent(activeAsset, activeAssetIndex!), activeAssetIndex!)">
+                            {{ copiedIndex === activeAssetIndex ? 'copied!' : 'copy' }}
+                        </button>
+                    </div>
+                    <div class="sc-code-scroll">
+                        <pre class="sc-code">{{ getAssetContent(activeAsset, activeAssetIndex!) }}</pre>
+                    </div>
+                </div>
+
+                <!-- No source -->
+                <div *ngIf="noSource" class="sc-empty" style="flex:1">
+                    <div class="sc-empty-icon">
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M4 3L1 6l3 3M8 3l3 3-3 3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span>No source available</span>
+                </div>
+
+            </div>
+        </ng-container>
+
+        <ng-template #emptyState>
+            <div class="sc-empty">
+                <div class="sc-empty-icon">
+                    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="1" y="1" width="10" height="10" rx="2"/>
+                        <path d="M1 4.5h10"/>
+                    </svg>
+                </div>
+                <span>Select a component from the sidebar</span>
+            </div>
+        </ng-template>
+
+    </main>
+</div>
