@@ -1,0 +1,29 @@
+.node {
+    padding:       6px 10px;
+    margin-bottom: 4px;
+    border-radius: 6px;
+    cursor:        pointer;
+    background:    #0f172a;
+    border:        1px solid #1e293b;
+    transition:    background 0.12s, border-color 0.12s;
+
+    &--selected {
+        background:   #1e293b;
+        border-color: #6366f1;
+    }
+
+    &__row {
+        display:     flex;
+        align-items: center;
+        gap:         8px;
+    }
+
+    &__badge {
+        font-size:      11px;
+        padding:        2px 6px;
+        border-radius:  999px;
+        color:          #fff;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+}

@@ -1,0 +1,19 @@
+:host {
+    display: block;
+    height:  100%;
+}
+
+.root {
+    display:    flex;
+    height:     100vh;
+    background: #080f1a;
+    color:      #fff;
+}
+
+.pane {
+    padding:    20px;
+    overflow-y: auto;
+
+    &--tree   { width: 50%; }
+    &--detail { width: 50%; border-left: 1px solid #1e293b; }
+}

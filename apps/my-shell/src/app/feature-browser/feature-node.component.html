@@ -1,0 +1,23 @@
+<div [style.marginLeft.px]="depth === 0 ? 0 : 20">
+    <div
+            class="node"
+            [class.node--selected]="isSelected"
+            (click)="toggle()">
+        <div class="node__row">
+            <strong>{{ feature.id }}</strong>
+            <span class="node__badge" [style.background]="vis.color">
+        {{ vis.label }}
+      </span>
+        </div>
+    </div>
+
+    <ng-container *ngIf="hasChildren && open">
+        <feature-node
+                *ngFor="let child of feature.children; trackBy: trackById"
+                [feature]="child"
+                [depth]="depth + 1"
+                [selected]="selected"
+                [onSelect]="onSelect">
+        </feature-node>
+    </ng-container>
+</div>

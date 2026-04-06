@@ -1,0 +1,6 @@
+<div *ngIf="!feature" class="empty">Select a feature</div>
+
+<div *ngIf="feature" class="detail">
+    <h3 class="detail__title">{{ feature.label ?? feature.id }}</h3>
+    <pre class="detail__json">{{ feature | json }}</pre>
+</div>

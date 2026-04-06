@@ -1,0 +1,18 @@
+<div class="root">
+
+    <!-- Tree -->
+    <div class="pane pane--tree">
+        <feature-node
+                *ngFor="let f of roots; trackBy: trackById"
+                [feature]="f"
+                [selected]="selected"
+                [onSelect]="selectFn">
+        </feature-node>
+    </div>
+
+    <!-- Detail -->
+    <div class="pane pane--detail">
+        <feature-detail-panel [feature]="selected"/>
+    </div>
+
+</div>
