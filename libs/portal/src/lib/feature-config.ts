@@ -18,6 +18,38 @@ export type RouterConfig = {
     lazyModule? : string;
 };
 
+export interface ClientConstraints {
+    screenSizes?: Array<string> | null
+    orientation?: Array<string> | null
+    platforms?: Array<string> | null
+    minWidth?: number | null
+    maxWidth?: number | null
+    minHeight?: number | null
+    maxHeight?: number | null
+    capabilities?: Array<string> | null
+}
+
+export interface ShowcaseAsset {
+  type:     'css' | 'scss' | 'ts' | 'tsx' | 'json' | 'md' | 'html'
+  label:    string
+  // relative path from the feature source file — loaded via ?raw at startup
+  path?:     string
+  // populated by ShowcaseRegistry after loading — do not set manually
+  content?: string
+  // for public/ or CDN assets that can't use ?raw — fetched at runtime
+  url?:     string
+}
+
+export interface ShowcaseMeta {
+  title?:       string
+  description?: string
+  group?:       string   // sidebar grouping
+  order?:       number   // sort within group
+  docs?:        string   // raw markdown string — load via path?raw in decorator
+  tags?:        string[]
+  assets?:      ShowcaseAsset[]
+}
+
 /**
  * controls if a feature requires a valid session ( "private" ) or is available before login as well
  */
@@ -102,4 +134,12 @@ export interface FeatureConfig {
      * optional router hints
      */
     router? : RouterConfig
+    /**
+     * client constraints
+    */
+    clients?: ClientConstraints | null;
+    /**
+     * showcase data constraints
+     */
+    showcase?:    ShowcaseMeta
 }
