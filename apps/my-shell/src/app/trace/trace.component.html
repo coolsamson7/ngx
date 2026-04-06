@@ -1,0 +1,147 @@
+
+<!-- ── Slide-out panel ── -->
+<div
+        class="panel"
+        [class.panel--open]="open"
+        [style.height]="panelHeight"
+        [style.transition]="isDragging ? 'none' : 'height 0.28s cubic-bezier(.4,0,.2,1)'">
+
+    <!-- Resize handle -->
+    <div class="resize-handle" (mousedown)="onDragStart($event)"></div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <span class="toolbar__title">Trace</span>
+        <span class="toolbar__divider">|</span>
+
+        <!-- Level filters -->
+        <button
+                *ngFor="let lvl of traceLevels; trackBy: trackByIndex"
+                class="chip"
+                [class.chip--active]="filterLevel === lvl"
+                [style.--chip-color]="levelMeta[lvl].color"
+                [style.--chip-bg]="levelMeta[lvl].bg"
+                [style.opacity]="countForLevel(lvl) === 0 ? 0.35 : 1"
+                (click)="toggleFilterLevel(lvl)">
+            {{ levelMeta[lvl].label }}
+            <span *ngIf="countForLevel(lvl) > 0" class="chip__count">{{ countForLevel(lvl) }}</span>
+        </button>
+
+        <span class="toolbar__divider">|</span>
+
+        <!-- Path filter -->
+        <select class="path-select" [(ngModel)]="filterPath">
+            <option value="">all paths…</option>
+            <option *ngFor="let p of entries | pathList" [value]="p">{{ p }}</option>
+        </select>
+
+        <span class="toolbar__count">{{ visible.length }}/{{ entries.length }}</span>
+
+        <!-- Auto-scroll -->
+        <button
+                class="chip"
+                [class.chip--scroll]="autoScroll"
+                title="Toggle auto-scroll"
+                (click)="toggleAutoScroll()">
+            ↓ scroll
+        </button>
+
+        <!-- Clear -->
+        <button class="chip" (click)="onClear()">clear</button>
+    </div>
+
+    <!-- Split: list + detail -->
+    <div class="body">
+
+        <!-- Entry list -->
+        <div
+                #listEl
+                class="list"
+                (scroll)="onListScroll($event)">
+
+            <div *ngIf="visible.length === 0" class="list__empty">no trace entries</div>
+
+            <div
+                    *ngFor="let entry of visible; let i = index; trackBy: trackByIndex"
+                    class="entry"
+                    [class.entry--selected]="selectedEntry === entry"
+                    (click)="selectEntry(entry)">
+
+                <span class="entry__time">{{ formatTime(entry.timestamp) }}</span>
+
+                <span
+                        class="entry__level"
+                        [style.color]="levelMeta[entry.level].color"
+                        [style.background]="levelMeta[entry.level].bg">
+          {{ levelMeta[entry.level].label }}
+        </span>
+
+                <span class="entry__path" [title]="entry.path">{{ entry.path }}</span>
+
+                <span class="entry__message">{{ entry.message }}</span>
+            </div>
+        </div>
+
+        <!-- Detail panel -->
+        <div *ngIf="selectedEntry" class="detail">
+
+            <div class="detail__header">
+                <span class="detail__title">DETAIL</span>
+                <button class="detail__close" (click)="clearSelected()">✕</button>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-row__label">Level</span>
+                <span [style.color]="levelMeta[selectedEntry.level].color" style="font-weight:700">
+          {{ levelMeta[selectedEntry.level].label }} ({{ selectedEntry.level }})
+        </span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-row__label">Time</span>
+                <span>{{ formatTime(selectedEntry.timestamp) }}</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-row__label">Path</span>
+                <span class="detail-row__path">{{ selectedEntry.path }}</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-row__label">Message</span>
+                <span class="detail-row__value">{{ selectedEntry.message }}</span>
+            </div>
+
+            <ng-container *ngIf="selectedEntry.stackFrame">
+                <div class="detail__section-label">Stack Frame</div>
+                <div
+                        *ngFor="let kv of stackFrameEntries(selectedEntry)"
+                        class="detail-row">
+                    <span class="detail-row__label">{{ kv[0] }}</span>
+                    <span class="detail-row__value">{{ kv[1] }}</span>
+                </div>
+            </ng-container>
+
+        </div>
+    </div>
+</div>
+
+<!-- ── Tab / toggle button ── -->
+<div
+        class="tab"
+        [style.bottom]="tabBottom"
+        [style.transition]="isDragging ? 'none' : 'bottom 0.28s cubic-bezier(.4,0,.2,1)'">
+
+    <button class="tab__btn" [class.tab__btn--open]="open" (click)="toggleOpen()">
+    <span
+            class="tab__dot"
+            [style.background]="lastDot"
+            [style.box-shadow]="lastDotShadow">
+    </span>
+
+        TRACES
+
+        <span *ngIf="entries.length > 0" class="tab__badge">{{ entries.length }}</span>
+        <span class="tab__arrow">{{ open ? '▼' : '▲' }}</span>
+    </button>
+</div>

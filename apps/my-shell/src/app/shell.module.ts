@@ -49,7 +49,8 @@ import { SampleAuthentication } from './security/sample-authentication';
 import { SampleAuthorization } from './security/sample-authorization';
 import { ShellRouterModule } from './shell-router.module';
 import { ExtensionModule } from './extension';
-import { ErrorModule } from '@ngx/common';
+import { ErrorModule, Trace, TraceEntry } from '@ngx/common';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class TraceCommandInterceptor extends AbstractCommandInterceptor {
@@ -92,6 +93,22 @@ export class ApplicationErrorHandler {
   }
 }
 
+export class FooterTrace extends Trace {
+  static entries$ = new BehaviorSubject<TraceEntry[]>([]);
+  
+  // constructor
+
+  constructor(messageFormat: string) {
+    super(new common.TraceFormatter(messageFormat));
+  }
+
+  // implement Trace
+
+  trace(entry: common.TraceEntry): void {
+    FooterTrace.entries$.next([...FooterTrace.entries$.getValue(), entry]);
+  }
+}
+
 @Shell(LIBRARY_METADATA)
 @NgModule({
   declarations: [],
@@ -124,7 +141,7 @@ export class ApplicationErrorHandler {
 
     common.TracerModule.forRoot({
       enabled: !environment.production,
-      trace: new common.ConsoleTrace('%d [%p]: %m %f\n'), // d(ate), l(evel), p(ath), m(message), f(rame)
+      trace: new FooterTrace('%d [%p]: %m %f\n'),//new common.ConsoleTrace('%d [%p]: %m %f\n'), // d(ate), l(evel), p(ath), m(message), f(rame)
       paths: {
         feature: common.TraceLevel.FULL,
         portal: common.TraceLevel.FULL,

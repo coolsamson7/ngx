@@ -1,0 +1,334 @@
+$font:   "'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace";
+$bg:     #0d1117;
+$bg2:    #161b22;
+$border: #21262d;
+$muted:  #30363d;
+$dim:    #484f58;
+$mid:    #6b7280;
+$text:   #8b949e;
+$bright: #c9d1d9;
+$accent: #38bdf8;
+
+:host {
+    display: contents;
+    font-family: #{$font};
+}
+
+// ── Panel ───────────────────────────────────────────────────────────────────
+
+.panel {
+    position:        fixed;
+    bottom:          0;
+    left:            0;
+    right:           0;
+    height:          0;
+    background:      $bg;
+    border-top:      1px solid $border;
+    z-index:         9998;
+    overflow:        hidden;
+    display:         flex;
+    flex-direction:  column;
+    font-family:     #{$font};
+
+    &:not(.panel--open) {
+        border-top: none;
+    }
+}
+
+// ── Resize handle ───────────────────────────────────────────────────────────
+
+.resize-handle {
+    height:      4px;
+    cursor:      ns-resize;
+    background:  transparent;
+    flex-shrink: 0;
+    transition:  background 0.15s;
+
+    &:hover { background: $muted; }
+}
+
+// ── Toolbar ─────────────────────────────────────────────────────────────────
+
+.toolbar {
+    display:         flex;
+    align-items:     center;
+    gap:             8px;
+    padding:         4px 12px;
+    border-bottom:   1px solid $border;
+    flex-shrink:     0;
+    background:      $bg2;
+
+    &__title {
+        color:           $text;
+        font-size:       11px;
+        letter-spacing:  2px;
+        text-transform:  uppercase;
+    }
+
+    &__divider {
+        color:     $muted;
+        font-size: 10px;
+    }
+
+    &__count {
+        color:       $text;
+        font-size:   10px;
+        margin-left: auto;
+    }
+}
+
+// ── Chips ───────────────────────────────────────────────────────────────────
+
+.chip {
+    background:     transparent;
+    border:         1px solid $muted;
+    border-radius:  3px;
+    color:          $mid;
+    font-family:    #{$font};
+    font-size:      10px;
+    padding:        1px 7px;
+    cursor:         pointer;
+    letter-spacing: 0.5px;
+    transition:     background 0.12s, border-color 0.12s, color 0.12s;
+
+    &--active {
+        background:   var(--chip-bg);
+        border-color: var(--chip-color);
+        color:        var(--chip-color);
+    }
+
+    &--scroll {
+        background:   rgba(56, 189, 248, 0.12);
+        border-color: $accent;
+        color:        $accent;
+    }
+
+    &__count {
+        margin-left: 4px;
+        opacity:     0.7;
+    }
+}
+
+// ── Path select ─────────────────────────────────────────────────────────────
+
+.path-select {
+    background:    $bg;
+    border:        1px solid $muted;
+    border-radius: 3px;
+    color:         $bright;
+    font-family:   #{$font};
+    font-size:     11px;
+    padding:       2px 8px;
+    outline:       none;
+    width:         180px;
+    cursor:        pointer;
+
+    &:has(option[value=""]:checked) {
+        color: $dim;
+    }
+}
+
+// ── Body split ──────────────────────────────────────────────────────────────
+
+.body {
+    display:  flex;
+    flex:     1;
+    overflow: hidden;
+}
+
+// ── Entry list ──────────────────────────────────────────────────────────────
+
+.list {
+    flex:       1;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    &__empty {
+        color:       $muted;
+        font-size:   12px;
+        padding:     24px 16px;
+        text-align:  center;
+    }
+
+    &::-webkit-scrollbar       { width: 6px; }
+    &::-webkit-scrollbar-track { background: $bg; }
+    &::-webkit-scrollbar-thumb { background: $muted; border-radius: 3px; }
+}
+
+// ── Entry row ───────────────────────────────────────────────────────────────
+
+.entry {
+    display:               grid;
+    grid-template-columns: 88px 44px minmax(160px, 220px) 1fr;
+    gap:                   0 12px;
+    align-items:           center;
+    padding:               3px 12px;
+    cursor:                pointer;
+    border-left:           2px solid transparent;
+    transition:            background 0.08s;
+
+    &:hover              { background: $bg2; }
+    &--selected          { background: rgba(56, 189, 248, 0.07); border-left-color: $accent; }
+    &--selected:hover    { background: rgba(56, 189, 248, 0.07); }
+
+    &__time {
+        color:          $dim;
+        font-size:      10.5px;
+        letter-spacing: 0.3px;
+    }
+
+    &__level {
+        font-size:      10px;
+        font-weight:    700;
+        letter-spacing: 0.8px;
+        padding:        1px 4px;
+        border-radius:  2px;
+        text-align:     center;
+    }
+
+    &__path {
+        color:         $text;
+        font-size:     11px;
+        overflow:      hidden;
+        text-overflow: ellipsis;
+        white-space:   nowrap;
+    }
+
+    &__message {
+        color:         $bright;
+        font-size:     11.5px;
+        overflow:      hidden;
+        text-overflow: ellipsis;
+        white-space:   nowrap;
+    }
+}
+
+// ── Detail panel ────────────────────────────────────────────────────────────
+
+.detail {
+    width:      320px;
+    flex-shrink: 0;
+    border-left: 1px solid $border;
+    background:  $bg2;
+    overflow-y:  auto;
+    padding:     12px 14px;
+    font-size:   11px;
+    color:       $text;
+
+    &__header {
+        display:         flex;
+        justify-content: space-between;
+        margin-bottom:   12px;
+    }
+
+    &__title {
+        color:          $bright;
+        font-weight:    700;
+        font-size:      11px;
+        letter-spacing: 1px;
+    }
+
+    &__close {
+        background: none;
+        border:     none;
+        color:      $dim;
+        cursor:     pointer;
+        font-size:  14px;
+        padding:    0;
+        line-height: 1;
+
+        &:hover { color: $text; }
+    }
+
+    &__section-label {
+        border-top:     1px solid $border;
+        margin:         10px 0;
+        padding-top:    10px;
+        color:          $mid;
+        font-size:      10px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    &::-webkit-scrollbar       { width: 6px; }
+    &::-webkit-scrollbar-track { background: $bg2; }
+    &::-webkit-scrollbar-thumb { background: $muted; border-radius: 3px; }
+}
+
+// ── Detail row ──────────────────────────────────────────────────────────────
+
+.detail-row {
+    display:     flex;
+    gap:         8px;
+    margin-bottom: 6px;
+    align-items: flex-start;
+
+    &__label {
+        color:       $dim;
+        font-size:   10px;
+        width:       64px;
+        flex-shrink: 0;
+        padding-top: 1px;
+        letter-spacing: 0.3px;
+    }
+
+    &__path {
+        color:      #79c0ff;
+        word-break: break-all;
+    }
+
+    &__value {
+        color:      $bright;
+        word-break: break-all;
+    }
+}
+
+// ── Tab toggle ──────────────────────────────────────────────────────────────
+
+.tab {
+    position:   fixed;
+    bottom:     0;
+    right:      24px;
+    z-index:    9999;
+
+    &__btn {
+        display:     flex;
+        align-items: center;
+        gap:         8px;
+        background:  $bg2;
+        border:      1px solid $muted;
+        border-bottom: 1px solid $muted;
+        border-radius: 6px 6px 0 0;
+        color:       $text;
+        cursor:      pointer;
+        font-family: #{$font};
+        font-size:   11px;
+        letter-spacing: 0.5px;
+        padding:     5px 14px 5px 10px;
+        transition:  color 0.12s;
+
+        &--open { border-bottom-color: $bg; }
+        &:hover { color: $bright; }
+    }
+
+    &__dot {
+        width:       7px;
+        height:      7px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        transition:  background 0.2s, box-shadow 0.2s;
+    }
+
+    &__badge {
+        background:    $border;
+        border-radius: 10px;
+        color:         $text;
+        font-size:     10px;
+        padding:       0 6px;
+    }
+
+    &__arrow {
+        font-size: 10px;
+        opacity:   0.5;
+    }
+}

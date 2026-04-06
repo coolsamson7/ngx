@@ -6,18 +6,22 @@ import {
   SessionManager,
   Ticket,
 } from '@ngx/security';
+import { TraceFooterComponent } from './trace/trace.component';
+import { FooterTrace } from './shell.module';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-root',
   templateUrl: './shell.component.html',
   styleUrls: ['./shell.component.scss'],
-  imports: [FeatureOutletDirective],
+  imports: [FeatureOutletDirective, TraceFooterComponent],
   standalone: true
 })
 export class ShellComponent {
   // instance data
 
   portal: FeatureData;
+  entries = toSignal(FooterTrace.entries$, { initialValue: [] });
 
   // constructor
 
