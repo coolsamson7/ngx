@@ -47,7 +47,7 @@
 
 .label { margin-right: 8px; }
 .id-tag {
-    font-size: 12px;
+    font-size: 13px;
     color: black;
 
 }
@@ -62,13 +62,13 @@
   letter-spacing: 0.3px;
 
   &.v-public {
-    background: #e6f4ea;
-    color: #137333;
+    background: green;
+    color: white;
     border: 1px solid #ceead6;
   }
   &.v-private {
-    background: #fef7e0;
-    color: #b06000;
+    background: red;
+    color: white;
     border: 1px solid #feefc3;
   }
 }
