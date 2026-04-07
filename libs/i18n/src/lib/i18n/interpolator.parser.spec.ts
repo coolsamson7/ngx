@@ -100,6 +100,12 @@ describe('interpolator parser', () => {
     expect(placeholder.name).toBe('num');
   });
 
+  test('should parse ...', () => {
+    const placeholder : Placeholder = parser.parse('{today:date(1: 1)}');
+
+    expect(placeholder.name).toBe('num');
+  });
+
   test('should parse format name only', () => {
     const placeholder : Placeholder = parser.parse('{num:number}');
 

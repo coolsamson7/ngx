@@ -1,40 +1,42 @@
-.inspector-panel {
+.detail-container {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: #1e1e1e;
-  color: #d4d4d4;
 }
 
-.panel-header {
-  padding: 16px 20px;
-  background: #252526;
-  border-bottom: 1px solid #333;
+.header {
+  padding: 20px 24px;
+  background: #fff;
+  border-bottom: 1px solid #dadce0;
 
-  .breadcrumb { font-size: 10px; color: #858585; margin-bottom: 4px; letter-spacing: 1px; }
-  h1 { margin: 0; font-size: 18px; font-weight: 500; color: #fff; }
+  .type-label { font-size: 10px; font-weight: 700; color: #70757a; margin-bottom: 4px; }
+  h1 { margin: 0; font-size: 20px; font-weight: 400; color: #202124; }
+  .id-str { font-size: 12px; color: #1a73e8; }
 }
 
-.code-container {
+.code-viewport {
   flex: 1;
-  background: #000000; /* Pure black background for code */
+  background: #000; /* Deep black isolated to code only */
   overflow: auto;
-  padding: 12px;
 
   pre {
-    margin: 0;
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    margin: 0 !important; /* Removes the white/grey gap */
+    padding: 20px !important;
+    background: transparent !important;
+  }
+
+  code {
+    font-family: 'Fira Code', 'JetBrains Mono', monospace;
     font-size: 13px;
-    line-height: 1.5;
+    line-height: 1.6;
   }
 }
 
-.placeholder {
-  height: 100%;
+.empty-placeholder {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #555;
-  .icon { font-size: 32px; margin-bottom: 12px; }
+  height: 100%;
+  color: #bdc1c6;
+  font-style: italic;
 }

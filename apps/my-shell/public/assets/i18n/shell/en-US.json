@@ -21,6 +21,6 @@
     "label": "Hello {world}"
   },
   "current_price": {
-    "label": "the price {today:date()} is {price:number(style: 'currency', currency: 'EUR')"
+    "label": "the price {today:date(style: 's')} is {price:number(style: 'currency', currency: 'EUR')}"
   }
 }

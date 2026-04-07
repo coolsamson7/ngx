@@ -53,8 +53,8 @@ export class I18NShowcaseComponent extends WithI18N(WithView(WithCommandToolbar(
   override buildToolbar() {
     this.addCommand2Toolbar("open")
 
-    this.translate("shell:hello_world", {world: "world"})
-    this.translate("shell:current_price", {today: new Date(), price: 1})
+    this.translate("shell:hello_world.label", {world: "world"})
+    this.translate("shell:current_price.label", {today: new Date(), price: 1})
   }
 
   get today(): Date {

@@ -56,7 +56,7 @@ export class CommandShowcaseComponent extends WithCommands(AbstractFeature) impl
 
     // call it
 
-    this.runCommand('open';
+    this.runCommand('open');
   }
 
   // commands
