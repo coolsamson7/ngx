@@ -122,6 +122,23 @@ export class ShowcasePageComponent extends AbstractFeature implements OnInit, On
 
     // ── private ──
 
+    get groupedShowcases(): Record<string, FeatureData[]> {
+    const grouped: Record<string, FeatureData[]> = {};
+
+    this.showcases.forEach(s => {
+        const groupName = s.showcase?.group ?? 'Ungrouped';
+        if (!grouped[groupName]) grouped[groupName] = [];
+        grouped[groupName].push(s);
+    });
+
+    // optional: sort each group by order
+    Object.values(grouped).forEach(arr =>
+        arr.sort((a, b) => (a.showcase?.order ?? 0) - (b.showcase?.order ?? 0))
+    );
+
+    return grouped;
+}
+
     private normalizeShowcase(showcase: FeatureData): void {
         if (!showcase.showcase) return;
 
