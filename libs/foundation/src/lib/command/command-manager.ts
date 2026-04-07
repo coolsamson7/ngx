@@ -7,6 +7,8 @@ import { ExecutionContext } from "./execution-context";
 export interface CommandManager extends OnLocaleChange {
     findCommand(command: string) : CommandDescriptor | undefined
 
+    runCommand<T = any>(commandName: string, ...args: any[]): T
+
     callSuper<T=any>(...args: any[]) : T
 
     createdCommand(command: CommandDescriptor) : void

@@ -1,19 +1,24 @@
-:host {
-    display: block;
-    height:  100%;
+.browser-container {
+  display: flex;
+  height: 100vh;
+  background: var(--mat-sys-surface);
 }
 
-.root {
-    display:    flex;
-    height:     100vh;
-    background: #080f1a;
-    color:      #fff;
+.tree-sidebar {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  background: var(--mat-sys-surface-container-low);
 }
 
-.pane {
-    padding:    20px;
-    overflow-y: auto;
-
-    &--tree   { width: 50%; }
-    &--detail { width: 50%; border-left: 1px solid #1e293b; }
+.sidebar-header {
+  padding: 16px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--mat-sys-outline);
 }
+
+.scroll-area { flex: 1; overflow-y: auto; padding-bottom: 20px; }
+.detail-view { flex: 1; overflow-y: auto; background: var(--mat-sys-surface); }

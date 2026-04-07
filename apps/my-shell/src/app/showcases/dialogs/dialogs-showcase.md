@@ -1,7 +1,10 @@
-# Sample
+# Dialogs
 
-This sample shows a sample.
+This sample shows how to open confitmation dialogs and features as dialogs
+
+The class needs to derive from
 
 ```ts
-const a = "1"; foo()
+ WithDialogs(AbstractFeature) 
+```
 ```

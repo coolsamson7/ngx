@@ -1,32 +1,9 @@
-import {
-    Component,
-    Input,
-    inject,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-} from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatDividerModule } from '@angular/material/divider';
 import { FeatureRegistry, FeatureData, Feature, AbstractFeature } from '@ngx/portal';
 import { FeatureNodeComponent } from './feature-node.component';
 import { FeatureDetailPanelComponent } from './feature-detail.component';
-
-// ---------------------------------------------------------------------------
-// Utilities
-// ---------------------------------------------------------------------------
-
-interface VisibilityBadge { label: string; color: string; }
-
-function visibilityBadge(vis: string[] = ['public']): VisibilityBadge {
-    if (vis.includes('public') && vis.includes('private'))
-        return { label: 'public + private', color: '#10b981' };
-    if (vis.includes('private'))
-        return { label: 'private', color: '#8b5cf6' };
-    return { label: 'public', color: '#0ea5e9' };
-}
-
-// ---------------------------------------------------------------------------
-// InspectorPage
-// ---------------------------------------------------------------------------
 
 @Feature({
   id: 'feature-browser',
@@ -37,12 +14,12 @@ function visibilityBadge(vis: string[] = ['public']): VisibilityBadge {
 @Component({
     selector:        'inspector-page',
     standalone:      true,
-    imports:         [CommonModule, FeatureNodeComponent, FeatureDetailPanelComponent],
+    imports:         [CommonModule, FeatureNodeComponent, FeatureDetailPanelComponent, MatDividerModule],
     templateUrl:     './feature-browser.component.html',
     styleUrls:       ['./feature-browser.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InspectorPageComponent extends AbstractFeature{
+export class InspectorPageComponent extends AbstractFeature {
     private featureRegistry = inject(FeatureRegistry);
     private cdr             = inject(ChangeDetectorRef);
 
@@ -53,7 +30,7 @@ export class InspectorPageComponent extends AbstractFeature{
     }
 
     selectFn = (f: FeatureData): void => {
-        this.selected = this.selected?.id === f.id ? null : f;
+        this.selected = f;
         this.cdr.markForCheck();
     };
 

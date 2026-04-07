@@ -1,18 +1,19 @@
-<div class="root">
+<div class="browser-container">
+    <aside class="tree-sidebar">
+        <div class="sidebar-header">Registry Explorer</div>
+        <div class="scroll-area">
+            <feature-node
+                    *ngFor="let f of roots; trackBy: trackById"
+                    [feature]="f"
+                    [selected]="selected"
+                    [onSelect]="selectFn">
+            </feature-node>
+        </div>
+    </aside>
 
-    <!-- Tree -->
-    <div class="pane pane--tree">
-        <feature-node
-                *ngFor="let f of roots; trackBy: trackById"
-                [feature]="f"
-                [selected]="selected"
-                [onSelect]="selectFn">
-        </feature-node>
-    </div>
+    <mat-divider vertical></mat-divider>
 
-    <!-- Detail -->
-    <div class="pane pane--detail">
-        <feature-detail-panel [feature]="selected"/>
-    </div>
-
+    <main class="detail-view">
+        <feature-detail-panel [feature]="selected"></feature-detail-panel>
+    </main>
 </div>

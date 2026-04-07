@@ -1,6 +1,35 @@
-<div *ngIf="!feature" class="empty">Select a feature</div>
+<div class="detail-panel" *ngIf="feature; else emptyState">
+    <header class="detail-header">
+        <div class="title-row">
+            <h2>{{ feature.label }}</h2>
+            <span class="type-badge">FEATURE</span>
+        </div>
+        <code class="id-sub">{{ feature.id }}</code>
+    </header>
 
-<div *ngIf="feature" class="detail">
-    <h3 class="detail__title">{{ feature.label ?? feature.id }}</h3>
-    <pre class="detail__json">{{ feature | json }}</pre>
+    <mat-divider></mat-divider>
+
+    <div class="content-body">
+        <section class="prop-group">
+            <label>Attributes</label>
+            <div class="prop-row">
+                <span class="key">Visibility</span>
+                <span class="val">{{ feature.visibility?.join(', ') }}</span>
+            </div>
+        </section>
+
+        <section class="prop-group" *ngIf="feature.tags?.length">
+            <label>Tags</label>
+            <div class="tag-cloud">
+                <span class="tag-chip" *ngFor="let tag of feature.tags">{{ tag }}</span>
+            </div>
+        </section>
+    </div>
 </div>
+
+<ng-template #emptyState>
+    <div class="empty-placeholder">
+        <mat-icon>info_outline</mat-icon>
+        <p>Select a node to inspect properties</p>
+    </div>
+</ng-template>

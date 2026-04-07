@@ -1,10 +1,12 @@
 import { Component, Injector } from '@angular/core';
+import { ButtonComponent } from '@ngx/component';
 import { AbstractFeature, Feature } from '@ngx/portal';
+import { WithDialogs } from '@ngx/ui';
 
 @Feature({
   id: "dialogs-showcase",
   parent: "showcases",
-  description: "showcase",
+  description: "dialogs showcase",
   tags: ["showcase"],
   permissions: [],
   visibility: ["private", "public"],
@@ -36,12 +38,38 @@ import { AbstractFeature, Feature } from '@ngx/portal';
 @Component({
     selector:        'dialogs-showcase',
     standalone:      true,
-    imports:         [],
+    imports:         [ButtonComponent],
     templateUrl:     './dialogs-showcase.component.html',
     styleUrls:       ['./dialogs-showcase.component.scss'],
 })
-export class DialogsShowcaseComponent extends AbstractFeature {
+export class DialogsShowcaseComponent extends WithDialogs(AbstractFeature) {
   constructor(injector: Injector) {
     super(injector);
+  }
+
+  // callbacks
+
+  openFeatureDialog() {
+      this.openDialog({
+        title: "Title",
+        dialog: "test-dialog",
+        buttons: ["ok", "cancel"],
+        onStartup: {
+          command: "hello",
+          args: ["world"]
+        }
+      }).subscribe(result => {
+        console.log("Dialog result:", result)
+      });
+  }
+
+  openConfirmationDialog() {
+      this.confirmationDialog()
+        .title("Confirmation")
+        .message("Hello world!")
+        .okCancel()
+        .show().subscribe(result => {
+          console.log("Dialog result:", result)
+        })
   }
 }

@@ -2,7 +2,7 @@
   "name": "my-shell",
   "type": "shell",
   "version": "0.0.1",
-  "commitHash": "1dfc0dd03e357c0bb38257aeed573e302bb6bd85",
+  "commitHash": "d9c26de7969715ed7b300d0354a9201eafb027f0",
   "module": "ShellModule",
   "features": [
     {
@@ -88,6 +88,37 @@
       "visibility": ["public", "private"],
       "children": [
         {
+          "id": "command-showcase",
+          "label": "command-showcase",
+          "showcase": {
+            "title": "Commands",
+            "description": "A sample shocign the usage of commands",
+            "group": "Core",
+            "order": 1,
+            "docs": "showcases/commands/command-showcase.md",
+            "assets": [
+              {
+                "type": "ts",
+                "label": "Source",
+                "path": "showcases/commands/command-showcase.component.ts"
+              },
+              {
+                "type": "html",
+                "label": "HTML",
+                "path": "showcases/commands/command-showcase.component.html"
+              },
+              {
+                "type": "scss",
+                "label": "SCSS",
+                "path": "showcases/commands/command-showcase.component.scss"
+              }
+            ]
+          },
+          "component": "CommandShowcaseComponent",
+          "tags": ["showcase"],
+          "visibility": ["private", "public"]
+        },
+        {
           "id": "dialogs-showcase",
           "label": "dialogs-showcase",
           "showcase": {
@@ -119,33 +150,33 @@
           "visibility": ["private", "public"]
         },
         {
-          "id": "sample-showcase",
-          "label": "sample-showcase",
+          "id": "view-showcase",
+          "label": "view-showcase",
           "showcase": {
-            "title": "Sample",
-            "description": "A sample",
+            "title": "View",
+            "description": "A view showcase",
             "group": "Core",
             "order": 1,
-            "docs": "showcases/sample/sample-showcase.md",
+            "docs": "showcases/view/view-showcase.md",
             "assets": [
               {
                 "type": "ts",
                 "label": "Source",
-                "path": "showcases/sample/sample-showcase.component.ts"
+                "path": "showcases/view/saviewmple-showcase.component.ts"
               },
               {
                 "type": "html",
                 "label": "HTML",
-                "path": "showcases/sample/sample-showcase.component.html"
+                "path": "showcases/view/view-showcase.component.html"
               },
               {
                 "type": "scss",
                 "label": "SCSS",
-                "path": "showcases/sample/sample-showcase.component.scss"
+                "path": "showcases/view/view-showcase.component.scss"
               }
             ]
           },
-          "component": "SampleShowcaseComponent",
+          "component": "ViewShowcaseComponent",
           "tags": ["showcase"],
           "visibility": ["private", "public"]
         }

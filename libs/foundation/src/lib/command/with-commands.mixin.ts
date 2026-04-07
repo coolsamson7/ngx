@@ -93,6 +93,25 @@ export function WithCommands<T extends Constructor<AbstractFeature>>(base: T, co
 
         // implement CommandAdministration
 
+        /**
+         * Find a command by name and execute it with provided arguments.
+         * @param commandName the name of the command
+         * @param args arguments to pass to the command
+         * @returns the result of command.run(...)
+         */
+        runCommand<T = any>(commandName: string, ...args: any[]): T {
+            const command = this.getCommand(commandName); // throws if not found
+            const context = command.createContext(args, { fromCode: true });
+
+            this.currentExecutionContext = context;
+            try {
+                const result = command.runWithContext(context) as T;
+                return result;
+            } finally {
+                this.currentExecutionContext = undefined;
+            }
+        }
+
          /**
          * return an array commands, given a filter object
          * @param filter a <code>CommandFilter</code>

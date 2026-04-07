@@ -1,25 +1,12 @@
-import {
-    Component,
-    Input,
-    ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 import type { FeatureData } from '@ngx/portal';
-
-export interface VisibilityBadge { label: string; color: string; }
-
-export function visibilityBadge(vis: string[] = ['public']): VisibilityBadge {
-    if (vis.includes('public') && vis.includes('private'))
-        return { label: 'public + private', color: '#10b981' };
-    if (vis.includes('private'))
-        return { label: 'private', color: '#8b5cf6' };
-    return { label: 'public', color: '#0ea5e9' };
-}
 
 @Component({
     selector:        'feature-node',
     standalone:      true,
-    imports:         [CommonModule],
+    imports:         [CommonModule, MatIconModule],
     templateUrl:     './feature-node.component.html',
     styleUrls:       ['./feature-node.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,9 +19,14 @@ export class FeatureNodeComponent {
 
     open = true;
 
-    get hasChildren(): boolean         { return !!this.feature.children?.length; }
-    get isSelected():  boolean         { return this.selected?.id === this.feature.id; }
-    get vis():         VisibilityBadge { return visibilityBadge(this.feature.visibility); }
+    get hasChildren(): boolean { return !!this.feature.children?.length; }
+    get isSelected():  boolean { return this.selected?.id === this.feature.id; }
+
+    get vis() {
+        const v = this.feature.visibility || ['public'];
+        if (v.includes('private')) return { label: 'private', class: 'badge-private' };
+        return { label: 'public', class: 'badge-public' };
+    }
 
     toggle(): void {
         if (this.onSelect) this.onSelect(this.feature);
