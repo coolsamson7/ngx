@@ -2,22 +2,25 @@
   "name": "my-shell",
   "type": "shell",
   "version": "0.0.1",
-  "commitHash": "af1dd6a370e055c151402e661382ecf4daba16b3",
+  "commitHash": "1dfc0dd03e357c0bb38257aeed573e302bb6bd85",
   "module": "ShellModule",
   "features": [
     {
       "id": "test-dialog",
       "label": "test-dialog",
+      "showcase": null,
       "component": "TestDialogComponent"
     },
     {
       "id": "about-dialog",
       "label": "about-dialog",
+      "showcase": null,
       "component": "AboutDialog"
     },
     {
       "id": "feature-browser",
       "label": "Feature Browser",
+      "showcase": null,
       "component": "InspectorPageComponent",
       "tags": ["navigation"],
       "visibility": ["public", "private"]
@@ -25,6 +28,7 @@
     {
       "id": "home",
       "label": "Home",
+      "showcase": null,
       "component": "HomeComponent",
       "tags": ["navigation"],
       "visibility": ["public", "private"],
@@ -33,11 +37,13 @@
     {
       "id": "preferences-dialog",
       "label": "preferences-dialog",
+      "showcase": null,
       "component": "PreferencesDialog"
     },
     {
       "id": "private-portal",
       "label": "private-portal",
+      "showcase": null,
       "router": {
         "lazyModule": "PrivatePortalModule"
       },
@@ -50,6 +56,7 @@
       "id": "public-portal",
       "label": "public-portal",
       "i18n": ["shell", "portal"],
+      "showcase": null,
       "router": {
         "lazyModule": "PublicPortalModule"
       },
@@ -61,52 +68,86 @@
     {
       "id": "sample-crud-preferences",
       "label": "sample-crud-preferences",
+      "showcase": null,
       "component": "SampleCrudPreferencesComponent",
       "tags": ["preferences"]
     },
     {
       "id": "sample-preferences",
       "label": "sample-preferences",
+      "showcase": null,
       "component": "SamplePreferencesComponent",
       "tags": ["preferences"]
     },
     {
       "id": "showcases",
       "label": "Showcases",
+      "showcase": null,
       "component": "ShowcasePageComponent",
       "tags": ["navigation"],
       "visibility": ["public", "private"],
       "children": [
         {
+          "id": "dialogs-showcase",
+          "label": "dialogs-showcase",
+          "showcase": {
+            "title": "Dialogs",
+            "description": "How to open dialogs",
+            "group": "Addon",
+            "order": 1,
+            "docs": "showcases/dialogs/dialogs-showcase.md",
+            "assets": [
+              {
+                "type": "ts",
+                "label": "Source",
+                "path": "showcases/dialogs/dialogs-showcase.component.ts"
+              },
+              {
+                "type": "html",
+                "label": "HTML",
+                "path": "showcases/dialogs/dialogs-showcase.component.html"
+              },
+              {
+                "type": "scss",
+                "label": "SCSS",
+                "path": "showcases/dialogs/dialogs-showcase.component.scss"
+              }
+            ]
+          },
+          "component": "DialogsShowcaseComponent",
+          "tags": ["showcase"],
+          "visibility": ["private", "public"]
+        },
+        {
           "id": "sample-showcase",
           "label": "sample-showcase",
-          "component": "SampleShowcaseComponent",
-          "tags": ["showcase"],
-          "visibility": ["private", "public"],
           "showcase": {
-          "title":       "Sample",
-          "description": "A sample",
-          "group":       "Core",
-          "order":       1,
-          "docs":      "showcases/sample/sample-showcase.md",
-          "assets": [
+            "title": "Sample",
+            "description": "A sample",
+            "group": "Core",
+            "order": 1,
+            "docs": "showcases/sample/sample-showcase.md",
+            "assets": [
               {
-                "type":    "ts",
-                "label":   "sample-showcase.component.ts",
+                "type": "ts",
+                "label": "Source",
                 "path": "showcases/sample/sample-showcase.component.ts"
               },
               {
-                "type":  "html",
-                "label": "sample-showcase.component.html",
-                "path":   "showcases/sample/sample-showcase.component.html"
+                "type": "html",
+                "label": "HTML",
+                "path": "showcases/sample/sample-showcase.component.html"
               },
-                {
-                "type":  "scss",
+              {
+                "type": "scss",
                 "label": "SCSS",
-                "path":   "showcases/sample/sample-showcase.component.scss"
+                "path": "showcases/sample/sample-showcase.component.scss"
               }
             ]
-          }
+          },
+          "component": "SampleShowcaseComponent",
+          "tags": ["showcase"],
+          "visibility": ["private", "public"]
         }
       ]
     },
@@ -114,6 +155,7 @@
       "id": "**",
       "label": "Page not found",
       "icon": "language",
+      "showcase": null,
       "component": "PageNotFoundComponent",
       "isPageNotFound": true
     }

@@ -19,6 +19,8 @@ import { SamplePreferencesComponent } from './preferences/sample/sample-preferen
 
 import { ShowcasePageComponent } from './showcase-browser/showcase-browser.component';
 
+import { DialogsShowcaseComponent } from './showcases/dialogs/dialogs-showcase.component';
+
 import { SampleShowcaseComponent } from './showcases/sample/sample-showcase.component';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -82,6 +84,12 @@ export const localRoutes: Routes = [
     path: 'showcases',
     component: ShowcasePageComponent,
     children: [
+      {
+        path: 'dialogs-showcase',
+        component: DialogsShowcaseComponent,
+        children: [],
+      },
+
       {
         path: 'sample-showcase',
         component: SampleShowcaseComponent,

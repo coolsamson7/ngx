@@ -333,9 +333,9 @@ export class ManifestGenerator {
         label: decorator.label || (decorator.labelKey ? '' : decorator.id),
         labelKey: decorator.labelKey || '',
         i18n: decorator.i18n || [],
-        //isPageNotFound: decorator.isPageNotFound || decorator.id == "**",
         icon: decorator.icon || '',
         folder: decorator.folder || '',
+        showcase: decorator.showcase || null,
         router: decorator.router || null,
         component: data.decorates,
         tags: decorator.tags || [], // portal
