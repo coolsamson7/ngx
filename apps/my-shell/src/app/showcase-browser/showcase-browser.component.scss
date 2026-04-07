@@ -365,6 +365,27 @@
     &::-webkit-scrollbar-thumb  { background: var(--subtle); border-radius: 2px; }
 }
 
+.sc-code {
+  font-size: 12px;      /* change to whatever you like */
+  line-height: 1.5;
+  font-family: 'Fira Code', monospace;
+}
+
+pre[class*="language-"] {
+    padding: 1em !important;
+    margin: 0 !important;
+    display: block;
+    overflow: auto;
+}
+
+/* Force the code block to align to the start */
+code[prismHighlight] {
+    display: block !important; /* Forces it to behave like a block, removing inline offsets */
+    text-indent: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    white-space: pre !important; /* Critical for Markdown/TS formatting */
+}
 
 // ── Docs pane ───────────────────────────────────────────────────────────────
 
