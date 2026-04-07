@@ -109,9 +109,15 @@
         <ng-container *ngIf="selectedId; else emptyState">
             <div [class]="bodyClass">
 
-                <!-- Docs pane docs | markdownToHtml TODO-->
+                <!-- Docs pane docs -->
                 <div *ngIf="showDocs" class="sc-docs-pane">
-                    <div [innerHTML]="docs"></div>
+                      <pre class="sc-code"> 
+                            <code
+                                prismHighlight
+                                [prismHighlight]="docs!"
+                                language="markdown">
+                            </code>
+                        </pre>
                 </div>
 
                 <!-- Live preview -->
@@ -132,15 +138,22 @@
                         </div>
                         <span class="sc-code-filename">{{ activeAsset.label }}</span>
                         <span class="sc-code-lang">{{ activeAsset.type.toUpperCase() }}</span>
+                        <!-- TODO  (click)="copyContent(getAssetContent(activeAsset, activeAssetIndex!), activeAssetIndex!)" -->
                         <button
                                 class="sc-copy-btn"
                                 [class.sc-copy-btn--copied]="copiedIndex === activeAssetIndex"
-                                (click)="copyContent(getAssetContent(activeAsset, activeAssetIndex!), activeAssetIndex!)">
+                               >
                             {{ copiedIndex === activeAssetIndex ? 'copied!' : 'copy' }}
                         </button>
                     </div>
-                    <div class="sc-code-scroll">
-                        <pre class="sc-code">{{ getAssetContent(activeAsset, activeAssetIndex!) }}</pre>
+                   <div class="sc-code-scroll">
+                        <pre class="sc-code">
+                            <code
+                                prismHighlight
+                                [prismHighlight]="getAssetContent(activeAsset)"
+                                [language]="mapLang(activeAsset.type)">
+                            </code>
+                        </pre>
                     </div>
                 </div>
 

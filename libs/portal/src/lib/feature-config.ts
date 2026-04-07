@@ -32,12 +32,8 @@ export interface ClientConstraints {
 export interface ShowcaseAsset {
   type:     'css' | 'scss' | 'ts' | 'tsx' | 'json' | 'md' | 'html'
   label:    string
-  // relative path from the feature source file — loaded via ?raw at startup
   path?:     string
-  // populated by ShowcaseRegistry after loading — do not set manually
   content?: string
-  // for public/ or CDN assets that can't use ?raw — fetched at runtime
-  url?:     string
 }
 
 export interface ShowcaseMeta {
@@ -45,7 +41,7 @@ export interface ShowcaseMeta {
   description?: string
   group?:       string   // sidebar grouping
   order?:       number   // sort within group
-  docs?:        string   // raw markdown string — load via path?raw in decorator
+  docs?:        string   // raw markdown string
   tags?:        string[]
   assets?:      ShowcaseAsset[]
 }

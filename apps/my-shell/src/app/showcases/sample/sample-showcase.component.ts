@@ -1,6 +1,5 @@
 import { Component, Injector } from '@angular/core';
 import { AbstractFeature, Feature } from '@ngx/portal';
-//import { MarkdownToHtmlPipe } from '../markdown.pipe';
 
 @Feature({
   id: "sample-showcase",
@@ -14,22 +13,22 @@ import { AbstractFeature, Feature } from '@ngx/portal';
         description: 'A sample',
         group:       'Core',
         order:       1,
-        docs:      'sample/sample-showcase.md',
+        docs:      'showcases/sample/sample-showcase.md',
         assets: [
           {
             type:    'ts',
             label:   'Source',
-            path: 'sample/sample-showcase.component.ts',
+            path: 'showcases/sample/sample-showcase.component.ts',
           },
           {
             type:  'html',
             label: 'HTML',
-            url:   'sample/sample-showcase.component.html',
+            path:   'showcases/sample/sample-showcase.component.html',
           },
              {
             type:  'scss',
             label: 'SCSS',
-            url:   'sample/sample-showcase.component.scss',
+            path:   'showcases/sample/sample-showcase.component.scss',
           },
         ]
       }
@@ -37,7 +36,7 @@ import { AbstractFeature, Feature } from '@ngx/portal';
 @Component({
     selector:        'showcase-page',
     standalone:      true,
-    imports:         [],//MarkdownToHtmlPipe TODO
+    imports:         [],
     templateUrl:     './sample-showcase.component.html',
     styleUrls:       ['./sample-showcase.component.scss'],
 })

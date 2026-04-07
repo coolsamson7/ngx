@@ -1,5 +1,7 @@
 @use '@angular/material' as mat;
 
+@import 'prismjs/themes/prism-tomorrow.css';
+
 /* 1. Core */
 @include mat.core();
 

@@ -17,7 +17,7 @@ import { SampleCrudPreferencesComponent } from './preferences/sample/sample-crud
 
 import { SamplePreferencesComponent } from './preferences/sample/sample-preference';
 
-import { ShowcasePageComponent } from './showcase/showcase.component';
+import { ShowcasePageComponent } from './showcase-browser/showcase-browser.component';
 
 import { SampleShowcaseComponent } from './showcases/sample/sample-showcase.component';
 

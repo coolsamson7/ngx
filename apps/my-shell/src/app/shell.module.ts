@@ -50,7 +50,6 @@ import { ShellRouterModule } from './shell-router.module';
 import { ExtensionModule } from './extension';
 import { ErrorModule, Trace, TraceEntry } from '@ngx/common';
 import { BehaviorSubject } from 'rxjs';
-import { ShowcaseRegistry } from './showcase/showcase-registry';
 
 @Injectable({ providedIn: 'root' })
 export class TraceCommandInterceptor extends AbstractCommandInterceptor {
@@ -109,9 +108,6 @@ export class FooterTrace extends Trace {
   }
 }
 
-export function initShowcases(registry: ShowcaseRegistry) {
-  return () => registry.startup(); // must return function
-}
 
 @Shell(LIBRARY_METADATA)
 @NgModule({
@@ -240,12 +236,6 @@ export function initShowcases(registry: ShowcaseRegistry) {
       },
       deps: [Injector],
       multi: true,
-    },
-     {
-      provide: APP_INITIALIZER,
-      useFactory: initShowcases,
-      deps: [ShowcaseRegistry],
-      multi: true
     }
   ],
 

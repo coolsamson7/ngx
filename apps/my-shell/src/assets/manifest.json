@@ -88,22 +88,22 @@
           "description": "A sample",
           "group":       "Core",
           "order":       1,
-          "docs":      "sample/sample-showcase.md",
+          "docs":      "showcases/sample/sample-showcase.md",
           "assets": [
               {
                 "type":    "ts",
-                "label":   "Source",
-                "path": "sample/sample-showcase.component.ts"
+                "label":   "sample-showcase.component.ts",
+                "path": "showcases/sample/sample-showcase.component.ts"
               },
               {
                 "type":  "html",
-                "label": "HTML",
-                "url":   "sample/sample-showcase.component.html"
+                "label": "sample-showcase.component.html",
+                "path":   "showcases/sample/sample-showcase.component.html"
               },
                 {
                 "type":  "scss",
                 "label": "SCSS",
-                "url":   "sample/sample-showcase.component.scss"
+                "path":   "showcases/sample/sample-showcase.component.scss"
               }
             ]
           }

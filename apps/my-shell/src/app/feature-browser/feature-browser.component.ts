@@ -6,7 +6,7 @@ import {
     ChangeDetectorRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FeatureRegistry, FeatureData, Feature } from '@ngx/portal';
+import { FeatureRegistry, FeatureData, Feature, AbstractFeature } from '@ngx/portal';
 import { FeatureNodeComponent } from './feature-node.component';
 import { FeatureDetailPanelComponent } from './feature-detail.component';
 
@@ -42,7 +42,7 @@ function visibilityBadge(vis: string[] = ['public']): VisibilityBadge {
     styleUrls:       ['./feature-browser.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InspectorPageComponent {
+export class InspectorPageComponent extends AbstractFeature{
     private featureRegistry = inject(FeatureRegistry);
     private cdr             = inject(ChangeDetectorRef);
 
