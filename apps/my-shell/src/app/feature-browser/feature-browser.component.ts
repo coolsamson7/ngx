@@ -1,7 +1,7 @@
 import { Component, inject, ChangeDetectionStrategy, ChangeDetectorRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
-import { FeatureRegistry, FeatureData, Feature, AbstractFeature } from '@ngx-portal';
+import { FeatureRegistry, FeatureData, Feature, AbstractFeature } from '@ngx/portal';
 import { FeatureNodeComponent } from './feature-node.component';
 import { FeatureDetailPanelComponent } from './feature-detail.component';
 

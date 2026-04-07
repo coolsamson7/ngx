@@ -1,6 +1,6 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import type { FeatureData } from '@ngx-portal';
+import type { FeatureData } from '@ngx/portal';
 
 @Component({
     selector:        'feature-node',
@@ -25,7 +25,7 @@ export class FeatureNodeComponent {
     toggle(event?: Event): void {
         if (event) {
             event.preventDefault();
-            event.stopPropagation(); // CRITICAL for tree navigation
+            event.stopPropagation();
         }
         if (this.onSelect) this.onSelect(this.feature);
         if (this.hasChildren) this.open = !this.open;

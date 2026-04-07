@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FeatureData } from '@ngx-portal';
+import { FeatureData } from '@ngx/portal';
 import { PrismHighlightDirective } from '../showcase-browser/prism-highlight.directive';
 
 const CYCLIC_KEYS = new Set(['$parent', 'parent', '_parent', '__parent', 'children']);

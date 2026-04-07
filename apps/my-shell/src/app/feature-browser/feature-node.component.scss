@@ -22,6 +22,7 @@
     background: #e8f0fe;
     color: #1a73e8;
     font-weight: 500;
+    .node-dot { opacity: 1; background: #1a73e8; }
     .id-tag { color: #1a73e8; opacity: 0.7; }
   }
 }
@@ -33,7 +34,7 @@
   align-items: center;
   justify-content: center;
   .chevron {
-    border: solid #5f6368;
+    border: solid #9aa0a6;
     border-width: 0 1.5px 1.5px 0;
     display: inline-block;
     padding: 2.5px;
@@ -44,12 +45,20 @@
 }
 .no-expander { width: 20px; }
 
+/* THE DOT ICON */
+.node-dot {
+  width: 6px;
+  height: 6px;
+  background: #5f6368;
+  border-radius: 50%;
+  margin-right: 12px;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
 .label { margin-right: 8px; }
 .id-tag {
-  font-size: 11px;
-  color: #70757a;
-  font-family: 'Roboto Mono', monospace;
-  opacity: 0.6;
+  font-size: 13px;
 }
 
 .spacer { flex: 1; }
@@ -61,31 +70,18 @@
 }
 
 .badge {
-  display: flex;
-  align-items: center;
-  gap: 6px;
   font-size: 10px;
   padding: 1px 8px;
   border-radius: 12px;
   font-weight: 600;
   text-transform: uppercase;
-
-  .badge-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: currentColor;
-    opacity: 0.5;
-    flex-shrink: 0;
-  }
+  color: white;
 
   &.v-public {
-    background: #e6f4ea;
-    color: #137333;
+    background: green;
   }
 
   &.v-private {
-    background: rgb(217 48 37 / 12%);
-    color: rgb(217 48 37);
+    background: red; /* Red with Opacity */
   }
 }
