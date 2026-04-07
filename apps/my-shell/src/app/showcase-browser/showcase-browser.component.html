@@ -69,7 +69,7 @@
                 </button>
 
                 <button
-                        *ngFor="let asset of assets.slice(1); let i = index; trackBy: trackByIndex"
+                        *ngFor="let asset of assets; let i = index; trackBy: trackByIndex"
                         class="sc-tab-btn"
                         [class.active]="isTabActive(i)"
                         (click)="setActiveTab(i)">
