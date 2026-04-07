@@ -1,35 +1,23 @@
-<div class="detail-panel" *ngIf="feature; else emptyState">
-    <header class="detail-header">
-        <div class="title-row">
-            <h2>{{ feature.label }}</h2>
-            <span class="type-badge">FEATURE</span>
-        </div>
-        <code class="id-sub">{{ feature.id }}</code>
-    </header>
-
-    <mat-divider></mat-divider>
-
-    <div class="content-body">
-        <section class="prop-group">
-            <label>Attributes</label>
-            <div class="prop-row">
-                <span class="key">Visibility</span>
-                <span class="val">{{ feature.visibility?.join(', ') }}</span>
-            </div>
-        </section>
-
-        <section class="prop-group" *ngIf="feature.tags?.length">
-            <label>Tags</label>
-            <div class="tag-cloud">
-                <span class="tag-chip" *ngFor="let tag of feature.tags">{{ tag }}</span>
-            </div>
-        </section>
-    </div>
+<div *ngIf="!feature" class="empty">
+    <span>Select a feature</span>
 </div>
 
-<ng-template #emptyState>
-    <div class="empty-placeholder">
-        <mat-icon>info_outline</mat-icon>
-        <p>Select a node to inspect properties</p>
+<div *ngIf="feature" class="detail">
+
+    <div class="detail__header">
+        <span class="detail__id">{{ feature.id }}</span>
+        <span *ngIf="feature.label && feature.label !== feature.id" class="detail__label">
+      {{ feature.label }}
+    </span>
+        <span *ngFor="let v of feature.visibility" class="detail__pill" [class]="'detail__pill--' + v">
+      {{ v }}
+    </span>
     </div>
-</ng-template>
+
+    <div class="detail__code">
+    <pre class="detail__pre language-json"><code
+            [prismHighlight]="serialized"
+            language="json"></code></pre>
+    </div>
+
+</div>

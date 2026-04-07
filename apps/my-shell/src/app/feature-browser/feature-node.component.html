@@ -1,27 +1,34 @@
-<div class="node-row"
-     [class.is-selected]="isSelected"
-     [style.padding-left.px]="depth * 16 + 8"
-     (click)="toggle()">
+<div [style.marginLeft.px]="depth === 0 ? 0 : 16">
+    <div
+            class="node"
+            [class.node--selected]="isSelected"
+            [class.node--has-children]="hasChildren"
+            (click)="toggle()">
 
-    <mat-icon class="state-icon" *ngIf="hasChildren">
-        {{ open ? 'expand_more' : 'chevron_right' }}
-    </mat-icon>
-    <mat-icon class="type-icon" *ngIf="!hasChildren">radio_button_checked</mat-icon>
+        <div class="node__row">
+            <span class="node__id">{{ feature.id }}</span>
 
-    <span class="label">{{ feature.label }}</span>
-    <span class="id-tag">{{ feature.id }}</span>
+            <span *ngIf="feature.label && feature.label !== feature.id" class="node__label">
+        {{ feature.label }}
+      </span>
 
-    <span class="spacer"></span>
+            <span *ngFor="let v of visibilities" class="node__pill" [class]="'node__pill--' + v">
+        {{ v }}
+      </span>
 
-    <span class="badge" [ngClass]="vis.class">{{ vis.label }}</span>
-</div>
+            <span *ngFor="let tag of feature.tags" class="node__tag">{{ tag }}</span>
 
-<div class="children-wrapper" *ngIf="open && hasChildren">
-    <feature-node
-            *ngFor="let child of feature.children; trackBy: trackById"
-            [feature]="child"
-            [depth]="depth + 1"
-            [selected]="selected"
-            [onSelect]="onSelect">
-    </feature-node>
+            <span *ngIf="hasChildren" class="node__count">{{ feature.children!.length }}</span>
+        </div>
+    </div>
+
+    <ng-container *ngIf="hasChildren && open">
+        <feature-node
+                *ngFor="let child of feature.children; trackBy: trackById"
+                [feature]="child"
+                [depth]="depth + 1"
+                [selected]="selected"
+                [onSelect]="onSelect">
+        </feature-node>
+    </ng-container>
 </div>
