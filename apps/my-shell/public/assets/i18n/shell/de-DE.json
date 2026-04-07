@@ -16,5 +16,12 @@
     "label": "Abbrechen",
     "shortcut": "escape",
     "tooltip": "Cancel tooltip"
+  },
+
+  "hello_world": {
+    "label": "Hallo {world}"
+  },
+  "current_price": {
+    "label": "Der Preis am {today:date()} ist {price:number(style: 'currency', currency: 'EUR')"
   }
 }

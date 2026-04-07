@@ -20,7 +20,7 @@ import { AbstractFeature, Feature } from '@ngx/portal';
           {
             type:    'ts',
             label:   'Source',
-            path: 'showcases/view/saviewmple-showcase.component.ts',
+            path: 'showcases/view/view-showcase.component.ts',
           },
           {
             type:  'html',
@@ -43,8 +43,6 @@ import { AbstractFeature, Feature } from '@ngx/portal';
     styleUrls:       ['./view-showcase.component.scss'],
 })
 export class ViewShowcaseComponent extends WithView(WithCommandToolbar(WithCommands(AbstractFeature))) {
-  //@ViewChild(CommandToolbarComponent) override commandToolbar? : CommandToolbarComponent // TODO?????
-
   constructor(injector: Injector) {
     super(injector);
   }

@@ -2,7 +2,7 @@
   "name": "my-shell",
   "type": "shell",
   "version": "0.0.1",
-  "commitHash": "d9c26de7969715ed7b300d0354a9201eafb027f0",
+  "commitHash": "c26df32eb1a4749177c5d4c1d4983616ece7185f",
   "module": "ShellModule",
   "features": [
     {
@@ -150,6 +150,37 @@
           "visibility": ["private", "public"]
         },
         {
+          "id": "i18n-showcase",
+          "label": "i18n-showcase",
+          "showcase": {
+            "title": "i18n",
+            "description": "A i18n showcase",
+            "group": "Core",
+            "order": 1,
+            "docs": "showcases/i18n/i18n-showcase.md",
+            "assets": [
+              {
+                "type": "ts",
+                "label": "Source",
+                "path": "showcases/i18n/i18n-showcase.component.ts"
+              },
+              {
+                "type": "html",
+                "label": "HTML",
+                "path": "showcases/i18n/i18n-showcase.component.html"
+              },
+              {
+                "type": "scss",
+                "label": "SCSS",
+                "path": "showcases/i18n/i18n-showcase.component.scss"
+              }
+            ]
+          },
+          "component": "I18NShowcaseComponent",
+          "tags": ["showcase"],
+          "visibility": ["private", "public"]
+        },
+        {
           "id": "view-showcase",
           "label": "view-showcase",
           "showcase": {
@@ -162,7 +193,7 @@
               {
                 "type": "ts",
                 "label": "Source",
-                "path": "showcases/view/saviewmple-showcase.component.ts"
+                "path": "showcases/view/view-showcase.component.ts"
               },
               {
                 "type": "html",

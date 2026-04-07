@@ -23,6 +23,8 @@ import { CommandShowcaseComponent } from './showcases/commands/command-showcase.
 
 import { DialogsShowcaseComponent } from './showcases/dialogs/dialogs-showcase.component';
 
+import { I18NShowcaseComponent } from './showcases/i18n/i18n-showcase.component';
+
 import { ViewShowcaseComponent } from './showcases/view/view-showcase.component';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -95,6 +97,12 @@ export const localRoutes: Routes = [
       {
         path: 'dialogs-showcase',
         component: DialogsShowcaseComponent,
+        children: [],
+      },
+
+      {
+        path: 'i18n-showcase',
+        component: I18NShowcaseComponent,
         children: [],
       },
 
