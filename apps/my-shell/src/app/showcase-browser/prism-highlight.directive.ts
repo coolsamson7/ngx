@@ -6,22 +6,18 @@ import {
     AfterViewInit,
 } from '@angular/core';
 
+import { marked } from 'marked';
 import Prism from 'prismjs';
-import 'prismjs/components/prism-typescript';
-import 'prismjs/components/prism-markup';
-import 'prismjs/components/prism-scss';
-import 'prismjs/components/prism-markdown';
-import 'prismjs/components/prism-json';
 
-// ── IMPORTANT: import a Prism theme globally or add to angular.json styles ──
-// Option A — import here (bundled into component):
-// import 'prismjs/themes/prism-tomorrow.css';
-//
-// Option B (recommended) — add to angular.json styles array:
-// "node_modules/prismjs/themes/prism-tomorrow.css"
+// Language Imports
+import 'prismjs/components/prism-markup';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-scss';
+import 'prismjs/components/prism-json';
+import 'prismjs/components/prism-markdown';
 
 @Directive({
-    selector:   'code[prismHighlight]',  // only matches <code> elements
+    selector: '[prismHighlight]',
     standalone: true,
 })
 export class PrismHighlightDirective implements OnChanges, AfterViewInit {
@@ -44,15 +40,22 @@ export class PrismHighlightDirective implements OnChanges, AfterViewInit {
 
     private highlight(): void {
         const el   = this.el.nativeElement;
-        const code = this.prismHighlight;
+        const code = this.prismHighlight?.trim() ?? ''; // Fixes the first-line indent
 
         if (!el || !code) return;
 
-        // set raw text first — Prism will replace innerHTML
-        el.textContent = code;
-        el.className   = `language-${this.language}`;
+        if (this.language === 'markdown' || this.language === 'md') {
+            // 1. Transform Markdown string to HTML (Headers, Lists, etc.)
+            const html = marked.parse(code) as string;
+            el.innerHTML = html;
 
-        // Prism.highlightElement works on <code> elements directly
-        Prism.highlightElement(el);
+            // 2. Highlight any embedded code blocks (```ts, etc.)
+            Prism.highlightAllUnder(el);
+        } else {
+            // 3. Standard Code Mode (TS, JSON, etc.)
+            el.textContent = code;
+            el.className   = `language-${this.language}`;
+            Prism.highlightElement(el);
+        }
     }
 }
