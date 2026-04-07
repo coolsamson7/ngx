@@ -1,9 +1,9 @@
 <div class="detail-container" *ngIf="feature; else empty">
-    <div class="header">
-        <div class="type-label">FEATURE COMPONENT</div>
+    <header class="header">
+        <div class="eyebrow">FEATURE SPECIFICATION</div>
         <h1>{{ feature.label }}</h1>
-        <code class="id-str">{{ feature.id }}</code>
-    </div>
+        <code class="id-line">{{ feature.id }}</code>
+    </header>
 
     <div class="code-viewport">
         <pre><code [prismHighlight]="serialized" language="json"></code></pre>
@@ -11,7 +11,7 @@
 </div>
 
 <ng-template #empty>
-    <div class="empty-placeholder">
-        <p>Select a node to view the registry definition</p>
+    <div class="empty-state">
+        <p>Select a node from the registry to inspect its metadata</p>
     </div>
 </ng-template>

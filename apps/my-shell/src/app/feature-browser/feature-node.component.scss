@@ -1,74 +1,91 @@
 .node-row {
   display: flex;
   align-items: center;
-  height: 30px;
+  height: 32px;
   cursor: pointer;
   font-size: 13px;
-  color: #333; /* High contrast dark text */
-  padding: 0 8px;
+  color: #3c4043;
+  margin: 0 8px;
+  border-radius: 4px;
+  outline: none;
   transition: background 0.1s;
   user-select: none;
-  border-radius: 4px;
-  margin: 1px 4px;
 
-  .badge-container {
-      display: flex;
-      column-gap: 5px;
+  &:hover { background: rgba(60, 64, 67, 0.04); }
+
+  &:focus-visible {
+    background: rgba(26, 115, 232, 0.08);
+    box-shadow: inset 0 0 0 1px #1a73e8;
   }
 
-  &:hover { background: #f0f2f5; }
-
   &.is-selected {
-    background: #e8f0fe; /* Soft Material Blue selection */
-    color: #1967d2;      /* Primary Blue text */
+    background: #e8f0fe;
+    color: #1a73e8;
     font-weight: 500;
-
-    .id-tag {
-        color: black;
-    }
+    .id-tag { color: #1a73e8; opacity: 0.7; }
   }
 }
 
 .expander {
   width: 20px;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   .chevron {
     border: solid #5f6368;
-    border-width: 0 2px 2px 0;
+    border-width: 0 1.5px 1.5px 0;
     display: inline-block;
-    padding: 2px;
+    padding: 2.5px;
     transform: rotate(-45deg);
-    transition: transform 0.2s;
+    transition: transform 0.2s ease;
     &.open { transform: rotate(45deg); }
   }
 }
+.no-expander { width: 20px; }
 
 .label { margin-right: 8px; }
 .id-tag {
-    font-size: 13px;
-    color: black;
-
+  font-size: 11px;
+  color: #70757a;
+  font-family: 'Roboto Mono', monospace;
+  opacity: 0.6;
 }
+
 .spacer { flex: 1; }
 
+.badge-container {
+  display: flex;
+  gap: 4px;
+  padding-right: 4px;
+}
+
 .badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 10px;
-  padding: 2px 8px;
+  padding: 1px 8px;
   border-radius: 12px;
-  text-transform: uppercase;
   font-weight: 600;
-  letter-spacing: 0.3px;
+  text-transform: uppercase;
+
+  .badge-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
 
   &.v-public {
-    background: green;
-    color: white;
-    border: 1px solid #ceead6;
+    background: #e6f4ea;
+    color: #137333;
   }
+
   &.v-private {
-    background: red;
-    color: white;
-    border: 1px solid #feefc3;
+    background: rgb(217 48 37 / 12%);
+    color: rgb(217 48 37);
   }
 }

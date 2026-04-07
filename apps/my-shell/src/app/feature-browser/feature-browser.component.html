@@ -1,6 +1,6 @@
 <div class="browser-wrapper">
-    <aside class="browser-sidebar">
-        <div class="sidebar-title">FEATURES</div>
+    <aside class="browser-sidebar" [style.width.px]="sidebarWidth">
+        <div class="sidebar-title">Feature Registry</div>
         <div class="scroll-content">
             <feature-node
                     *ngFor="let f of roots; trackBy: trackById"
@@ -11,7 +11,7 @@
         </div>
     </aside>
 
-    <div class="resizer"></div>
+    <div class="splitter" (mousedown)="startResizing($event)"></div>
 
     <main class="browser-main">
         <feature-detail-panel [feature]="selected"></feature-detail-panel>

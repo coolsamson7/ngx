@@ -1,10 +1,6 @@
-import {
-    Component,
-    Input,
-    ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import type { FeatureData } from '@ngx/portal';
+import type { FeatureData } from '@ngx-portal';
 
 @Component({
     selector:        'feature-node',
@@ -26,9 +22,34 @@ export class FeatureNodeComponent {
     get isSelected():  boolean  { return this.selected?.id === this.feature.id; }
     get visibilities(): string[] { return this.feature.visibility ?? []; }
 
-    toggle(): void {
+    toggle(event?: Event): void {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation(); // CRITICAL for tree navigation
+        }
         if (this.onSelect) this.onSelect(this.feature);
         if (this.hasChildren) this.open = !this.open;
+    }
+
+    onKeydown(event: KeyboardEvent): void {
+        switch (event.key) {
+            case 'Enter':
+            case ' ':
+                this.toggle(event);
+                break;
+            case 'ArrowRight':
+                if (this.hasChildren) {
+                    event.preventDefault();
+                    this.open = true;
+                }
+                break;
+            case 'ArrowLeft':
+                if (this.hasChildren) {
+                    event.preventDefault();
+                    this.open = false;
+                }
+                break;
+        }
     }
 
     trackById(_: number, f: FeatureData): string { return f.id; }

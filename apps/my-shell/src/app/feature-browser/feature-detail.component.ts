@@ -1,14 +1,8 @@
-import {
-    Component,
-    Input,
-    OnChanges,
-    ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FeatureData } from '@ngx/portal';
-import { PrismHighlightDirective } from '../showcase-browser/prism-highlight.directive'
+import { FeatureData } from '@ngx-portal';
+import { PrismHighlightDirective } from '../showcase-browser/prism-highlight.directive';
 
-// Properties that establish cycles or are internal implementation details
 const CYCLIC_KEYS = new Set(['$parent', 'parent', '_parent', '__parent', 'children']);
 
 function safeSerialize(data: FeatureData): string {
@@ -16,14 +10,12 @@ function safeSerialize(data: FeatureData): string {
         Object.entries(data)
             .filter(([k]) => !CYCLIC_KEYS.has(k) && !k.startsWith('$') && !k.startsWith('_'))
             .map(([k, v]) => {
-                // summarize children as id list instead of full objects
                 if (k === 'children' && Array.isArray(v))
                     return [k, (v as FeatureData[]).map(c => c.id)];
                 return [k, v];
             })
     );
 
-    // re-add children summary if present
     if (data.children?.length)
         clean['children'] = data.children.map(c => c.id);
 
@@ -40,7 +32,6 @@ function safeSerialize(data: FeatureData): string {
 })
 export class FeatureDetailPanelComponent implements OnChanges {
     @Input() feature: FeatureData | null = null;
-
     serialized = '';
 
     ngOnChanges(): void {

@@ -1,20 +1,23 @@
 <div class="node-row"
      [class.is-selected]="isSelected"
-     [style.padding-left.px]="depth * 16 + 8"
-     (click)="toggle()">
+     [style.padding-left.px]="depth * 16 + 12"
+     tabindex="0"
+     (click)="toggle($event)"
+     (keydown)="onKeydown($event)">
 
-  <span class="expander" *ngIf="hasChildren">
+  <span class="expander" *ngIf="hasChildren" (click)="$event.stopPropagation(); open = !open">
     <i class="chevron" [class.open]="open"></i>
   </span>
     <span class="no-expander" *ngIf="!hasChildren"></span>
 
-    <!--span class="label">{{ feature.label }}</span-->
+    <span class="label">{{ feature.label }}</span>
     <span class="id-tag">{{ feature.id }}</span>
 
     <span class="spacer"></span>
 
     <div class="badge-container">
     <span *ngFor="let v of visibilities" class="badge" [ngClass]="'v-' + v">
+      <span class="badge-dot"></span>
       {{ v }}
     </span>
     </div>
