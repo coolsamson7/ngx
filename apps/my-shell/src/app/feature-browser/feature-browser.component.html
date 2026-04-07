@@ -1,7 +1,7 @@
-<div class="browser-container">
-    <aside class="tree-sidebar">
-        <div class="sidebar-header">Registry Explorer</div>
-        <div class="scroll-area">
+<div class="browser-wrapper">
+    <aside class="browser-sidebar">
+        <div class="sidebar-title">FEATURES</div>
+        <div class="scroll-content">
             <feature-node
                     *ngFor="let f of roots; trackBy: trackById"
                     [feature]="f"
@@ -11,9 +11,9 @@
         </div>
     </aside>
 
-    <mat-divider vertical></mat-divider>
+    <div class="resizer"></div>
 
-    <main class="detail-view">
+    <main class="browser-main">
         <feature-detail-panel [feature]="selected"></feature-detail-panel>
     </main>
 </div>

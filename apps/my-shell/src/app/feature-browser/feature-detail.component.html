@@ -1,23 +1,17 @@
-<div *ngIf="!feature" class="empty">
-    <span>Select a feature</span>
+<div class="inspector-panel" *ngIf="feature; else emptyState">
+    <header class="panel-header">
+        <div class="breadcrumb">FEATURE / {{ feature.id }}</div>
+        <h1>{{ feature.label }}</h1>
+    </header>
+
+    <div class="code-container">
+        <pre><code [prismHighlight]="serialized" language="json"></code></pre>
+    </div>
 </div>
 
-<div *ngIf="feature" class="detail">
-
-    <div class="detail__header">
-        <span class="detail__id">{{ feature.id }}</span>
-        <span *ngIf="feature.label && feature.label !== feature.id" class="detail__label">
-      {{ feature.label }}
-    </span>
-        <span *ngFor="let v of feature.visibility" class="detail__pill" [class]="'detail__pill--' + v">
-      {{ v }}
-    </span>
+<ng-template #emptyState>
+    <div class="placeholder">
+        <div class="icon">🔍</div>
+        <p>Select a feature to view metadata</p>
     </div>
-
-    <div class="detail__code">
-    <pre class="detail__pre language-json"><code
-            [prismHighlight]="serialized"
-            language="json"></code></pre>
-    </div>
-
-</div>
+</ng-template>

@@ -1,34 +1,31 @@
-<div [style.marginLeft.px]="depth === 0 ? 0 : 16">
-    <div
-            class="node"
-            [class.node--selected]="isSelected"
-            [class.node--has-children]="hasChildren"
-            (click)="toggle()">
+<div class="node-row"
+     [class.is-selected]="isSelected"
+     [style.padding-left.px]="depth * 16 + 8"
+     (click)="toggle()">
 
-        <div class="node__row">
-            <span class="node__id">{{ feature.id }}</span>
+  <span class="expander" *ngIf="hasChildren">
+    <i class="chevron" [class.open]="open"></i>
+  </span>
+    <span class="no-expander" *ngIf="!hasChildren"></span>
 
-            <span *ngIf="feature.label && feature.label !== feature.id" class="node__label">
-        {{ feature.label }}
-      </span>
+    <!--span class="label">{{ feature.label }}</span-->
+    <span class="id-tag">{{ feature.id }}</span>
 
-            <span *ngFor="let v of visibilities" class="node__pill" [class]="'node__pill--' + v">
-        {{ v }}
-      </span>
+    <span class="spacer"></span>
 
-            <span *ngFor="let tag of feature.tags" class="node__tag">{{ tag }}</span>
-
-            <span *ngIf="hasChildren" class="node__count">{{ feature.children!.length }}</span>
-        </div>
+    <div class="badge-container">
+    <span *ngFor="let v of visibilities" class="badge" [ngClass]="'v-' + v">
+      {{ v }}
+    </span>
     </div>
+</div>
 
-    <ng-container *ngIf="hasChildren && open">
-        <feature-node
-                *ngFor="let child of feature.children; trackBy: trackById"
-                [feature]="child"
-                [depth]="depth + 1"
-                [selected]="selected"
-                [onSelect]="onSelect">
-        </feature-node>
-    </ng-container>
+<div class="children-block" *ngIf="open && hasChildren">
+    <feature-node
+            *ngFor="let child of feature.children; trackBy: trackById"
+            [feature]="child"
+            [depth]="depth + 1"
+            [selected]="selected"
+            [onSelect]="onSelect">
+    </feature-node>
 </div>

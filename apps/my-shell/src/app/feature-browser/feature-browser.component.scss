@@ -1,24 +1,30 @@
-.browser-container {
+.browser-wrapper {
   display: flex;
-  height: 100vh;
-  background: var(--mat-sys-surface);
+  height: 100%;
+  background: #181818; /* Darkest layer */
+  overflow: hidden;
 }
 
-.tree-sidebar {
-  width: 320px;
+.browser-sidebar {
+  width: 300px;
   display: flex;
   flex-direction: column;
-  background: var(--mat-sys-surface-container-low);
+  border-right: 1px solid #333;
 }
 
-.sidebar-header {
-  padding: 16px;
-  font-size: 12px;
+.sidebar-title {
+  padding: 10px 16px;
+  font-size: 11px;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--mat-sys-outline);
+  color: #6b6b6b;
+  letter-spacing: 0.5px;
 }
 
-.scroll-area { flex: 1; overflow-y: auto; padding-bottom: 20px; }
-.detail-view { flex: 1; overflow-y: auto; background: var(--mat-sys-surface); }
+.scroll-content { flex: 1; overflow-y: auto; }
+
+.browser-main { flex: 1; background: #000; }
+
+.resizer {
+    width: 1px;
+    background: #333;
+}
