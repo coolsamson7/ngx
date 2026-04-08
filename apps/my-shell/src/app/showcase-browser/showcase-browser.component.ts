@@ -12,7 +12,7 @@ import { RouterModule, Router, NavigationEnd, RouterOutlet } from '@angular/rout
 import { filter, Subscription } from 'rxjs';
 import { AbstractFeature, Feature, FeatureRegistry } from '@ngx/portal';
 import type { FeatureData, ShowcaseAsset } from '@ngx/portal';
-import { PrismHighlightDirective } from './prism-highlight.directive';
+import { PrismHighlightComponent } from './prism-highlight.component';
 
 export type ActiveTab = 'preview' | 'docs' | number;
 export type ViewMode  = 'preview' | 'split' | 'code';
@@ -26,7 +26,7 @@ export type ViewMode  = 'preview' | 'split' | 'code';
 @Component({
     selector:        'showcase-page',
     standalone:      true,
-    imports:         [CommonModule, RouterModule, RouterOutlet, PrismHighlightDirective],
+    imports:         [CommonModule, RouterModule, RouterOutlet, PrismHighlightComponent],
     templateUrl:     './showcase-browser.component.html',
     styleUrls:       ['./showcase-browser.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,

@@ -112,13 +112,7 @@
 
                 <!-- Docs pane docs -->
                 <div *ngIf="showDocs" class="sc-docs-pane">
-                      <pre class="sc-code"> 
-                            <code
-                                prismHighlight
-                                [prismHighlight]="docs!"
-                                language="markdown">
-                            </code>
-                        </pre>
+                    <prism-highlight [code]="docs!" language="markdown"></prism-highlight>
                 </div>
 
                 <!-- Live preview -->
@@ -147,15 +141,11 @@
                             {{ copiedIndex === activeAssetIndex ? 'copied!' : 'copy' }}
                         </button>
                     </div>
-                   <div class="sc-code-scroll">
-                        <pre class="sc-code">
-                            <code
-                                prismHighlight
-                                [prismHighlight]="getAssetContent(activeAsset)"
-                                [language]="mapLang(activeAsset.type)">
-                            </code>
-                        </pre>
-                    </div>
+
+                    <prism-highlight
+                            [code]="getAssetContent(activeAsset)"
+                            [language]="mapLang(activeAsset.type)">
+                    </prism-highlight>
                 </div>
 
                 <!-- No source -->

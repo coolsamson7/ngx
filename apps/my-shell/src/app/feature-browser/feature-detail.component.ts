@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FeatureData } from '@ngx/portal';
-import { PrismHighlightDirective } from '../showcase-browser/prism-highlight.directive';
+import { PrismHighlightComponent } from '../showcase-browser/prism-highlight.component';
 
 const CYCLIC_KEYS = new Set(['$parent', 'parent', '_parent', '__parent', 'children']);
 
@@ -25,7 +25,7 @@ function safeSerialize(data: FeatureData): string {
 @Component({
     selector:        'feature-detail-panel',
     standalone:      true,
-    imports:         [CommonModule, PrismHighlightDirective],
+    imports: [CommonModule, PrismHighlightComponent],
     templateUrl:     './feature-detail.component.html',
     styleUrls:       ['./feature-detail.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,

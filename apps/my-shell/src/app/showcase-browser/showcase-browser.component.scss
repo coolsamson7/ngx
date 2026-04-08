@@ -354,22 +354,6 @@
     &--copied { color: var(--accent); }
 }
 
-.sc-code-scroll {
-    flex:     1;
-    overflow: auto;
-    padding:  1rem 1.25rem;
-    animation: fadeSlide 0.18s ease both;
-
-    &::-webkit-scrollbar        { width: 4px; height: 4px; }
-    &::-webkit-scrollbar-track  { background: transparent; }
-    &::-webkit-scrollbar-thumb  { background: var(--subtle); border-radius: 2px; }
-}
-
-.sc-code {
-  font-size: 12px;      /* change to whatever you like */
-  line-height: 1.5;
-  font-family: 'Fira Code', monospace;
-}
 
 pre[class*="language-"] {
     padding: 1em !important;

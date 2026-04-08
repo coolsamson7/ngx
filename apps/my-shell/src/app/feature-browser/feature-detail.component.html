@@ -6,7 +6,9 @@
     </header>
 
     <div class="code-viewport">
-        <pre><code [prismHighlight]="serialized" language="json"></code></pre>
+        <!--pre><code [prismHighlight]="serialized" language="json"></code></pre-->
+
+        <prism-highlight [code]="serialized" language="json"></prism-highlight>
     </div>
 </div>
 
