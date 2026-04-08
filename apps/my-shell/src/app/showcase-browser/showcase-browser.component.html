@@ -110,53 +110,63 @@
         <ng-container *ngIf="selectedId; else emptyState">
             <div [class]="bodyClass">
 
-                <!-- Docs pane docs -->
-                <div *ngIf="showDocs" class="sc-docs-pane">
-                    <prism-highlight [code]="docs!" language="markdown"></prism-highlight>
-                </div>
+                <ngx-splitter orientation="horizontal">
+                    <!-- Docs pane docs -->
 
-                <!-- Live preview -->
-                <div *ngIf="showPreview" class="sc-preview-pane">
-                    <span class="sc-preview-label">Live preview</span>
-                    <div class="sc-preview-inner">
-                        <router-outlet/>
+                    <div  *ngIf="showDocs" class="sc-docs-pane">
+                        <prism-highlight [code]="docs!" language="markdown"></prism-highlight>
                     </div>
-                </div>
 
-                <!-- Code pane -->
-                <div *ngIf="showCode && activeAsset" class="sc-code-pane">
-                    <div class="sc-code-toolbar">
-                        <div class="sc-code-toolbar-dots">
-                            <div class="sc-code-dot sc-code-dot-r"></div>
-                            <div class="sc-code-dot sc-code-dot-y"></div>
-                            <div class="sc-code-dot sc-code-dot-g"></div>
+                    <!-- Live preview -->
+
+                    <div  *ngIf="showPreview" class="sc-preview-pane">
+                        <span class="sc-preview-label">Live preview</span>
+                        <div class="sc-preview-inner">
+                            <router-outlet/>
                         </div>
-                        <span class="sc-code-filename">{{ activeAsset.label }}</span>
-                        <span class="sc-code-lang">{{ activeAsset.type.toUpperCase() }}</span>
-                        <!-- TODO  (click)="copyContent(getAssetContent(activeAsset, activeAssetIndex!), activeAssetIndex!)" -->
-                        <button
-                                class="sc-copy-btn"
-                                [class.sc-copy-btn--copied]="copiedIndex === activeAssetIndex"
-                               >
-                            {{ copiedIndex === activeAssetIndex ? 'copied!' : 'copy' }}
-                        </button>
                     </div>
 
-                    <prism-highlight
-                            [code]="getAssetContent(activeAsset)"
-                            [language]="mapLang(activeAsset.type)">
-                    </prism-highlight>
-                </div>
+                    <!-- right -->
+                        
 
-                <!-- No source -->
-                <div *ngIf="noSource" class="sc-empty" style="flex:1">
-                    <div class="sc-empty-icon">
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M4 3L1 6l3 3M8 3l3 3-3 3" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                              <!-- Code pane -->
+                    <div  *ngIf="showCode && activeAsset" class="sc-code-pane">
+                        <div class="sc-code-toolbar">
+                            <div class="sc-code-toolbar-dots">
+                                <div class="sc-code-dot sc-code-dot-r"></div>
+                                <div class="sc-code-dot sc-code-dot-y"></div>
+                                <div class="sc-code-dot sc-code-dot-g"></div>
+                            </div>
+                            <span class="sc-code-filename">{{ activeAsset.label }}</span>
+                            <span class="sc-code-lang">{{ activeAsset.type.toUpperCase() }}</span>
+                            <!-- TODO  (click)="copyContent(getAssetContent(activeAsset, activeAssetIndex!), activeAssetIndex!)" -->
+                            <button
+                                    class="sc-copy-btn"
+                                    [class.sc-copy-btn--copied]="copiedIndex === activeAssetIndex"
+                                >
+                                {{ copiedIndex === activeAssetIndex ? 'copied!' : 'copy' }}
+                            </button>
+                        </div>
+
+                        <prism-highlight
+                                [code]="getAssetContent(activeAsset)"
+                                [language]="mapLang(activeAsset.type)">
+                        </prism-highlight>
                     </div>
-                    <span>No source available</span>
-                </div>
+
+                    <!-- No source -->
+                    <div  *ngIf="noSource" class="sc-empty" style="flex:1">
+                        <div class="sc-empty-icon">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M4 3L1 6l3 3M8 3l3 3-3 3" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <span>No source available</span>
+                    </div>
+                </ngx-splitter>
+               
+
+              
 
             </div>
         </ng-container>

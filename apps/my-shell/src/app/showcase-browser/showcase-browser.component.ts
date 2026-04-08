@@ -13,6 +13,7 @@ import { filter, Subscription } from 'rxjs';
 import { AbstractFeature, Feature, FeatureRegistry } from '@ngx/portal';
 import type { FeatureData, ShowcaseAsset } from '@ngx/portal';
 import { PrismHighlightComponent } from './prism-highlight.component';
+import { SplitterComponent } from './splitter.component';
 
 export type ActiveTab = 'preview' | 'docs' | number;
 export type ViewMode  = 'preview' | 'split' | 'code';
@@ -26,7 +27,7 @@ export type ViewMode  = 'preview' | 'split' | 'code';
 @Component({
     selector:        'showcase-page',
     standalone:      true,
-    imports:         [CommonModule, RouterModule, RouterOutlet, PrismHighlightComponent],
+    imports:         [CommonModule, RouterModule, RouterOutlet, PrismHighlightComponent, SplitterComponent],
     templateUrl:     './showcase-browser.component.html',
     styleUrls:       ['./showcase-browser.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
