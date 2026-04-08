@@ -20,6 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { WithDialogs } from '@ngx/ui';
 import { AvatarComponent } from '../avatar/avatar.component';
 import { LocaleSwitchComponent } from '../locale/locale-switch.component';
+import { IconComponent } from "@ngx/component";
 
 @Feature({
   id: 'public-portal',
@@ -34,7 +35,7 @@ import { LocaleSwitchComponent } from '../locale/locale-switch.component';
   selector: 'public-portal',
   templateUrl: './public-portal-component.html',
   styleUrls: ['./public-portal-component.scss'],
-  imports: [CommonModule, RouterOutlet, RouterLink, MatToolbar, MatButtonModule, LocaleSwitchComponent],
+  imports: [CommonModule, RouterOutlet, RouterLink, MatToolbar, MatButtonModule, LocaleSwitchComponent, IconComponent],
 })
 export class PublicPortalComponent extends WithDialogs(AbstractFeature) {
   // instance data
@@ -56,6 +57,16 @@ export class PublicPortalComponent extends WithDialogs(AbstractFeature) {
   }
 
   // public
+
+  openSettings() {
+       this.openDialog({
+                    title: "Preferences",
+                    dialog: "preferences-dialog",
+                    buttons: ["ok", "apply", "cancel"]
+                  }).subscribe(result => {
+                    console.log("Dialog result:", result)
+                  });
+  }
 
   about() {
       this.openDialog({

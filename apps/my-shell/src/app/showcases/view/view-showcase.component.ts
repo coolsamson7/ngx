@@ -38,7 +38,7 @@ import { AbstractFeature, Feature } from '@ngx/portal';
 @Component({
     selector:        'view-showcase-page',
     standalone:      true,
-    imports:         [ CommandToolbarComponent, ViewComponent],
+    imports:         [CommandToolbarComponent, ViewComponent],
     templateUrl:     './view-showcase.component.html',
     styleUrls:       ['./view-showcase.component.scss'],
 })
@@ -50,14 +50,35 @@ export class ViewShowcaseComponent extends WithView(WithCommandToolbar(WithComma
   // override WithCommandToolbar
 
   override buildToolbar() {
-    this.addCommand2Toolbar("open")
+    this
+        .addCommand2Toolbar("lockView", {menu: "more", icon: "help", tooltip: "Lock", label: "Lock" })
+        .addCommand2Toolbar("lockCommand", {menu: "more", icon: "help", tooltip: "Lock", label: "Lock" })
+        .addCommand2Toolbar("throwError")
   }
 
   // commands
 
   @Command({
-        i18n: 'shell:open',
-        icon: "forward",
-  })
-  open() {}
+    label: 'Command',
+    lock: "command"
+   })
+   async lockCommand() {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+   }
+
+   @Command({
+     label: 'View',
+     lock: "view"
+   })
+   async lockView() {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+   }
+
+   @Command({
+       label: 'Error',
+       icon: "help"
+   })
+   async throwError() {
+       throw new Error("ouch")
+   }
 }

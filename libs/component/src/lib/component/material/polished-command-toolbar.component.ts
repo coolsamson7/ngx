@@ -18,6 +18,7 @@ import {CommandToolbar} from "../components";
 import { ToolbarCommandConfig } from "../../with-command-toolbar.mixin";
 import { IconComponent } from "../../icon";
 
+
 // ---------------------------------------------------------------------------
 // Internal element models
 // ---------------------------------------------------------------------------

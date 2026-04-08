@@ -13,6 +13,13 @@ export const appIconHelp: {
   name: 'help',
   data: `<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 72 72"><defs><style>*{stroke-linecap:butt;stroke-linejoin:round}</style></defs><g id="figure_1"><path id="text_1" d="M43.283 55.96c0-.84-.68-1.52-1.519-1.52h-9.106c-.828 0-1.519.68-1.519 1.52v9.105c0 .84.69 1.52 1.52 1.52h9.105c.84 0 1.52-.68 1.52-1.52zM55.28 33.19c0-8.691-9.106-15.172-17.234-15.172-7.735 0-13.504 3.293-17.605 10.093-.415.68-.266 1.509.382 2.008l6.226 4.74c.298.19.606.307.946.307.414 0 .871-.233 1.18-.605 2.23-2.816 3.144-3.72 4.058-4.367.829-.574 2.39-1.105 4.101-1.105 3.071 0 5.844 1.902 5.844 4.027 0 2.433-1.222 3.676-4.144 5.004-3.336 1.52-7.894 5.472-7.894 10.062v1.71c0 .83.531 2.125 1.37 2.125h9.106c.872 0 1.52-.988 1.52-1.827 0-1.094 1.402-3.719 3.644-5.004 3.602-2.02 8.5-4.782 8.5-11.996"/></g></svg>`,
 };
+export const appIconPreferences: {
+  name: 'preferences';
+  data: string;
+} = {
+  name: 'preferences',
+  data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><rect id="a" width="30" height="50" x="-15" y="-135" fill="#8e8e93" rx="6"/></defs><g transform="translate(256 256)"><use href="#a"/><use href="#a" transform="rotate(30)"/><use href="#a" transform="rotate(60)"/><use href="#a" transform="rotate(90)"/><use href="#a" transform="rotate(120)"/><use href="#a" transform="rotate(150)"/><use href="#a" transform="rotate(180)"/><use href="#a" transform="rotate(210)"/><use href="#a" transform="rotate(240)"/><use href="#a" transform="rotate(270)"/><use href="#a" transform="rotate(300)"/><use href="#a" transform="rotate(330)"/><circle r="105" fill="#8e8e93"/><circle r="40" fill="#7a7a7e"/></g></svg>`,
+};
 export const appIconSave: {
   name: 'save';
   data: string;
@@ -20,10 +27,15 @@ export const appIconSave: {
   name: 'save',
   data: `<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 72 72"><defs><style>*{stroke-linecap:butt;stroke-linejoin:round}</style></defs><g id="figure_1"><path id="text_1" d="M21.423 61.729V47.162h29.144v14.567zm34 0V45.94a3.64 3.64 0 0 0-3.634-3.644H20.21a3.65 3.65 0 0 0-3.644 3.644v15.789H11.71V13.162h4.856V28.94a3.643 3.643 0 0 0 3.644 3.644h21.856a3.637 3.637 0 0 0 3.644-3.644V13.162c.765 0 2.242.605 2.773 1.137l10.657 10.657c.5.499 1.148 2.05 1.148 2.773v34zM40.856 26.518c0 .637-.574 1.21-1.212 1.21h-7.288c-.649 0-1.212-.573-1.212-1.21V14.372c0-.648.564-1.211 1.212-1.211h7.288c.638 0 1.212.563 1.212 1.211zm24.288 1.21c0-2.007-1.137-4.78-2.582-6.225L51.939 10.878c-1.446-1.435-4.219-2.582-6.227-2.582H10.5a3.65 3.65 0 0 0-3.644 3.644v51a3.643 3.643 0 0 0 3.644 3.644h51a3.643 3.643 0 0 0 3.644-3.644z"/></g></svg>`,
 };
-export type AppIconName = 'forward' | 'help' | 'save';
+export type AppIconName = 'forward' | 'help' | 'preferences' | 'save';
 export interface MyIcon {
   name: AppIconName;
   data: string;
 }
 export type MyIconNameSubset<T extends Readonly<MyIcon[]>> = T[number]['name'];
-export const completeIconSet = [appIconForward, appIconHelp, appIconSave];
+export const completeIconSet = [
+  appIconForward,
+  appIconHelp,
+  appIconPreferences,
+  appIconSave,
+];

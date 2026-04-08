@@ -3,6 +3,10 @@
 
   <div class="spacer"></div>
 
+    <button class="icon-btn" (click)="openSettings()">
+        <svg-icon name="preferences" [size]="40"></svg-icon>
+    </button>
+
   <button (click)="about()" mat-button>About</button>
   <button (click)="login()" mat-button>Login</button>
   <locale-switch></locale-switch>

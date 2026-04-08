@@ -8,6 +8,22 @@
     color: white;
   }
 
+  .icon-btn {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #333; /* The icon will inherit this because of currentColor */
+  }
+
+  .icon-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
   > a {
     text-decoration: none;
   }
