@@ -1,29 +1,32 @@
 :host {
     display: block;
     width: 100%;
-    /* This replaces .sc-code-scroll */
     height: 100%;
     overflow: hidden;
 }
 
-.is-code, .is-markdown {
+.is-code,
+.is-markdown {
     height: 100%;
-    overflow: auto; /* Internal scrolling handles the content */
 }
 
 .is-code {
     background: #000000;
+    overflow: auto; // ✅ only ONE scroll container
 
     .code-pre {
         margin: 0 !important;
         padding: 20px !important;
         background: transparent !important;
-        /* Remove overflow from here so the parent .is-code handles it */
         overflow: visible;
     }
 
     code {
         font-family: 'Fira Code', monospace;
-        white-space: pre; /* Keeps formatting */
+        white-space: pre;
     }
+}
+
+.is-markdown {
+    overflow: auto;
 }

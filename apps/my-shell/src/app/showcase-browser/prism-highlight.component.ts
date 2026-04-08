@@ -10,7 +10,6 @@ import { CommonModule } from '@angular/common';
 import { marked } from 'marked';
 import Prism from 'prismjs';
 
-// Language Imports
 import 'prismjs/components/prism-markup';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-scss';
@@ -31,7 +30,7 @@ import 'prismjs/components/prism-markdown';
         </div>
     `,
     styleUrls: ['./prism-highlight.component.scss'],
-    encapsulation: ViewEncapsulation.Emulated // Scopes CSS to this component only
+    encapsulation: ViewEncapsulation.Emulated
 })
 export class PrismHighlightComponent implements OnChanges {
     @Input() code = '';
@@ -45,8 +44,7 @@ export class PrismHighlightComponent implements OnChanges {
     }
 
     ngOnChanges(): void {
-        // Use setTimeout to ensure ViewChild is updated if switching between MD and Code
-        setTimeout(() => this.highlight());
+        queueMicrotask(() => this.highlight()); // ✅ cleaner than setTimeout
     }
 
     private highlight(): void {
