@@ -61,9 +61,15 @@ export class SplitterComponent implements AfterViewInit, OnDestroy {
   private startDrag(e: MouseEvent): void {
     e.preventDefault();
     this.dragging = true;
+
+    this.el.nativeElement.classList.add('dragging'); // ✅ add
   }
 
-  stopDrag = (): void => { this.dragging = false; };
+  stopDrag = (): void => {
+    this.dragging = false;
+
+    this.el.nativeElement.classList.remove('dragging'); // ✅ remove
+  };
 
   onDrag = (e: MouseEvent): void => {
     if (!this.dragging) return;

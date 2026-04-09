@@ -30,7 +30,7 @@ export type ViewMode  = 'preview' | 'split' | 'code';
     imports:         [CommonModule, RouterModule, RouterOutlet, PrismHighlightComponent, SplitterComponent],
     templateUrl:     './showcase-browser.component.html',
     styleUrls:       ['./showcase-browser.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShowcasePageComponent extends AbstractFeature implements OnInit, OnDestroy {
 

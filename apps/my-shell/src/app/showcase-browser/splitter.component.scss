@@ -23,6 +23,14 @@ ngx-splitter {
   }
 }
 
+ngx-splitter.dragging .ngx-splitter-handle {
+  background: rgb(74, 144, 226);
+}
+
+ngx-splitter.dragging .ngx-splitter-grip {
+  background: white;
+}
+
 // ── Handle ────────────────────────────────────────────────────────────────
 
 .ngx-splitter-handle {
@@ -43,7 +51,7 @@ ngx-splitter {
 }
 
 ngx-splitter:not(.vertical) .ngx-splitter-handle {
-  width: 6px;
+  width: 4px;
   cursor: col-resize;
 
   .ngx-splitter-grip {
