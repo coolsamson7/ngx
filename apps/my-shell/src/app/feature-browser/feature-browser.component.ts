@@ -4,6 +4,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { FeatureRegistry, FeatureData, Feature, AbstractFeature } from '@ngx/portal';
 import { FeatureNodeComponent } from './feature-node.component';
 import { FeatureDetailPanelComponent } from './feature-detail.component';
+import { SplitterComponent } from '../showcase-browser/splitter.component';
 
 @Feature({
   id: 'feature-browser',
@@ -14,7 +15,7 @@ import { FeatureDetailPanelComponent } from './feature-detail.component';
 @Component({
     selector:        'inspector-page',
     standalone:      true,
-    imports:         [CommonModule, FeatureNodeComponent, FeatureDetailPanelComponent, MatDividerModule],
+    imports:         [CommonModule, FeatureNodeComponent, FeatureDetailPanelComponent, MatDividerModule, SplitterComponent],
     templateUrl:     './feature-browser.component.html',
     styleUrls:       ['./feature-browser.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,27 +36,6 @@ export class InspectorPageComponent extends AbstractFeature {
         this.selected = f;
         this.cdr.markForCheck();
     };
-
-    startResizing(event: MouseEvent): void {
-        this.isResizing = true;
-        document.body.style.cursor = 'col-resize';
-        event.preventDefault();
-    }
-
-    @HostListener('window:mousemove', ['$event'])
-    onMouseMove(event: MouseEvent): void {
-        if (!this.isResizing) return;
-        this.sidebarWidth = Math.max(200, Math.min(800, event.clientX));
-        this.cdr.markForCheck();
-    }
-
-    @HostListener('window:mouseup')
-    onMouseUp(): void {
-        if (this.isResizing) {
-            this.isResizing = false;
-            document.body.style.cursor = 'default';
-        }
-    }
 
     trackById(_: number, f: FeatureData): string { return f.id; }
 }

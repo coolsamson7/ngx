@@ -29,20 +29,6 @@
   padding: 8px 0;
 }
 
-.splitter {
-  width: 5px;
-  cursor: col-resize;
-  background: transparent;
-  border-left: 1px solid #dadce0;
-  z-index: 10;
-  margin-left: -1px;
-
-  &:hover, &:active {
-    background: #1a73e8;
-    border-left-color: transparent;
-  }
-}
-
 .browser-main {
   flex: 1;
   min-width: 0;

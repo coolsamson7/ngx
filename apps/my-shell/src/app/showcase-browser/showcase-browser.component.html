@@ -1,6 +1,9 @@
 <div class="sc-root">
 
     <!-- ── Sidebar ── -->
+    <ngx-splitter>
+
+
     <aside class="sc-sidebar">
         <div class="sc-sidebar-header">
             <div class="sc-logo">
@@ -16,18 +19,18 @@
         </div>
 
        <div *ngFor="let g of groupedShowcases | keyvalue">
-    <p class="sc-sidebar-section-label">{{ g.key }}</p>
+            <p class="sc-sidebar-section-label">{{ g.key }}</p>
 
-    <div class="sc-sidebar-list">
-        <div *ngFor="let s of g.value; trackBy: trackById"
-             class="sc-item"
-             [class.active]="s.path === selectedId"
-             (click)="navigate(s.path!)">
-            <span class="sc-item-dot"></span>
-            {{ s.label || s.id }}
+            <div class="sc-sidebar-list">
+                <div *ngFor="let s of g.value; trackBy: trackById"
+                     class="sc-item"
+                     [class.active]="s.path === selectedId"
+                     (click)="navigate(s.path!)">
+                    <span class="sc-item-dot"></span>
+                    {{ s.label || s.id }}
+                </div>
+            </div>
         </div>
-    </div>
-</div>
     </aside>
 
     <!-- ── Main ── -->
@@ -184,4 +187,6 @@
         </ng-template>
 
     </main>
+
+    </ngx-splitter>
 </div>

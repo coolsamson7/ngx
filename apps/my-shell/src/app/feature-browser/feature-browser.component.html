@@ -1,19 +1,19 @@
 <div class="browser-wrapper">
-    <aside class="browser-sidebar" [style.width.px]="sidebarWidth">
-        <div class="sidebar-title">Feature Registry</div>
-        <div class="scroll-content">
-            <feature-node
-                    *ngFor="let f of roots; trackBy: trackById"
-                    [feature]="f"
-                    [selected]="selected"
-                    [onSelect]="selectFn">
-            </feature-node>
-        </div>
-    </aside>
+    <ngx-splitter orientation="horizontal">
+        <aside class="browser-sidebar" [style.width.px]="sidebarWidth">
+            <div class="sidebar-title">Feature Registry</div>
+            <div class="scroll-content">
+                <feature-node
+                        *ngFor="let f of roots; trackBy: trackById"
+                        [feature]="f"
+                        [selected]="selected"
+                        [onSelect]="selectFn">
+                </feature-node>
+            </div>
+        </aside>
 
-    <div class="splitter" (mousedown)="startResizing($event)"></div>
-
-    <main class="browser-main">
-        <feature-detail-panel [feature]="selected"></feature-detail-panel>
-    </main>
+        <main class="browser-main">
+            <feature-detail-panel [feature]="selected"></feature-detail-panel>
+        </main>
+    </ngx-splitter>
 </div>
