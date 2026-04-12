@@ -1,9 +1,28 @@
-<mat-toolbar class="toolbar dense-5">
-  <mat-toolbar-row>
-    <ng-container  *ngFor="let element of elements">
-      <command-button *ngIf="element.type === 'command'" [command]="command(element)" [label]="label"></command-button>
+<div class="pct-bar" [class.pct-tray]="opts.style === 'tray'">
+    <ng-container *ngFor="let item of renderedItems; trackBy: trackItem">
 
-      <command-menu-button *ngIf="element.type === 'menu'" [commands]="commands(element)" [icon]="element.icon" [tooltip]="element.tooltip" [label]="element.label"></command-menu-button>
+        <div *ngIf="item.kind === 'separator'" class="pct-separator" aria-hidden="true"></div>
+
+        <ng-container *ngIf="item.kind === 'element'">
+
+            <pct-command-button
+                    *ngIf="asCommand(item.el) as cmd"
+                    [command]="cmd.command"
+                    [labelMode]="opts.labelMode"
+                    [iconPosition]="opts.iconPosition"
+                    [shortcutInTooltip]="opts.shortcutInTooltip">
+            </pct-command-button>
+
+            <pct-command-menu-button
+                    *ngIf="item.el.type === 'menu'"
+                    [commands]="asMenu(item.el).commands"
+                    [icon]="item.el.icon"
+                    [label]="item.el.label"
+                    [tooltip]="item.el.tooltip"
+                    [labelMode]="opts.labelMode"
+                    [iconPosition]="opts.iconPosition">
+            </pct-command-menu-button>
+
+        </ng-container>
     </ng-container>
-  </mat-toolbar-row>
-</mat-toolbar>
+</div>

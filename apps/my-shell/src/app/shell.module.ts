@@ -9,7 +9,7 @@ import { localRoutes } from './local.routes';
 
 import { AbstractCommandInterceptor, CommandErrorInterceptor, CommandModule, ExecutionContext } from "@ngx/foundation"
 
-import { ComponentModule, IconRegistry, MaterialButtonComponent, MaterialCommandToolbarComponent, PolishedCommandToolbarComponent } from "@ngx/component";
+import { ComponentModule, IconRegistry, MaterialButtonComponent, MaterialCommandToolbarComponent, CommandToolbarComponent, PolishedCommandToolbarComponent } from "@ngx/component";
 
 import {
   CanActivateGuard,
@@ -184,7 +184,7 @@ export class FooterTrace extends Trace {
           }
       },
       "command-toolbar": {
-          type: PolishedCommandToolbarComponent,
+          type: MaterialCommandToolbarComponent,
           options: {
               style:             'tray',    // 'tray' | 'pill' | 'compact'
               iconPosition:      'top',     // 'top'  | 'left' | 'none'

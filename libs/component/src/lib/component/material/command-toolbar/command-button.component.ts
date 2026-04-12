@@ -1,88 +1,61 @@
-import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
-import { MatIconModule,  } from "@angular/material/icon";
+import {
+    Component,
+    Input,
+    OnInit,
+    OnDestroy,
+    ViewChild,
+    ViewEncapsulation,
+    ChangeDetectionStrategy,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule, } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { CommandDescriptor, CommandListener, ExecutionContext } from '@ngx/foundation';
 
-import { MatButtonModule, MatIconButton } from "@angular/material/button";
+import { MatRipple, MatRippleModule } from '@angular/material/core';
+import { IconComponent } from '../../../icon';
 
-import { CommonModule } from "@angular/common";
-import { CommandDescriptor, CommandListener, CommandManager, ExecutionContext, WithCommands } from "@ngx/foundation";
-import { AbstractFeature } from "@ngx/portal";
-import { hasMixin } from "@ngx/common";
-import { MatTooltipModule } from "@angular/material/tooltip";
-import { IconComponent } from "../../../icon";
+export type LabelMode    = 'show' | 'tooltip' | 'none';
+export type IconPosition = 'top'  | 'left'    | 'none';
 
 @Component({
-    selector: 'command-button',
-    templateUrl: './command-button.component.html',
-    styleUrls: ['./command-button.component.scss'],
+    selector: 'pct-command-button',
     standalone: true,
+    imports: [CommonModule, MatButtonModule, MatTooltipModule, IconComponent, MatRippleModule],
     encapsulation: ViewEncapsulation.None,
-    imports: [
-        // angular
-
-        CommonModule,
-
-        // material
-
-        MatButtonModule,
-        MatIconModule,
-        MatTooltipModule,
-        IconComponent
-    ]
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: './command-button.component.html',
+    styleUrls:   ['./command-toolbar.component.scss'],
 })
-export class CommandButtonComponent implements OnInit, CommandListener {
-    // view child
+export class CommandButtonComponent implements OnInit, OnDestroy, CommandListener {
 
-    @ViewChild("button") button!: MatIconButton;
+    @Input({ required: true }) command!: CommandDescriptor;
+    @Input() labelMode: LabelMode       = 'show';
+    @Input() iconPosition: IconPosition = 'top';
+    @Input() shortcutInTooltip = true;
 
-    // input
+    @ViewChild('btn', { read: MatRipple }) private ripple!: MatRipple;
 
-    @Input() command!:  string | CommandDescriptor
-    @Input() label = false
-
-    tooltip = ""
-    descriptor!: CommandDescriptor
-
-    // constructor
-
-    constructor(private feature: AbstractFeature) {
+    get tooltip(): string {
+        const parts: string[] = [];
+        if (this.labelMode === 'tooltip' && this.command.label)
+            parts.push(this.command.label);
+        else if (this.command.tooltip)
+            parts.push(this.command.tooltip);
+        if (this.shortcutInTooltip && this.command.shortcut)
+            parts.push(`(${this.command.shortcut})`);
+        return parts.join(' ');
     }
 
-    // callbacks
-
-    click() {
-        this.descriptor.run()
-    }
-
-    // implement CommandListener
+    ngOnInit()    { this.command.addListener(this); }
+    ngOnDestroy() { /*this.command.removeListener?.(this); TODO */ }
 
     onCall(context: ExecutionContext): void {
-        if ( context.data.fromShortcut) {
-            ; // TODO this.button.ripple.launch({centered: true})
+        if (context.data?.fromShortcut) {
+            this.ripple?.launch({ centered: true });
         }
     }
 
-    onResult(context: ExecutionContext): void {
-        //
-    }
-
-    onError(context: ExecutionContext): void {
-        //
-    }
-
-    // implement OnInit
-
-    ngOnInit(): void {
-    if ( this.command instanceof CommandDescriptor)
-       this.descriptor =  <CommandDescriptor>this.command
-    else {
-        if ( hasMixin(this, WithCommands))
-            this.descriptor  = (<CommandManager><unknown>this.feature).getCommand(this.command)
-        else
-            throw new Error("WithCommands is missing")
-    }
-
-    this.descriptor.addListener(this)
-
-    this.tooltip =  (this.descriptor.tooltip || "") + (this.descriptor.shortcut ? (" " + this.descriptor.shortcut) : "")
-    }
+    onResult(_context: ExecutionContext): void {}
+    onError(_context: ExecutionContext):  void {}
 }

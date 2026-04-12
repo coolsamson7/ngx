@@ -1,177 +1,173 @@
-import { CommonModule } from "@angular/common";
-import { Component, Input, ViewEncapsulation } from "@angular/core";
-import { MatButtonModule } from "@angular/material/button";
-import { MatIconModule } from "@angular/material/icon";
-import { MatToolbarModule } from "@angular/material/toolbar";
+import {
+    Component,
+    Input,
+    ViewEncapsulation,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    inject,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CommandDescriptor } from '@ngx/foundation';
 
+import { CommandButtonComponent, LabelMode, IconPosition } from './command-button.component';
+import { CommandMenuButtonComponent } from './command-menu-button.component';
+import { ToolbarCommandConfig } from '../../../with-command-toolbar.mixin';
+import { CommandToolbar } from '../../components';
 
-import { CommandMenuButtonComponent } from "./command-menu-button.component";
-import { CommandDescriptor } from "@ngx/foundation";
+// ─────────────────────────────────────────────────────────────────────────────
+// Config
+// ─────────────────────────────────────────────────────────────────────────────
 
-import { CommandButtonComponent } from "./command-button.component";
-import { CommandToolbar } from "../../components";
-import { ToolbarCommandConfig } from "../../../with-command-toolbar.mixin";
-
-// either a single command or a menu with commands
-
-// config: icon,label
-
-abstract class ToolbarElement {
-  // instance data
-
-  type: "command" | "menu" = "command"
-
-  abstract get icon() : string
-  abstract get tooltip() : string
-  abstract get label() : string
-
-  // constructor
-
-  constructor(protected toolbar: MaterialCommandToolbarComponent, public name: string, protected parent?: ToolbarElement) {}
-
-  // public
-
-  revert() {
-    const index = this.toolbar.elements.indexOf(this)
-    if ( this.parent )
-      this.toolbar.elements[index] = this.parent
-    else
-      this.toolbar.elements.splice(index, 1)
-  }
+export interface ToolbarOptions {
+    style?:             'tray' | 'flat';
+    iconPosition?:      IconPosition;
+    labelMode?:         LabelMode;
+    shortcutInTooltip?: boolean;
 }
 
-class ToolbarCommandMenuElement extends ToolbarElement {
-  // instance data
+// ─────────────────────────────────────────────────────────────────────────────
+// Internal element model
+// ─────────────────────────────────────────────────────────────────────────────
 
-  commands : CommandDescriptor[] = []
+abstract class ToolbarElement {
+    type: 'command' | 'menu' = 'command';
+    abstract get icon():    string;
+    abstract get tooltip(): string;
+    abstract get label():   string;
 
-  // override
+    constructor(
+        protected toolbar: MaterialCommandToolbarComponent,
+        public name:  string,
+        public group: string | undefined,
+        protected parent?: ToolbarElement,
+    ) {}
 
-   override get icon() : string {
-    return this.config.icon || ""
-  }
-
-  override get label(): string {
-     return this.config.label || ""
-  }
-
-  override get tooltip(): string {
-    return this.config.tooltip || ""
- }
-
-  // constructor
-
-  constructor(toolbar: MaterialCommandToolbarComponent, command: CommandDescriptor, private config: ToolbarCommandConfig, parent?: ToolbarCommandMenuElement) {
-    super(toolbar, config.menu!, parent)
-
-    if ( !config.icon) {
-      config.icon = parent ? parent.icon : command.icon
+    revert() {
+        const i = this.toolbar.elements.indexOf(this);
+        if (this.parent) this.toolbar.elements[i] = this.parent;
+        else             this.toolbar.elements.splice(i, 1);
+        this.toolbar['cdr'].markForCheck();
     }
-
-    if ( !config.label) {
-      config.label = parent ? parent.label : command.label
-    }
-
-    this.type = "menu"
-    if ( parent )
-      this.commands.push(...parent.commands)
-
-    this.commands.push(command)
-  }
 }
 
 class ToolbarCommandElement extends ToolbarElement {
-  // override
+    override get icon()    { return this.command.icon    ?? ''; }
+    override get label()   { return this.command.label   ?? ''; }
+    override get tooltip() { return this.command.tooltip ?? ''; }
 
-   override get icon() : string {
-    return this.command.icon || ""
-  }
-
-  override get label(): string {
-     return this.command.label || ""
-  }
-
-  override get tooltip(): string {
-    return this.command.tooltip || ""
- }
-
-  // constructor
-
-  constructor(toolbar: MaterialCommandToolbarComponent, public command: CommandDescriptor, parent?: ToolbarElement) {
-    super(toolbar, command.name, parent)
-
-    this.type = "command"
-  }
+    constructor(toolbar: MaterialCommandToolbarComponent, public command: CommandDescriptor, group: string | undefined, parent?: ToolbarElement) {
+        super(toolbar, command.name, group, parent);
+        this.type = 'command';
+    }
 }
 
+class ToolbarMenuElement extends ToolbarElement {
+    commands: CommandDescriptor[] = [];
+    override get icon()    { return this.config.icon    ?? ''; }
+    override get label()   { return this.config.label   ?? this.name; }
+    override get tooltip() { return this.config.tooltip ?? this.label; }
+
+    constructor(
+        toolbar: MaterialCommandToolbarComponent,
+        command: CommandDescriptor,
+        private config: ToolbarCommandConfig,
+        parent?: ToolbarMenuElement,
+    ) {
+        super(toolbar, config.menu!, config.group, parent);
+        this.type = 'menu';
+        if (parent) this.commands.push(...parent.commands);
+        this.commands.push(command);
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Rendered item type
+// ─────────────────────────────────────────────────────────────────────────────
+
+type RenderedItem =
+    | { kind: 'separator' }
+    | { kind: 'element'; el: ToolbarElement };
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Component
+// ─────────────────────────────────────────────────────────────────────────────
+
 @Component({
-    selector: 'material-command-toolbar',
-    templateUrl: './command-toolbar.component.html',
-    //styleUrls: ['./command-toolbar.component.scss'],
+    selector: 'command-toolbar',
     standalone: true,
-    imports: [
-      // angular
-
-      CommonModule,
-
-      // material
-
-      MatButtonModule,
-      MatIconModule,
-      MatToolbarModule,
-
-      // components
-
-      CommandButtonComponent,
-      CommandMenuButtonComponent
-    ],
-    encapsulation: ViewEncapsulation.None
+    imports: [CommonModule, CommandButtonComponent, CommandMenuButtonComponent],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: './command-toolbar.component.html',
+    styleUrls:   ['./command-toolbar.component.scss'],
 })
 export class MaterialCommandToolbarComponent implements CommandToolbar {
-  // input
 
-  @Input() label = false
+    @Input() label   = false;
+    @Input() options: ToolbarOptions = {};
 
-  // instance data
+    elements: ToolbarElement[] = [];
+    private cdr = inject(ChangeDetectorRef);
 
-  elements : ToolbarElement[] = []
-
-  // callback
-
-  command(element: ToolbarElement) : CommandDescriptor {
-    return (element as ToolbarCommandElement).command
-  }
-
-  commands(element: ToolbarElement) : CommandDescriptor[]{
-    return (element as ToolbarCommandMenuElement).commands
-  }
-
-  // public
-
-  addCommand(command: CommandDescriptor, config : ToolbarCommandConfig) : () => void {
-    const name = config.menu ? config.menu : command.name
-    const index = this.elements.findIndex(element => element.name == name)
-
-    let newElement : ToolbarElement
-
-    if ( config.menu) {
-      if ( index >= 0 ) // add to existing menu
-        this.elements[index] = (newElement = new ToolbarCommandMenuElement(this, command, config, this.elements[index] as ToolbarCommandMenuElement))
-      else
-        this.elements.push(newElement = new ToolbarCommandMenuElement(this, command, config))
-    }
-    else {
-      // regular button
-
-      if ( index >= 0 )
-        this.elements[index] = (newElement = new ToolbarCommandElement(this, command, this.elements[index]))
-      else
-        this.elements.push(newElement = new ToolbarCommandElement(this, command))
-
+    get opts() {
+        return {
+            style:             this.options.style             ?? 'tray',
+            iconPosition:      this.options.iconPosition      ?? 'top',
+            labelMode:         this.options.labelMode         ?? 'show',
+            shortcutInTooltip: this.options.shortcutInTooltip ?? true,
+        };
     }
 
-    // return the revert operation
+    get renderedItems(): RenderedItem[] {
+        const items: RenderedItem[] = [];
+        let lastGroup: string | undefined = undefined;
+        let first = true;
 
-    return () => newElement.revert()
-  }
+        for (const el of this.elements) {
+            const g = el.group;
+            if (!first && g !== lastGroup && g !== undefined && lastGroup !== undefined) {
+                items.push({ kind: 'separator' });
+            }
+            items.push({ kind: 'element', el });
+            lastGroup = g;
+            first = false;
+        }
+        return items;
+    }
+
+    asCommand(el: ToolbarElement): ToolbarCommandElement | null {
+        return el.type === 'command' ? el as ToolbarCommandElement : null;
+    }
+    asMenu(el: ToolbarElement): ToolbarMenuElement {
+        return el as ToolbarMenuElement;
+    }
+    trackItem(_: number, item: RenderedItem) {
+        return item.kind === 'separator' ? 'sep' : item.el.name;
+    }
+
+    addCommand(command: CommandDescriptor, config: ToolbarCommandConfig): () => void {
+        const name  = config.menu ?? command.name;
+        const group = config.group;
+        const index = this.elements.findIndex(el => el.name === name);
+        let newElement: ToolbarElement;
+
+        if (config.menu) {
+            const existing = index >= 0 ? this.elements[index] : undefined;
+            newElement = new ToolbarMenuElement(
+                this, command, config,
+                existing instanceof ToolbarMenuElement ? existing : undefined,
+            );
+        } else {
+            newElement = new ToolbarCommandElement(
+                this, command, group,
+                index >= 0 ? this.elements[index] : undefined,
+            );
+        }
+
+        if (index >= 0) this.elements[index] = newElement;
+        else            this.elements.push(newElement);
+
+        this.cdr.markForCheck();
+        return () => { newElement.revert(); };
+    }
 }

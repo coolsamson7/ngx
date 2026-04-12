@@ -53,7 +53,8 @@ export class ViewShowcaseComponent extends WithView(WithCommandToolbar(WithComma
     this
         .addCommand2Toolbar("lockView", {menu: "more", icon: "help", tooltip: "Lock", label: "Lock" })
         .addCommand2Toolbar("lockCommand", {menu: "more", icon: "help", tooltip: "Lock", label: "Lock" })
-        .addCommand2Toolbar("throwError")
+        .addCommand2Toolbar("throwError", {group: "g1"})
+        .addCommand2Toolbar("foo", {group: "g2"})
   }
 
   // commands
@@ -73,6 +74,15 @@ export class ViewShowcaseComponent extends WithView(WithCommandToolbar(WithComma
    async lockView() {
       await new Promise(resolve => setTimeout(resolve, 1000));
    }
+   
+   @Command({
+      label: 'Foo',
+      shortcut: "ctrl+f",
+      icon: "help"
+  })
+  async foo() {
+      console.log("foo")
+  }
 
    @Command({
        label: 'Error',

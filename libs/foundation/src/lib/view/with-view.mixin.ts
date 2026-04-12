@@ -48,7 +48,7 @@ export class BusyCursorInterceptor implements CommandInterceptor {
 
     onCall(context: ExecutionContext) {
       context.command.enabled = false;
-      this.withView.showMessage('Holla'); // reset previous message if any
+      this.withView.showMessage(context.command.label ?? context.command.name); // reset previous message if any
 
       this.withView.showOverlay(true);
     }

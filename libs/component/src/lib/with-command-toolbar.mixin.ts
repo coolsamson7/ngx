@@ -11,7 +11,8 @@ export interface ToolbarCommandConfig {
   menu?: string,
   icon?: string,
   label?: string,
-  tooltip?: string
+  tooltip?: string,
+ group?: string
 }
 
 export interface WithCommandToolbar {

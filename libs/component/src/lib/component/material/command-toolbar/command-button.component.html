@@ -1,14 +1,21 @@
-<button
-        mat-button
-        class="button"
+
+<button mat-button
+        #btn="matRipple"
+        matRipple
+
+        class="pct-btn"
+        [class.pct-btn-top]="iconPosition === 'top'"
+        [class.pct-btn-left]="iconPosition === 'left'"
+        [disabled]="!command.enabled"
         [matTooltip]="tooltip"
-        (click)="click()"
-        [disabled]="!descriptor.enabled"
->
-  <span class="content">
-    <svg-icon *ngIf="descriptor.icon" [name]="descriptor.icon"></svg-icon>
-    <span *ngIf="descriptor.label" class="label">
-      {{ descriptor.label }}
-    </span>
-  </span>
+        matTooltipPosition="below"
+        (click)="command.run()">
+
+    <div class="pct-btn-body">
+        <div class="pct-btn-stack">
+            <svg-icon *ngIf="command.icon && iconPosition !== 'none'"
+                      [name]="command.icon" class="pct-icon"></svg-icon>
+            <span *ngIf="labelMode === 'show'" class="pct-label">{{ command.label }}</span>
+        </div>
+    </div>
 </button>
