@@ -1,0 +1,118 @@
+{{>licenseInfo}}
+import { AxiosRequestConfig } from 'axios'
+import { singleton } from "tsyringe"
+import { AbstractService, HTTPFactory, service } from "@foundation/communication"
+
+{{#imports}}
+import { {{{classname}}} } from '{{filename}}'
+{{/imports}}
+{{#operations}}
+
+/**
+ * {{{description}}}{{^description}}no description{{/description}}
+ */
+@service("{{domain}}")
+@singleton()
+export class {{classname}} extends AbstractService {
+    // constructor
+
+    constructor(factory: HTTPFactory) {
+        super(factory)
+    }
+
+    // public
+
+    {{#operation}}
+    /**
+     {{#notes}}
+     * {{&notes}}
+     {{/notes}}
+     {{#summary}}
+     * {{&summary}}
+     {{/summary}}
+     {{#allParams}}
+     * @param {{paramName}} {{description}}
+     {{/allParams}}
+     */
+    public async {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{^-last}}, {{/-last}}{{/allParams}}): Promise<{{{returnType}}}{{^returnType}}void{{/returnType}}> {
+        const requestContext: AxiosRequestConfig = {
+            url: '{{{path}}}'{{#pathParams}}.replace('{' + '{{baseName}}' + '}', encodeURIComponent(String({{paramName}}))){{/pathParams}},
+            method: '{{httpMethod}}',
+            {{#bodyParam}}
+            data: this.serialize("{{{dataType}}}", "{{dataFormat}}", {{paramName}})
+            {{/bodyParam}}
+        }
+{{#queryParams}}
+
+        // "{{paramName}}" query param
+        if ({{paramName}} !== undefined)
+            requestContext.params["{{baseName}}"] = this.serialize("{{{dataType}}}", "{{dataFormat}}", {{paramName}})
+{{/queryParams}}
+{{#headerParams}}
+
+        // header params...
+        requestContext.setHeaderParam("{{baseName}}", this.serialize("{{{dataType}}}", "{{dataFormat}}", {{paramName}})
+{{/headerParams}}
+{{#hasFormParams}}
+
+        // form params...
+        const useForm = canConsumeForm([
+        {{#consumes}}
+            '{{{mediaType}}}',
+        {{/consumes}}
+        ])
+
+        let localVarFormParams
+        if (useForm) {
+            localVarFormParams = new FormData()
+        } else {
+            localVarFormParams = new URLSearchParams()
+        }
+{{/hasFormParams}}
+{{#formParams}}
+        {{#isArray}}
+        if ({{paramName}}) {
+        {{#isCollectionFormatMulti}}
+            {{paramName}}.forEach((element) => {
+                localVarFormParams.append('{{baseName}}', element as any)
+            })
+        {{/isCollectionFormatMulti}}
+        {{^isCollectionFormatMulti}}
+            // TODO: replace .append with .set
+            localVarFormParams.append('{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS["{{collectionFormat}}"]));
+        {{/isCollectionFormatMulti}}
+        }
+        {{/isArray}}
+        {{^isArray}}
+        if ({{paramName}} !== undefined) {
+             // TODO: replace .append with .set
+             {{^isFile}}
+             localVarFormParams.append('{{baseName}}', {{paramName}} as any)
+             {{/isFile}}
+             {{#isFile}}
+             if (localVarFormParams instanceof FormData) {
+                 {{#platforms}}
+                 {{#node}}
+                 localVarFormParams.append('{{baseName}}', {{paramName}}.data, {{paramName}}.name)
+                 {{/node}}
+                 {{^node}}
+                 localVarFormParams.append('{{baseName}}', {{paramName}}, {{paramName}}.name)
+                 {{/node}}
+                 {{/platforms}}
+             }
+             {{/isFile}}
+        }
+        {{/isArray}}
+{{/formParams}}
+{{#hasFormParams}}
+        requestContext.data = localVarFormParams
+{{/hasFormParams}}
+
+        const response = await this.request(requestContext)
+{{#responses}}{{#is2xx}}{{#dataType}}{{#isBinary}}
+        return response.data as any as {{{returnType}}};{{/isBinary}}{{^isBinary}}
+        return this.deserialize<{{{dataType}}}>("{{{dataType}}}", "", response.data){{/isBinary}}{{/dataType}}{{/is2xx}}{{/responses}}
+    }
+{{/operation}}
+}
+{{/operations}}

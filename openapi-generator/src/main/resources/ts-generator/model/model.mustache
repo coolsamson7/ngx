@@ -1,0 +1,64 @@
+{{>licenseInfo}}
+{{#models}}
+{{#model}}
+{{#tsImports}}
+import { {{classname}}, {{classname}}Schema } from '{{filename}}'
+{{/tsImports}}
+import { schema, enumeration, oneOf, string, object, boolean, number, array, record, reference, date } from "@foundation/common"
+
+{{#description}}
+/**
+* {{{.}}}
+*/
+{{/description}}
+{{^isEnum}}
+
+
+export interface {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{
+{{#vars}}
+{{#description}}
+    /**
+    * {{{.}}}
+    */
+{{/description}}
+    {{name}}{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}}{{#isNullable}} | null{{/isNullable}}
+{{/vars}}
+}
+
+{{^isArray}}
+
+/**
+* the schema for {@link {{classname}}}
+*/
+export const {{classname}}Schema = schema("{{classname}}", object({
+{{#vars}}
+   {{name}}: {{#vendorExtensions}}{{#schema-type}}{{{.}}}{{/schema-type}}{{/vendorExtensions}}{{#vendorExtensions}}{{#base-name}}baseName({{{.}}}){{/base-name}}{{/vendorExtensions}}{{#format}}.format("{{{.}}}"){{/format}}{{#minimum}} {{#exclusiveMinimum}}.greaterThan({{{.}}}){{/exclusiveMinimum}}{{^exclusiveMinimum}}.greaterEqual({{{.}}}){{/exclusiveMinimum}}{{/minimum}}{{#maximum}}{{#exclusiveMaximum}}.lessThan({{{.}}}){{/exclusiveMaximum}}{{^exclusiveMaximum}}.lessEqual({{{.}}}){{/exclusiveMaximum}}{{/maximum}}{{#required}}.required(){{/required}},
+ {{/vars}}
+}))
+{{/isArray}}
+
+
+
+{{/isEnum}}
+
+{{#isEnum}}
+{{#description}}
+/**
+* {{{.}}}
+*/
+{{/description}}
+export enum {{classname}} {
+{{#allowableValues}}
+{{#enumVars}}
+    {{name}} = {{{value}}},
+{{/enumVars}}
+{{/allowableValues}}
+}
+
+/**
+* the schema for the enumeration {@link {{classname}}{{enumName}}}
+*/
+export const {{classname}}{{enumName}}Schema = schema("{{classname}}{{enumName}}", enumeration({{classname}}{{enumName}}))
+{{/isEnum}}
+{{/model}}
+{{/models}}
