@@ -120,8 +120,8 @@ public class NgxGenerator {
 
     private String toFileName(String name) {
         return switch (this.filenameStyle) {
-            case PASCAL_CASE -> name + ".ts";
-            case KEBAB_CASE -> toKebabCase(name) + ".ts";
+            case PASCAL_CASE -> name;
+            case KEBAB_CASE -> toKebabCase(name);
         };
     }
 
@@ -167,6 +167,7 @@ public class NgxGenerator {
 
             List<Map<String, String>> tsImports = clazz.imports.stream()
                     .filter(name -> !name.equals(clazz.name))
+                    .map(name -> toFileName(name))
                     .map(name -> Map.of("importClass", name))
                     .toList();
             context.put("tsImports", tsImports);
