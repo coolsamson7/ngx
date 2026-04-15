@@ -1,11 +1,10 @@
 package com.ngx.generator;
 
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.media.ComposedSchema;
+import io.swagger.v3.oas.models.media.Schema;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ModelParser {
 
@@ -20,6 +19,7 @@ public class ModelParser {
     // =========================================================
 
     public sealed interface TypeRef permits Primitive, Array, Union, Ref, ObjectType, EnumType {}
+
     public record Primitive(String name) implements TypeRef {}
     public record Array(TypeRef item) implements TypeRef {}
     public record Union(List<TypeRef> types) implements TypeRef {}
@@ -27,12 +27,19 @@ public class ModelParser {
     public record ObjectType(String name) implements TypeRef {}
     public record EnumType(TypeRef baseType, List<String> values) implements TypeRef {}
 
+    // =========================================================
+    // MODEL
+    // =========================================================
+
     public static class ClassModel {
         public final String name;
         public final List<Property> properties = new ArrayList<>();
         public final Set<String> imports = new LinkedHashSet<>();
         public String parent;
-        public ClassModel(String name) { this.name = name; }
+
+        public ClassModel(String name) {
+            this.name = name;
+        }
     }
 
     public static class Property {
@@ -40,6 +47,7 @@ public class ModelParser {
         public final TypeRef type;
         public boolean required;
         public boolean nullable;
+
         public Property(String name, TypeRef type) {
             this.name = name;
             this.type = type;
@@ -47,93 +55,118 @@ public class ModelParser {
     }
 
     // =========================================================
-    // PARSING
+    // ENTRY
     // =========================================================
 
     public List<ClassModel> generateClasses() {
         List<ClassModel> result = new ArrayList<>();
-        if (openAPI.getComponents() == null || openAPI.getComponents().getSchemas() == null) return result;
+
+        if (openAPI.getComponents() == null || openAPI.getComponents().getSchemas() == null)
+            return result;
+
         for (var e : openAPI.getComponents().getSchemas().entrySet()) {
             result.add(parseClass(e.getKey(), e.getValue()));
         }
+
         return result;
     }
 
     private ClassModel parseClass(String name, Schema<?> schema) {
         ClassModel model = new ClassModel(name);
+
         if (schema.getAllOf() != null && !schema.getAllOf().isEmpty()) {
             for (Schema<?> s : schema.getAllOf()) {
-                TypeRef t = resolve(s, model.imports);
-                if (t instanceof Ref r) model.parent = r.name();
-                else addProperties(model, s);
+                if (s.get$ref() != null) {
+                    model.parent = refName(s.get$ref());
+                } else {
+                    addProperties(model, s);
+                }
             }
         } else {
             addProperties(model, schema);
         }
+
         return model;
     }
 
     private void addProperties(ClassModel model, Schema<?> schema) {
         if (schema.getProperties() == null) return;
-        Set<String> required = schema.getRequired() != null ? new HashSet<>(schema.getRequired()) : Set.of();
+
+        Set<String> required = schema.getRequired() != null
+                ? new HashSet<>(schema.getRequired())
+                : Set.of();
+
         for (var e : schema.getProperties().entrySet()) {
-            TypeRef type = resolve(e.getValue(), model.imports);
+            Schema<?> propSchema = (Schema<?>) e.getValue();
+
+            TypeRef type = resolve(propSchema, model.imports);
+
             Property p = new Property(e.getKey(), type);
             p.required = required.contains(e.getKey());
-            p.nullable = isNullable(e.getValue());
+            p.nullable = isNullable(propSchema);
+
             model.properties.add(p);
         }
     }
 
+    // =========================================================
+    // TYPE RESOLUTION (FIXED CORE)
+    // =========================================================
+
     TypeRef resolve(Schema<?> schema, Set<String> imports) {
         if (schema == null) return new Primitive("any");
+
+        // REF
         if (schema.get$ref() != null) {
-            String ref = schema.get$ref().replace("#/components/schemas/", "");
+            String ref = refName(schema.get$ref());
             imports.add(ref);
             return new Ref(ref);
         }
+
+        // ENUM
         if (schema.getEnum() != null && !schema.getEnum().isEmpty()) {
-            return new EnumType(primitive(schema), schema.getEnum().stream().map(Object::toString).toList());
+            return new EnumType(
+                    new Primitive("string"),
+                    schema.getEnum().stream().map(Object::toString).toList()
+            );
         }
 
-        List<Schema> options = (schema instanceof ComposedSchema cs) ?
-                (cs.getAnyOf() != null ? cs.getAnyOf() : cs.getOneOf()) :
-                (schema.getAnyOf() != null ? schema.getAnyOf() : schema.getOneOf());
+        // ANYOF / ONEOF
+        List<Schema> composed = getComposed(schema);
+        if (composed != null && !composed.isEmpty()) {
+            List<TypeRef> types = new ArrayList<>();
 
-        if (options != null && !options.isEmpty()) return union(options, imports);
+            for (Schema s : composed) {
+                if (isNullSchema(s)) continue;
+                types.add(resolve(s, imports));
+            }
 
-        String typeStr = getEffectiveType(schema);
-        if ("array".equals(typeStr) || schema.getItems() != null) {
-            return new Array(schema.getItems() != null ? resolve(schema.getItems(), imports) : new Primitive("any"));
+            if (types.isEmpty()) return new Primitive("any");
+            if (types.size() == 1) return types.get(0);
+
+            return new Union(types);
         }
-        if ("object".equals(typeStr) || schema.getProperties() != null) return new ObjectType("object");
-        return primitive(schema);
-    }
 
-    private TypeRef union(List<Schema> schemas, Set<String> imports) {
-        List<TypeRef> types = schemas.stream()
-                .map(s -> resolve(s, imports))
-                .filter(t -> !(t instanceof Primitive p && "any".equals(p.name())))
-                .distinct()
-                .collect(Collectors.toList());
+        String type = schema.getType();
 
-        if (types.isEmpty()) return new Primitive("any");
-        if (types.size() == 1) return types.get(0);
-        return new Union(types);
-    }
-
-    private String getEffectiveType(Schema<?> schema) {
-        if (schema.getType() != null) return schema.getType();
-        if (schema.getTypes() != null && !schema.getTypes().isEmpty()) {
-            return schema.getTypes().stream().filter(t -> !"null".equals(t)).findFirst().orElseGet(() -> schema.getTypes().iterator().next());
+        // ARRAY
+        if ("array".equals(type) || schema.getItems() != null) {
+            Schema<?> items = schema.getItems() != null ? schema.getItems() : new Schema<>();
+            return new Array(resolve(items, imports));
         }
-        return null;
+
+        // OBJECT
+        if ("object".equals(type) || schema.getProperties() != null) {
+            return new ObjectType("object");
+        }
+
+        return mapPrimitive(type);
     }
 
-    private TypeRef primitive(Schema<?> schema) {
-        String t = getEffectiveType(schema);
-        if (t == null) return new Primitive("any");
-        return switch (t) {
+    private Primitive mapPrimitive(String type) {
+        if (type == null) return new Primitive("any");
+
+        return switch (type) {
             case "string" -> new Primitive("string");
             case "integer", "number" -> new Primitive("number");
             case "boolean" -> new Primitive("boolean");
@@ -142,110 +175,132 @@ public class ModelParser {
         };
     }
 
+    // =========================================================
+    // NULL + COMPOSED HELPERS
+    // =========================================================
+
+    private List<Schema> getComposed(Schema<?> schema) {
+        if (schema instanceof ComposedSchema cs) {
+            return firstNonNull(cs.getAnyOf(), cs.getOneOf());
+        }
+        return firstNonNull(schema.getAnyOf(), schema.getOneOf());
+    }
+
+    private List<Schema> firstNonNull(List<Schema> a, List<Schema> b) {
+        return a != null ? a : b;
+    }
+
+    private boolean isNullSchema(Schema<?> s) {
+        if (s == null) return true;
+        if ("null".equals(s.getType())) return true;
+        if (s.getTypes() != null && s.getTypes().contains("null")) return true;
+        return false;
+    }
+
     private boolean isNullable(Schema<?> schema) {
         if (schema == null) return false;
         if (Boolean.TRUE.equals(schema.getNullable())) return true;
-        String t = getEffectiveType(schema);
-        if ("null".equals(t)) return true;
-        if (schema.getTypes() != null && schema.getTypes().contains("null")) return true;
-        List<Schema> options = (schema.getAnyOf() != null) ? schema.getAnyOf() : schema.getOneOf();
-        return options != null && options.stream().anyMatch(s -> "null".equals(getEffectiveType(s)));
+
+        List<Schema> composed = getComposed(schema);
+        if (composed != null) {
+            for (Schema s : composed) {
+                if (isNullSchema(s)) return true;
+            }
+        }
+        return false;
+    }
+
+    private String refName(String ref) {
+        return ref.replace("#/components/schemas/", "");
     }
 
     // =========================================================
-    // GENERATION: TS INTERFACE
+    // TYPESCRIPT GENERATION
     // =========================================================
 
     public String generateTypeScriptType(TypeRef type, boolean nullable) {
-        String tsType = resolveTsType(type);
-        // Ensure no "string | null | null"
-        if (nullable && !tsType.contains("null")) return tsType + " | null";
-        return tsType;
+        String ts = ts(type);
+        return nullable ? ts + " | null" : ts;
     }
 
-    private String resolveTsType(TypeRef type) {
+    private String ts(TypeRef type) {
         if (type instanceof Primitive p) {
             return switch (p.name()) {
-                case "integer", "number" -> "number";
                 case "string" -> "string";
+                case "number" -> "number";
                 case "boolean" -> "boolean";
                 case "null" -> "null";
                 default -> "any";
             };
         }
-        if (type instanceof EnumType e) {
-            boolean isStr = e.baseType() instanceof Primitive p && "string".equals(p.name());
-            return e.values().stream().map(v -> isStr ? "\"" + v + "\"" : v).collect(Collectors.joining(" | "));
-        }
+
         if (type instanceof Array a) {
-            String inner = resolveTsType(a.item());
+            String inner = ts(a.item());
             return inner.contains("|") ? "(" + inner + ")[]" : inner + "[]";
         }
+
         if (type instanceof Union u) {
-            return u.types().stream().map(this::resolveTsType).distinct().collect(Collectors.joining(" | "));
+            return u.types().stream()
+                    .map(this::ts)
+                    .distinct()
+                    .reduce((a, b) -> a + " | " + b)
+                    .orElse("any");
         }
+
         if (type instanceof Ref r) return r.name();
+
         return "any";
     }
 
     // =========================================================
-    // GENERATION: METADATA DESCRIPTOR (DSL)
+    // METADATA DSL GENERATION (UNCHANGED API)
     // =========================================================
 
     public String generateMetadataDescriptor(Property prop) {
-        String descriptor = resolveDescriptor(prop.type, false);
+        String d = descriptor(prop.type, false);
 
-        if (prop.nullable) {
-            descriptor += ".nullable()";
-        }
+        if (prop.nullable) d += ".nullable()";
+        if (!prop.required) d = "optional(" + d + ")";
 
-        if (!prop.required) {
-            descriptor = "optional(" + descriptor + ")";
-        }
-
-        return descriptor;
+        return d;
     }
 
-    private String resolveDescriptor(TypeRef type, boolean inCollection) {
+    private String descriptor(TypeRef type, boolean inArray) {
+
         if (type instanceof Primitive p) {
             return switch (p.name()) {
-                case "integer", "number" -> "number()";
                 case "string" -> "string()";
+                case "number" -> "number()";
                 case "boolean" -> "boolean()";
-                case "null" -> "nullType()";
                 default -> "any()";
             };
         }
-        if (type instanceof EnumType e) {
-            boolean isStr = e.baseType() instanceof Primitive p && "string".equals(p.name());
-            String values = e.values().stream().map(v -> isStr ? "\"" + v + "\"" : v).collect(Collectors.joining(", "));
-            return "oneOf(" + values + ")";
-        }
+
         if (type instanceof Array a) {
-            return "array(" + resolveDescriptor(a.item(), true) + ")";
+            return "array(" + descriptor(a.item(), true) + ")";
         }
+
         if (type instanceof Union u) {
-            // FIX: If we have multiple types in a union, we filter out 'null'
-            // from the list because .nullable() will be added by the parent.
-            List<TypeRef> filteredTypes = u.types().stream()
+            List<TypeRef> cleaned = u.types().stream()
                     .filter(t -> !(t instanceof Primitive p && "null".equals(p.name())))
                     .toList();
 
-            if (filteredTypes.size() == 1) {
-                return resolveDescriptor(filteredTypes.get(0), inCollection);
-            }
+            if (cleaned.size() == 1) return descriptor(cleaned.get(0), inArray);
 
-            String inners = filteredTypes.stream()
-                    .map(t -> resolveDescriptor(t, inCollection))
-                    .distinct()
-                    .collect(Collectors.joining(", "));
-            return "union(" + inners + ")";
+            return "union(" +
+                    cleaned.stream()
+                            .map(t -> descriptor(t, inArray))
+                            .reduce((a, b) -> a + ", " + b)
+                            .orElse("any()")
+                    + ")";
         }
+
         if (type instanceof Ref r) {
-            String schemaName = r.name() + "Schema";
-            return inCollection ? schemaName : "reference(" + schemaName + ")";
+            return inArray ? r.name() + "Schema" : "reference(" + r.name() + "Schema)";
         }
+
         if (type instanceof ObjectType) return "object()";
+
         return "any()";
     }
 }
