@@ -1,11 +1,11 @@
-
+{{>licenseInfo}}
 import {
 schema, object, string, number, boolean, array,
 oneOf, union, optional, reference
 } from "@ngx/common";
 
 {{#tsImports}}
-    import { {{importClass}}, {{importClass}}Schema } from "./{{importClass}}";
+import { {{importClass}}, {{importClass}}Schema } from "./{{importClass}}";
 {{/tsImports}}
 
 /**

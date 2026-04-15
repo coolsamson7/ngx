@@ -1,7 +1,4 @@
-/**
-* This is a generated file, do NOT edit manually!
-* Generator: AxiosClientGenerator V1.0 based on (OpenAPI-Generator https://openapi-generator.tech)
-*/
+{{>licenseInfo}}
 
 import { AxiosRequestConfig } from 'axios'
 import { singleton } from "tsyringe"
@@ -17,11 +14,11 @@ import { AbstractService, HTTPFactory, service } from "@foundation/communication
 @service("")
 @singleton()
 export class {{classname}} extends AbstractService {
-// constructor
+    // constructor
 
-constructor(factory: HTTPFactory) {
-super(factory)
-}
+    constructor(factory: HTTPFactory) {
+        super(factory)
+    }
 
 // public
 
@@ -33,14 +30,13 @@ super(factory)
     {{/allParams}}
     */
     public async {{nickname}}({{#allParams}}{{name}}{{^required}}?{{/required}}: {{{dataType}}}{{^-last}}, {{/-last}}{{/allParams}}): Promise<{{{returnType}}}> {
-    const requestContext: AxiosRequestConfig = {
-    url: '{{{path}}}'{{#pathParams}}.replace('{' + '{{baseName}}' + '}', encodeURIComponent(String({{name}}))){{/pathParams}},
-    method: '{{method}}'{{#bodyParam}},
-    data: this.serialize("{{{bodyType}}}", "", {{name}}){{/bodyParam}}
-    }
+        const requestContext: AxiosRequestConfig = {
+            url: '{{{path}}}'{{#pathParams}}.replace('{' + '{{baseName}}' + '}', encodeURIComponent(String({{name}}))){{/pathParams}},
+            method: '{{method}}'{{#bodyParam}},
+            data: this.serialize("{{{bodyType}}}", "", {{name}}){{/bodyParam}}
+        }
 
-    const response = await this.request(requestContext)
-
+        const response = await this.request(requestContext)
     {{^isVoid}}
         return this.deserialize<{{{returnType}}}>("{{{deserializerType}}}", "", response.data)
     {{/isVoid}}
