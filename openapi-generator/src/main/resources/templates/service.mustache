@@ -1,18 +1,19 @@
 {{>licenseInfo}}
 
+import { Injectable, Injector } from "@angular/core";
 import { AxiosRequestConfig } from 'axios'
-import { singleton } from "tsyringe"
-import { AbstractService, HTTPFactory, service } from "@foundation/communication"
+
+import { AbstractService, HTTPFactory, service } from "@ngx/communication"
 
 {{#tsImports}}
-    import { {{importClass}} } from '../model/{{importClass}}'
+import { {{importClass}} } from '../model/{{importClass}}'
 {{/tsImports}}
 
 /**
 * no description
 */
-@service("")
-@singleton()
+@Injectable({providedIn: 'root'})
+@Service({domain: ""})
 export class {{classname}} extends AbstractService {
     // constructor
 
@@ -20,7 +21,7 @@ export class {{classname}} extends AbstractService {
         super(factory)
     }
 
-// public
+    // public
 
 {{#operations}}
     /**
