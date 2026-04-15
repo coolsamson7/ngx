@@ -1,6 +1,6 @@
 /**
 * This is a generated file, do NOT edit manually!
-* Generator: NgxGenerator V2.0
+* Generator: AxiosClientGenerator V1.0 based on (OpenAPI-Generator https://openapi-generator.tech)
 */
 
 import { AxiosRequestConfig } from 'axios'
@@ -12,40 +12,37 @@ import { AbstractService, HTTPFactory, service } from "@foundation/communication
 {{/tsImports}}
 
 /**
-* Service for handling {{classname}} operations.
+* no description
 */
 @service("")
 @singleton()
 export class {{classname}} extends AbstractService {
+// constructor
 
 constructor(factory: HTTPFactory) {
 super(factory)
 }
 
+// public
+
 {{#operations}}
     /**
-    * {{nickname}}
+    * {{summary}}
     {{#allParams}}
         * @param {{name}}
     {{/allParams}}
     */
     public async {{nickname}}({{#allParams}}{{name}}{{^required}}?{{/required}}: {{{dataType}}}{{^-last}}, {{/-last}}{{/allParams}}): Promise<{{{returnType}}}> {
     const requestContext: AxiosRequestConfig = {
-    url: '{{{path}}}',
-    method: '{{method}}',
-    {{#bodyParam}}
-        data: this.serialize("{{{dataType}}}", "", {{name}})
-    {{/bodyParam}}
-    };
+    url: '{{{path}}}'{{#pathParams}}.replace('{' + '{{baseName}}' + '}', encodeURIComponent(String({{name}}))){{/pathParams}},
+    method: '{{method}}'{{#bodyParam}},
+    data: this.serialize("{{{bodyType}}}", "", {{name}}){{/bodyParam}}
+    }
 
-    {{#pathParams}}
-        requestContext.url = requestContext.url.replace('{' + '{{baseName}}' + '}', encodeURIComponent(String({{name}})));
-    {{/pathParams}}
-
-    const response = await this.request(requestContext);
+    const response = await this.request(requestContext)
 
     {{^isVoid}}
-        return this.deserialize<{{{returnType}}}>("{{{returnType}}}", "", response.data);
+        return this.deserialize<{{{returnType}}}>("{{{deserializerType}}}", "", response.data)
     {{/isVoid}}
     }
 

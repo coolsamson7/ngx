@@ -85,7 +85,7 @@ public class ModelParser {
         }
     }
 
-    private TypeRef resolve(Schema<?> schema, Set<String> imports) {
+    TypeRef resolve(Schema<?> schema, Set<String> imports) {
         if (schema == null) return new Primitive("any");
         if (schema.get$ref() != null) {
             String ref = schema.get$ref().replace("#/components/schemas/", "");

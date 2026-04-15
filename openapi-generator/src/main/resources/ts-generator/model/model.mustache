@@ -4,7 +4,7 @@
 {{#tsImports}}
 import { {{classname}}, {{classname}}Schema } from '{{filename}}'
 {{/tsImports}}
-import { schema, enumeration, oneOf, string, object, boolean, number, array, record, reference, date } from "@foundation/common"
+import { schema, enumeration, oneOf, string, object, boolean, number, array, record, reference, date } from "@ngx/common"
 
 {{#description}}
 /**
@@ -32,8 +32,8 @@ export interface {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{
 */
 export const {{classname}}Schema = schema("{{classname}}", object({
 {{#vars}}
-   {{name}}: {{#vendorExtensions}}{{#schema-type}}{{{.}}}{{/schema-type}}{{/vendorExtensions}}{{#vendorExtensions}}{{#base-name}}baseName({{{.}}}){{/base-name}}{{/vendorExtensions}}{{#format}}.format("{{{.}}}"){{/format}}{{#minimum}} {{#exclusiveMinimum}}.greaterThan({{{.}}}){{/exclusiveMinimum}}{{^exclusiveMinimum}}.greaterEqual({{{.}}}){{/exclusiveMinimum}}{{/minimum}}{{#maximum}}{{#exclusiveMaximum}}.lessThan({{{.}}}){{/exclusiveMaximum}}{{^exclusiveMaximum}}.lessEqual({{{.}}}){{/exclusiveMaximum}}{{/maximum}}{{#required}}.required(){{/required}},
- {{/vars}}
+    {{name}}: {{^required}}optional({{/required}}{{#vendorExtensions}}{{#schema-type}}{{{.}}}{{/schema-type}}{{/vendorExtensions}}{{#vendorExtensions}}{{#base-name}}baseName({{{.}}}){{/base-name}}{{/vendorExtensions}}{{#format}}.format("{{{.}}}"){{/format}}{{#minimum}} {{#exclusiveMinimum}}.greaterThan({{{.}}}){{/exclusiveMinimum}}{{^exclusiveMinimum}}.greaterEqual({{{.}}}){{/exclusiveMinimum}}{{/minimum}}{{#maximum}}{{#exclusiveMaximum}}.lessThan({{{.}}}){{/exclusiveMaximum}}{{^exclusiveMaximum}}.lessEqual({{{.}}}){{/exclusiveMaximum}}{{/maximum}}{{^required}}){{/required}},
+{{/vars}}
 }))
 {{/isArray}}
 
