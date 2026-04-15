@@ -167,8 +167,9 @@ public class NgxGenerator {
 
             List<Map<String, String>> tsImports = clazz.imports.stream()
                     .filter(name -> !name.equals(clazz.name))
-                    .map(name -> toFileName(name))
-                    .map(name -> Map.of("importClass", name))
+                    .map(name -> Map.of(
+                            "importClass", name,
+                            "importFile", toFileName(name)))
                     .toList();
             context.put("tsImports", tsImports);
 
@@ -208,7 +209,12 @@ public class NgxGenerator {
             Map<String, Object> context = new HashMap<>();
             context.put("classname", group.name());
             context.put("operations", group.operations());
-            context.put("tsImports", group.imports().stream().map(i -> Map.of("importClass", i)).toList());
+            context.put("tsImports",
+                    group.imports().stream()
+                            .map(name -> Map.of(
+                                    "importClass", name,
+                                    "importFile", toFileName(name)))
+                            .toList());
 
             String output = renderer.render("service.mustache", context);
 
