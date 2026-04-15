@@ -1,0 +1,26 @@
+import {
+schema, object, string, number, boolean, array,
+oneOf, union, optional, reference
+} from "@ngx/common";
+
+{{#tsImports}}
+    import { {{importClass}}, {{importClass}}Schema } from "./{{importClass}}";
+{{/tsImports}}
+
+/**
+* Interface definition for {{classname}}
+*/
+export interface {{classname}} {{#parent}}extends {{parent}}{{/parent}} {
+{{#vars}}
+    {{{name}}}: {{{dataType}}};
+{{/vars}}
+}
+
+/**
+* Schema descriptor for {{classname}}
+*/
+export const {{classname}}Schema = schema("{{classname}}", object({
+{{#vars}}
+    {{{name}}}: {{{descriptor}}},
+{{/vars}}
+}));
