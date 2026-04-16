@@ -1,5 +1,5 @@
 import "reflect-metadata"
-import { array, boolean, date, enumeration, number, object, reference, string } from "./base-types/index"
+import { array, boolean, date, enumeration, number, object, optional, reference, string } from "./type"
 
 enum Color {
     RED = 1,
@@ -61,7 +61,7 @@ describe("validation", () => {
             elements: array(
                 object({
                     firstName: string().max(10),
-                    lastName: string().optional(),
+                    lastName: optional(string()),
                 })
             ),
         })
@@ -70,7 +70,7 @@ describe("validation", () => {
             elements: [
                 {
                     firstName: "Andi",
-                    lastName: "Ernst",
+                    //lastName: "Ernst",
                 },
             ],
         })
@@ -171,12 +171,12 @@ describe("validation", () => {
     it("should accept optional", async () => {
         const schema = object({
             firstName: string().max(10),
-            lastName: string().length(2).optional(),
+            lastName: optional(string().length(2)),
         })
 
         schema.validate({
             firstName: "And", // ouch
-            lastName: undefined,
+            //lastName: undefined,
         })
     })
 })

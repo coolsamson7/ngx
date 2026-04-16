@@ -87,6 +87,7 @@ export class Type<T> {
 
     // instance data
 
+    _format = ""
     tests: Test<T>[] = []
     message?: string
 
@@ -117,6 +118,11 @@ export class Type<T> {
 
 
     // public
+
+    format(format: string): Type<T> {
+        this._format = format
+        return this
+    }
 
     validate(object: T) {
         const context = new ValidationContext()
@@ -151,14 +157,6 @@ export class Type<T> {
         const typeTest = this.tests[0]
 
         typeTest.ignore = false
-
-        return this
-    }
-
-    optional(): Type<T> {
-        const typeTest = this.tests[0]
-
-        typeTest.ignore = true
 
         return this
     }
@@ -223,4 +221,12 @@ export class Type<T> {
             }
         }
     }
+}
+
+export const schema = (name: string, type: Type<any>) : Type<any> => {
+    type.name = name
+
+    Type.register(type);
+
+    return type;
 }

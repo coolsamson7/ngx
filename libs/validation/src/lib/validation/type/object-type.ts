@@ -1,12 +1,13 @@
 import { Type } from "./type"
 import { ValidationContext } from "../validation-context"
+import { OptionalType } from "./optional-type"
 
 export type PropertyConstraints = { [property: string]: Type<any> | string }
 
 /**
  * this constraint class adds specific checks for complex objects.
  */
-export class ObjectConstraint<T = any> extends Type<T> {
+export class ObjectType<T = any> extends Type<T> {
     // constructor
 
     constructor(public shape: PropertyConstraints, name?: string) {
@@ -50,7 +51,27 @@ export class ObjectConstraint<T = any> extends Type<T> {
             for (const property in this.shape) {
                 context.path = path === "" ? property : path + "." + property;
 
-                (this.shape[property] as Type<any>).check(Reflect.get(object as object, property), context)
+                const hasProp = Object.hasOwn(object!, property)
+                const value = hasProp ? (object as any)[property] : undefined
+                const type = this.shape[property] as Type<any>
+
+                if (!hasProp) {
+                     if (type instanceof OptionalType)
+                        return
+                    
+                    const test = type.tests[0]
+
+                    context.violations.push({
+                        type: test.type,
+                        name: test.name,
+                        params: test.params,
+                        path: context.path,
+                        value: object,
+                        message: "is required",
+                    });
+                }
+                else
+                    type.check(value, context)
             } // for
 
             context.path = path
@@ -58,4 +79,4 @@ export class ObjectConstraint<T = any> extends Type<T> {
     }
 }
 
-export const object = (constraints: PropertyConstraints, name?: string) => new ObjectConstraint(constraints, name)
+export const object = (constraints: PropertyConstraints, name?: string) => new ObjectType(constraints, name)

@@ -1,18 +1,18 @@
 import { Type } from "./type"
 import { ValidationContext } from "../validation-context"
-import { ObjectConstraint } from "./object-type"
+import { ObjectType } from "./object-type"
 
 /**
  * this constraint relates to referenced object schema
  */
-export class ReferenceConstraint<T> extends Type<T> {
+export class ReferenceType<T> extends Type<T> {
     // instance data
 
-    private schema: ObjectConstraint<T>
+    private schema: ObjectType<T>
 
     // constructor
 
-    constructor(public type: ObjectConstraint<T>) {
+    constructor(public type: ObjectType<T>) {
         super()
 
         this.schema = type
@@ -53,4 +53,4 @@ export class ReferenceConstraint<T> extends Type<T> {
     }
 }
 
-export const reference = (type: any) => new ReferenceConstraint(type)
+export const reference = (type: any) => new ReferenceType(type)

@@ -8,5 +8,8 @@ export * from "./record-type"
 export * from "./enum-type"
 export * from "./reference-type"
 export * from "./class-type"
+export * from "./one-of-type"
+export * from "./optional-type"
+export * from "./union-type"
 
 export * from "./type"

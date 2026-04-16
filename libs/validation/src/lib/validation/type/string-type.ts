@@ -3,7 +3,7 @@ import { Type, ConstraintInfo } from "./type"
 /**
  * this constraint class adds specific checks for strings.
  */
-export class StringConstraint extends Type<string> {
+export class StringType extends Type<string> {
     // static data
 
     private static readonly EMAIL =
@@ -19,7 +19,7 @@ export class StringConstraint extends Type<string> {
 
     // fluent api
 
-    length(length: number, info?: ConstraintInfo): StringConstraint {
+    length(length: number, info?: ConstraintInfo): StringType {
         this.test({
             type: "string",
             name: "length",
@@ -35,7 +35,7 @@ export class StringConstraint extends Type<string> {
         return this
     }
 
-    min(min: number, info?: ConstraintInfo): StringConstraint {
+    min(min: number, info?: ConstraintInfo): StringType {
         this.test({
             type: "string",
             name: "min",
@@ -51,7 +51,7 @@ export class StringConstraint extends Type<string> {
         return this
     }
 
-    max(max: number, info?: ConstraintInfo): StringConstraint {
+    max(max: number, info?: ConstraintInfo): StringType {
         this.test({
             type: "string",
             name: "max",
@@ -67,7 +67,7 @@ export class StringConstraint extends Type<string> {
         return this
     }
 
-    nonEmpty(info?: ConstraintInfo): StringConstraint {
+    nonEmpty(info?: ConstraintInfo): StringType {
         this.test({
             type: "string",
             name: "nonEmpty",
@@ -81,7 +81,7 @@ export class StringConstraint extends Type<string> {
         return this
     }
 
-    email(info?: ConstraintInfo): StringConstraint {
+    email(info?: ConstraintInfo): StringType {
         this.test({
             type: "string",
             name: "email",
@@ -95,7 +95,7 @@ export class StringConstraint extends Type<string> {
         return this
     }
 
-    matches(re: RegExp, info?: ConstraintInfo): StringConstraint {
+    matches(re: RegExp, info?: ConstraintInfo): StringType {
         this.test({
             type: "string",
             name: "matches",
@@ -111,7 +111,7 @@ export class StringConstraint extends Type<string> {
         return this
     }
 
-    format(format: string, info?: ConstraintInfo): StringConstraint {
+    format(format: string, info?: ConstraintInfo): StringType {
         this.test({
             type: "string",
             name: "format",
@@ -128,4 +128,4 @@ export class StringConstraint extends Type<string> {
     }
 }
 
-export const string = (name?: string) => new StringConstraint(name)
+export const string = (name?: string) => new StringType(name)
