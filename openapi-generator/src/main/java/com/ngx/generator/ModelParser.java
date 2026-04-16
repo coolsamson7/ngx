@@ -19,13 +19,16 @@ public class ModelParser {
     // TYPES
     // =========================================================
 
-    public sealed interface TypeRef permits Primitive, Array, Union, Ref, ObjectType, EnumType {}
+    public sealed interface TypeRef permits Primitive, Array, Union, Ref, ObjectType, EnumType, MapType {}
     public record Primitive(String name) implements TypeRef {}
     public record Array(TypeRef item) implements TypeRef {}
     public record Union(List<TypeRef> types) implements TypeRef {}
     public record Ref(String name) implements TypeRef {}
     public record ObjectType(String name) implements TypeRef {}
     public record EnumType(TypeRef baseType, List<String> values) implements TypeRef {}
+
+    // ✅ NEW
+    public record MapType(TypeRef valueType) implements TypeRef {}
 
     public static class ClassModel {
         public final String name;
@@ -45,7 +48,6 @@ public class ModelParser {
         public boolean required;
         public boolean nullable;
 
-        // constraints + format
         public String format;
         public Number minimum;
         public Number maximum;
@@ -119,10 +121,6 @@ public class ModelParser {
         }
     }
 
-    // =========================================================
-    // CONSTRAINT EXTRACTION
-    // =========================================================
-
     private void extractConstraints(Property p, Schema<?> schema) {
         if (schema == null) return;
 
@@ -158,6 +156,17 @@ public class ModelParser {
                     primitive(schema),
                     schema.getEnum().stream().map(Object::toString).toList()
             );
+        }
+
+        // ✅ MAP SUPPORT
+        if (schema.getAdditionalProperties() != null) {
+            Object ap = schema.getAdditionalProperties();
+
+            if (ap instanceof Schema<?> apSchema) {
+                return new MapType(resolve(apSchema, imports));
+            }
+
+            return new MapType(new Primitive("any"));
         }
 
         List<Schema> options = null;
@@ -291,6 +300,10 @@ public class ModelParser {
                     .collect(Collectors.joining(" | "));
         }
 
+        if (type instanceof MapType m) {
+            return "Record<string, " + resolveTsType(m.valueType()) + ">";
+        }
+
         if (type instanceof Ref r) return r.name();
 
         if (type instanceof ObjectType) return "Record<string, any>";
@@ -305,21 +318,18 @@ public class ModelParser {
     public String generateMetadataDescriptor(Property prop) {
         String descriptor = resolveDescriptor(prop.type, false);
 
-        // number
         if (prop.minimum != null)
             descriptor += ".min(" + prop.minimum + ")";
 
         if (prop.maximum != null)
             descriptor += ".max(" + prop.maximum + ")";
 
-        // string
         if (prop.minLength != null)
             descriptor += ".minLength(" + prop.minLength + ")";
 
         if (prop.maxLength != null)
             descriptor += ".maxLength(" + prop.maxLength + ")";
 
-        // array
         if (prop.minItems != null)
             descriptor += ".minItems(" + prop.minItems + ")";
 
@@ -364,7 +374,6 @@ public class ModelParser {
         }
 
         if (type instanceof Union u) {
-            // ✅ FIX: remove null → handled by .nullable()
             List<TypeRef> filtered = u.types().stream()
                     .filter(t -> !(t instanceof Primitive p && "null".equals(p.name())))
                     .toList();
@@ -379,6 +388,10 @@ public class ModelParser {
                     .collect(Collectors.joining(", "));
 
             return "union(" + inners + ")";
+        }
+
+        if (type instanceof MapType m) {
+            return "record(" + resolveDescriptor(m.valueType(), true) + ")";
         }
 
         if (type instanceof Ref r) {
