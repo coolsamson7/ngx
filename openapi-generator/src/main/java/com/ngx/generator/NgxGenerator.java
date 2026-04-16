@@ -7,7 +7,6 @@ import java.nio.file.*;
 import java.util.*;
 
 import static com.ngx.generator.FileNameStyle.KEBAB_CASE;
-import static com.ngx.generator.FileNameStyle.PASCAL_CASE;
 
 public class NgxGenerator {
     static class Runner {
@@ -86,17 +85,27 @@ public class NgxGenerator {
         // go
 
         void run() {
-
             OpenAPI openApi = new OpenAPIV3Parser().read(this._input);
             if (openApi == null) {
                 System.err.println("Failed to parse OpenAPI spec: " + _input);
                 System.exit(1);
             }
 
+            // log settings
+
+            System.out.println("output dir        : " + this._outputDir);
+            System.out.println("generate models   : " + this._generateModels);
+            System.out.println("model directory   : " + this._modelDir);
+            System.out.println("generate services : " + this._generateServices);
+            System.out.println("service directory : " + this._serviceDir);
+            System.out.println("generate index    : " + this._generateIndex);
+            System.out.println("service domain    : " + this._domain);
+
             // Create our generator
 
             NgxGenerator generator = new NgxGenerator();
 
+            generator.outputDir = this._outputDir;
             generator.filenameStyle = this._filenameStyle;
             generator.modelDir = this._modelDir;
             generator.serviceDir = this._serviceDir;
@@ -245,12 +254,34 @@ public class NgxGenerator {
         // Clean up indentation and trailing commas
         String clean = content.replaceAll("(?m)^[ \t]+$", "") // Empty lines
                 .replaceAll("\n\n\n+", "\n\n")  // Max 2 newlines
-                .replaceAll(",\\s*\\)", ")");   // Trailing comma fix
+                .replaceAll(",\\s*\\)", ")")
+                .trim();
+
         try {
-            Path path = Paths.get(outputDir, subDir);
-            Files.createDirectories(path);
-            Files.writeString(path.resolve(filename), clean.trim());
+            Path dir = Paths.get(outputDir, subDir);
+            Files.createDirectories(dir);
+
+            Path file = dir.resolve(filename);
+
+            boolean changed = true;
+
+            // Compare with existing file if it exists
+            if (Files.exists(file)) {
+                String existing = Files.readString(file).trim();
+                changed = !existing.equals(clean);
+            }
+
+            // Write only if needed (optional but usually desired)
+            if (changed) {
+                Files.writeString(file, clean);
+
+                System.out.println("> updated " + file);
+            } else {
+                System.out.println("> unchanged " + file);
+            }
+
         } catch (Exception e) {
+            System.err.println("> failed " + filename);
             e.printStackTrace();
         }
     }

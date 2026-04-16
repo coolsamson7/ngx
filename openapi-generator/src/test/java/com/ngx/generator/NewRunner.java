@@ -9,7 +9,7 @@ public class NewRunner {
                 .modelDir("models")
                 .serviceDir("services")
                 .generateIndex(true)
-                .domain("foo")
+                .domain("test")
                 .filenameStyle(FileNameStyle.KEBAB_CASE)
                 .run();
     }
