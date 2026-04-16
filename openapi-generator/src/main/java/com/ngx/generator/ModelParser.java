@@ -45,7 +45,7 @@ public class ModelParser {
         public boolean required;
         public boolean nullable;
 
-        // ✅ NEW: constraints + format
+        // constraints + format
         public String format;
         public Number minimum;
         public Number maximum;
@@ -113,7 +113,6 @@ public class ModelParser {
             p.required = required.contains(e.getKey());
             p.nullable = isNullable(propSchema);
 
-            // ✅ extract constraints + format
             extractConstraints(p, propSchema);
 
             model.properties.add(p);
@@ -121,7 +120,7 @@ public class ModelParser {
     }
 
     // =========================================================
-    // CONSTRAINT EXTRACTION (NEW)
+    // CONSTRAINT EXTRACTION
     // =========================================================
 
     private void extractConstraints(Property p, Schema<?> schema) {
@@ -142,7 +141,7 @@ public class ModelParser {
     }
 
     // =========================================================
-    // TYPE RESOLUTION (UNCHANGED)
+    // TYPE RESOLUTION
     // =========================================================
 
     TypeRef resolve(Schema<?> schema, Set<String> imports) {
@@ -250,7 +249,7 @@ public class ModelParser {
     }
 
     // =========================================================
-    // GENERATION (UNCHANGED API)
+    // TYPESCRIPT GENERATION
     // =========================================================
 
     public String generateTypeScriptType(TypeRef type, boolean nullable) {
@@ -294,37 +293,41 @@ public class ModelParser {
 
         if (type instanceof Ref r) return r.name();
 
+        if (type instanceof ObjectType) return "Record<string, any>";
+
         return "any";
     }
+
+    // =========================================================
+    // DESCRIPTOR GENERATION
+    // =========================================================
 
     public String generateMetadataDescriptor(Property prop) {
         String descriptor = resolveDescriptor(prop.type, false);
 
         // number
-
         if (prop.minimum != null)
             descriptor += ".min(" + prop.minimum + ")";
 
         if (prop.maximum != null)
-            descriptor += ".min(" + prop.maximum + ")";
+            descriptor += ".max(" + prop.maximum + ")";
 
         // string
-
         if (prop.minLength != null)
-            descriptor += ".min(" + prop.minLength + ")";
+            descriptor += ".minLength(" + prop.minLength + ")";
 
         if (prop.maxLength != null)
-            descriptor += ".min(" + prop.maxLength + ")";
+            descriptor += ".maxLength(" + prop.maxLength + ")";
 
         // array
-
         if (prop.minItems != null)
-            descriptor += ".min(" + prop.minItems + ")";
+            descriptor += ".minItems(" + prop.minItems + ")";
 
         if (prop.maxItems != null)
-            descriptor += ".min(" + prop.maxItems + ")";
+            descriptor += ".maxItems(" + prop.maxItems + ")";
 
-        // the rest
+        if (prop.pattern != null)
+            descriptor += ".pattern(\"" + prop.pattern + "\")";
 
         if (prop.format != null)
             descriptor += ".format(\"" + prop.format + "\")";
@@ -361,10 +364,20 @@ public class ModelParser {
         }
 
         if (type instanceof Union u) {
-            String inners = u.types().stream()
+            // ✅ FIX: remove null → handled by .nullable()
+            List<TypeRef> filtered = u.types().stream()
+                    .filter(t -> !(t instanceof Primitive p && "null".equals(p.name())))
+                    .toList();
+
+            if (filtered.size() == 1) {
+                return resolveDescriptor(filtered.get(0), inCollection);
+            }
+
+            String inners = filtered.stream()
                     .map(t -> resolveDescriptor(t, inCollection))
                     .distinct()
                     .collect(Collectors.joining(", "));
+
             return "union(" + inners + ")";
         }
 
