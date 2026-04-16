@@ -1,8 +1,8 @@
 import { Type } from "./type"
 import { ValidationContext } from "../validation-context"
 
-export class OptionalType<T> extends Type<T | undefined> {
-    constructor(public inner: Type<T>, name?: string) {
+export class OptionalType<T> extends Type<OptionalType<T>, T | undefined> {
+    constructor(public inner: Type<OptionalType<T>, T>, name?: string) {
         super(name ?? "optional " + inner.name)
     }
 
@@ -15,5 +15,5 @@ export class OptionalType<T> extends Type<T | undefined> {
     }
 }
 
-export const optional = <T>(type: Type<T>, name?: string) =>
+export const optional = <T>(type: Type<any, T>, name?: string) =>
     new OptionalType(type, name)

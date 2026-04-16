@@ -31,7 +31,7 @@ class Patch {
   }
 }
 
-export class Type<T> {
+export class Type<T extends Type<T, V>, V=any>  {
     // static data
 
     static cache = {}
@@ -40,31 +40,23 @@ export class Type<T> {
 
     // static methods
 
-
-    static register(constraint: Type<any>) {
+    static register(constraint: Type<any,any>) {
         set(this.cache, constraint.name!, constraint)
 
         return this
     }
 
-    static get(type: string): Type<any> | undefined {
+    static get(type: string): Type<any,any> | undefined {
         // execute possible pending patches
 
         this.resolve()
 
         // is it cached?
 
-        const constraint = get<Type<any>>(this.cache, type)
+        const constraint = get<Type<any,any>>(this.cache, type)
 
         return constraint
     }
-
-    /*static valueOf(type: string) : Type<any> {
-        const lowLevelType = type.split(" ")[0]
-        type = type.substring(lowLevelType.length + 1) // TODO
-
-        return TypeParser.parse(lowLevelType, type)
-    }*/
 
     private static resolve() {
         let patch;
@@ -74,31 +66,34 @@ export class Type<T> {
         this.timeout = false
     }
 
- static patch(object: any, property: string, evaluate: () => any) {
+    static patch(object: any, property: string, evaluate: () => any) {
         this.patches.push(new Patch(object, property, evaluate))
 
         if ( !this.timeout) {
             this.timeout = true
-            setTimeout(() => {
-                this.resolve()
-            }, 0)
+            setTimeout(() => {this.resolve()}, 0)
         }
     }
 
     // instance data
 
+    baseType = "string"
     _format = ""
-    tests: Test<T>[] = []
+    tests: Test<V>[] = []
     message?: string
 
-    // protected
+    // constructor
 
     protected constructor(public name?: string) {
         if ( name )
             Type.register(this)
     }
 
-    baseType = "string"
+    // protected
+
+    safe(): T {
+        return this as unknown as T
+    }
 
     protected literalType(type: string) {
         this.baseType = type
@@ -119,12 +114,15 @@ export class Type<T> {
 
     // public
 
-    format(format: string): Type<T> {
-        this._format = format
-        return this
+    format(format: string): T {
+        const self = this.safe()
+
+        self._format = format
+
+        return self
     }
 
-    validate(object: T) {
+    validate(object: V) {
         const context = new ValidationContext()
         this.check(object, context)
 
@@ -132,7 +130,7 @@ export class Type<T> {
             throw new ValidationError(context.violations)
     }
 
-    isValid(object: T): boolean {
+    isValid(object: V): boolean {
         const context = new ValidationContext()
         this.check(object, context)
 
@@ -141,32 +139,40 @@ export class Type<T> {
 
     // fluent: not here!
 
-    errorMessage(message: string) : Type<T> {
-        this.message = message
+    errorMessage(message: string) : T {
+        const self = this.safe()
 
-        return this
+        self.message = message
+
+        return self
     }
 
-    test(test: Test<T>): Type<T> {
-        this.tests.push(test)
+    test(test: Test<V>): T {
+        const self = this.safe()
 
-        return this
+        self.tests.push(test)
+
+        return self
     }
 
-    required(): Type<T> {
-        const typeTest = this.tests[0]
+    required(): T {
+        const self = this.safe()
+
+        const typeTest = self.tests[0]
 
         typeTest.ignore = false
 
-        return this
+        return self
     }
 
-    nullable(): Type<T> {
-        const typeTest = this.tests[0]
+    nullable(): T {
+        const self = this.safe()
+
+        const typeTest = self.tests[0]
 
         typeTest.ignore = true
 
-        return this
+        return self
     }
 
     params4(constraint: string): any | undefined {
@@ -176,6 +182,30 @@ export class Type<T> {
 
         return undefined
     }
+
+    // public
+
+    check(object: V, context: ValidationContext) {
+        for (const test of this.tests) {
+            if (!test.check(object)) {
+                // remember violation
+
+                if (test.ignore !== true)
+                    context.violations.push({
+                        type: test.type,
+                        name: test.name,
+                        params: test.params,
+                        path: context.path,
+                        value: object,
+                        message: test.message,
+                    })
+
+                if (test.break === true) return
+            }
+        }
+    }
+
+     // override
 
     toString() : string {
         const builder = new StringBuilder()
@@ -199,31 +229,9 @@ export class Type<T> {
 
         return builder.toString()
     }
-
-    // protected
-
-    check(object: T, context: ValidationContext) {
-        for (const test of this.tests) {
-            if (!test.check(object)) {
-                // remember violation
-
-                if (test.ignore !== true)
-                    context.violations.push({
-                        type: test.type,
-                        name: test.name,
-                        params: test.params,
-                        path: context.path,
-                        value: object,
-                        message: test.message,
-                    })
-
-                if (test.break === true) return
-            }
-        }
-    }
 }
 
-export const schema = (name: string, type: Type<any>) : Type<any> => {
+export const schema = (name: string, type: Type<any,any>) : Type<any,any> => {
     type.name = name
 
     Type.register(type);

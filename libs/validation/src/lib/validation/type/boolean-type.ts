@@ -3,7 +3,11 @@ import { Type, ConstraintInfo } from "./type"
 /**
  * this constraint class adds specific checks for booleans.
  */
-export class BooleanType extends Type<boolean> {
+export class BooleanType extends Type<BooleanType, boolean> {
+    // static
+
+    static SINGLETON = new BooleanType()
+
     // constructor
 
     constructor(name?: string) {
@@ -15,7 +19,7 @@ export class BooleanType extends Type<boolean> {
     // fluent
 
     isTrue(info?: ConstraintInfo): BooleanType {
-        this.test({
+        return this.test({
             type: "boolean",
             name: "isTrue",
             params: {},
@@ -24,12 +28,10 @@ export class BooleanType extends Type<boolean> {
                 return object === true
             },
         })
-
-        return this
     }
 
     isFalse(info?: ConstraintInfo): BooleanType {
-        this.test({
+        return this.test({
             type: "boolean",
             name: "isFalse",
             params: {},
@@ -38,12 +40,16 @@ export class BooleanType extends Type<boolean> {
                 return object === false
             },
         })
+    }
 
-        return this
+    // protected
+
+    safe(): BooleanType {
+        return this === BooleanType.SINGLETON ? new BooleanType() : this;
     }
 }
 
 /**
  * return a new constraint based on boolean values
  */
-export const boolean = (name?: string) => new BooleanType(name)
+export const boolean = (name?: string) => name ? new BooleanType(name) : BooleanType.SINGLETON

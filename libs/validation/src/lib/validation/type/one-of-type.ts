@@ -4,7 +4,7 @@ import { Type } from "./type"
  * Validation type for literal union types (e.g., 'value1' | 'value2' | 'value3')
  * This is different from EnumType which expects an enum object at runtime.
  */
-export class OneOfType<T> extends Type<T> {
+export class OneOfType<T> extends Type< OneOfType<T>, T> {
     // constructor
 
     constructor(private allowedValues: T[], name?: string) {

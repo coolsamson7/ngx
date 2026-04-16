@@ -5,7 +5,7 @@ import { Type } from "./type"
 /**
  * this constraint class adds specific checks for records ( e.g. mappings of string properties to value types ) .
  */
-export class RecordType<T> extends Type<T> {
+export class RecordType<T> extends Type<RecordType<T>, T> {
     // constructor
 
     constructor(public value: Type<any>, name?: string) {
@@ -49,4 +49,4 @@ export class RecordType<T> extends Type<T> {
     }
 }
 
-export const record = <T>(constraint: Type<T>, name?: string) => new RecordType(constraint, name)
+export const record = <T>(constraint: Type<Type<any, T>, T>, name?: string) => new RecordType(constraint, name)

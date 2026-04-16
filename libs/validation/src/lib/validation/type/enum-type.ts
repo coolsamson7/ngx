@@ -19,7 +19,7 @@ const enumValues = <Enum extends Record<string, number | string>>(e: Enum) => {
 /**
  * this constraint class adds specific checks for a specific class instances.
  */
-export class EnumType<T extends Record<string, number | string>> extends Type<T> {
+export class EnumType<T extends Record<string, number | string>> extends Type< EnumType<T>, T> {
     // instance data
 
     private keys: any[]

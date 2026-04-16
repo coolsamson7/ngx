@@ -41,10 +41,6 @@ object({
         color: enumeration(Color),
     }, "Foo")
 
-
-
-
-
 describe("constraint parser", () => {
     it("should execute a dynamic function", () => {
         const signature = ["message", "This", "task"]

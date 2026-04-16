@@ -3,7 +3,7 @@ import { Type, ConstraintInfo } from "./type"
 /**
  * this constraint class adds specific checks for dates.
  */
-export class DateType extends Type<Date> {
+export class DateType extends Type<DateType, Date> {
     // constructor
 
     constructor(name?: string) {

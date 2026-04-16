@@ -8,7 +8,7 @@ export declare interface _Type<T> extends Function {
 /**
  * this constraint class adds specific checks for a specific class instances.
  */
-export class ClassType extends Type<any> {
+export class ClassType extends Type<ClassType, any> {
     // constructor
 
     constructor(type: _Type<any>, name?: string) {

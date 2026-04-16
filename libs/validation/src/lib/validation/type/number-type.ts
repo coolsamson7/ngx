@@ -3,7 +3,11 @@ import { Type, ConstraintInfo } from "./type"
 /**
  * this constraint class adds specific checks for numbers.
  */
-export class NumberType extends Type<number> {
+export class NumberType extends Type<NumberType, number> {
+    // static
+
+    static SINGLETON = new NumberType()
+
     // constructor
 
     constructor(name?: string) {
@@ -15,7 +19,7 @@ export class NumberType extends Type<number> {
     // fluent api
 
     min(min: number, info?: ConstraintInfo): NumberType {
-        this.test({
+        return this.test({
             type: "number",
             name: "min",
             params: {
@@ -26,12 +30,10 @@ export class NumberType extends Type<number> {
                 return object >= min
             },
         })
-
-        return this
     }
 
     max(max: number, info?: ConstraintInfo): NumberType {
-        this.test({
+        return this.test({
             type: "number",
             name: "max",
             params: {
@@ -42,12 +44,10 @@ export class NumberType extends Type<number> {
                 return object <= max
             },
         })
-
-        return this
     }
 
     lessThan(number: number, info?: ConstraintInfo): NumberType {
-        this.test({
+        return this.test({
             type: "number",
             name: "lessThan",
             params: {
@@ -58,12 +58,10 @@ export class NumberType extends Type<number> {
                 return object < number
             },
         })
-
-        return this
     }
 
     lessThanEquals(number: number, info?: ConstraintInfo): NumberType {
-        this.test({
+        return this.test({
             type: "number",
             name: "lessThanEquals",
             params: {
@@ -74,12 +72,10 @@ export class NumberType extends Type<number> {
                 return object <= number
             },
         })
-
-        return this
     }
 
     greaterThan(number: number, info?: ConstraintInfo): NumberType {
-        this.test({
+        return this.test({
             type: "number",
             name: "greaterThan",
             params: {
@@ -90,12 +86,10 @@ export class NumberType extends Type<number> {
                 return object > number
             },
         })
-
-        return this
     }
 
     greaterThanEquals(number: number, info?: ConstraintInfo): NumberType {
-        this.test({
+        return this.test({
             type: "number",
             name: "greaterThanEquals",
             params: {
@@ -106,12 +100,10 @@ export class NumberType extends Type<number> {
                 return object >= number
             },
         })
-
-        return this
     }
 
     format(format: string, info?: ConstraintInfo): NumberType {
-        this.test({
+        return this.test({
             type: "number",
             name: "format",
             params: {
@@ -122,12 +114,10 @@ export class NumberType extends Type<number> {
                 return true // TODO add...
             },
         })
-
-        return this
     }
 
     precision(precision: number, info?: ConstraintInfo): NumberType {
-        this.test({
+        return this.test({
             type: "number",
             name: "precision",
             params: {
@@ -138,12 +128,10 @@ export class NumberType extends Type<number> {
                 return true // TODO add...
             },
         })
-
-        return this
     }
 
     scale(scale: number, info?: ConstraintInfo): NumberType {
-        this.test({
+        return this.test({
             type: "number",
             name: "scale",
             params: {
@@ -154,8 +142,6 @@ export class NumberType extends Type<number> {
                 return true // TODO add...
             },
         })
-
-        return this
     }
 
     //
@@ -174,57 +160,112 @@ export class NumberType extends Type<number> {
             scale: scale,
             precision: x.length - scale - 1
           };
-      }
+    }
+
+    // protected
+
+    safe(): NumberType {
+        return this === NumberType.SINGLETON ? new NumberType() : this;
+    }
 }
 
 // more
 
 export class ShortType extends NumberType {
+    // static
+
+    static SINGLETON = new ShortType()
+
     // constructor
 
     constructor(name?: string) {
         super(name)
+    }
+
+    // protected
+
+    safe(): ShortType {
+        return this === ShortType.SINGLETON ? new ShortType() : this;
     }
 }
 
 export class IntegerType extends NumberType {
+    // static
+
+    static SINGLETON = new IntegerType()
+
     // constructor
 
     constructor(name?: string) {
         super(name)
+    }
+
+    // protected
+
+    safe(): IntegerType {
+        return this === IntegerType.SINGLETON ? new IntegerType() : this;
     }
 }
 
 export class LongType extends NumberType {
+    // static
+
+    static SINGLETON = new LongType()
+
     // constructor
 
     constructor(name?: string) {
         super(name)
+    }
+
+    // protected
+
+    safe(): LongType {
+        return this === LongType.SINGLETON ? new LongType() : this;
     }
 }
 
 export class FloatType extends NumberType {
+    // static
+
+    static SINGLETON = new FloatType()
+
     // constructor
 
     constructor(name?: string) {
         super(name)
     }
+
+    // protected
+
+    safe(): FloatType {
+        return this === FloatType.SINGLETON ? new FloatType() : this;
+    }
 }
 
 export class DoubleType extends NumberType {
+    // static
+
+    static SINGLETON = new DoubleType()
+
     // constructor
 
     constructor(name?: string) {
         super(name)
+    }
+
+    // protected
+
+    safe(): DoubleType {
+        return this === DoubleType.SINGLETON ? new DoubleType() : this;
     }
 }
 
 // functions
 
-export const number = (name?: string) => new NumberType(name)
-
-export const short = (name?: string) => new ShortType(name)
-export const integer = (name?: string) => new IntegerType(name)
-export const long = (name?: string) => new LongType(name)
-export const float = (name?: string) => new FloatType(name)
-export const double = (name?: string) => new DoubleType(name)
+export const number = (name?: string) => name ? new NumberType(name) : NumberType.SINGLETON
+export const short = (name?: string) => name ? new ShortType(name) : ShortType.SINGLETON
+export const integer = (name?: string) => name ? new IntegerType(name) : IntegerType.SINGLETON
+export const long = (name?: string) => name ? new LongType(name) : LongType.SINGLETON
+export const float = (name?: string) => name ? new FloatType(name) : FloatType.SINGLETON
+export const double = (name?: string) => name ? new DoubleType(name) : DoubleType.SINGLETON

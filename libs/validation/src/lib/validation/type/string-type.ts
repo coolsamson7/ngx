@@ -3,8 +3,10 @@ import { Type, ConstraintInfo } from "./type"
 /**
  * this constraint class adds specific checks for strings.
  */
-export class StringType extends Type<string> {
+export class StringType extends Type<StringType, string> {
     // static data
+
+    static SINGLETON = new StringType()
 
     private static readonly EMAIL =
         /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
@@ -17,10 +19,14 @@ export class StringType extends Type<string> {
         this.literalType("string")
     }
 
+    safe(): StringType {
+        return this === StringType.SINGLETON ? new StringType() : this;
+    }
+
     // fluent api
 
     length(length: number, info?: ConstraintInfo): StringType {
-        this.test({
+        return this.test({
             type: "string",
             name: "length",
             params: {
@@ -31,12 +37,10 @@ export class StringType extends Type<string> {
                 return object.length === length
             },
         })
-
-        return this
     }
 
     min(min: number, info?: ConstraintInfo): StringType {
-        this.test({
+        return this.test({
             type: "string",
             name: "min",
             params: {
@@ -47,12 +51,10 @@ export class StringType extends Type<string> {
                 return object.length >= min
             },
         })
-
-        return this
     }
 
     max(max: number, info?: ConstraintInfo): StringType {
-        this.test({
+        return this.test({
             type: "string",
             name: "max",
             params: {
@@ -63,12 +65,10 @@ export class StringType extends Type<string> {
                 return object.length <= max
             },
         })
-
-        return this
     }
 
     nonEmpty(info?: ConstraintInfo): StringType {
-        this.test({
+        return this.test({
             type: "string",
             name: "nonEmpty",
             params: {},
@@ -77,26 +77,22 @@ export class StringType extends Type<string> {
                 return object.trim().length > 0
             },
         })
-
-        return this
     }
 
     email(info?: ConstraintInfo): StringType {
-        this.test({
+        return this.test({
             type: "string",
             name: "email",
             params: {},
             ...info,
             check(object: string): boolean {
-                return object.search(StringConstraint.EMAIL) !== -1
+                return object.search(StringType.EMAIL) !== -1
             },
         })
-
-        return this
     }
 
     matches(re: RegExp, info?: ConstraintInfo): StringType {
-        this.test({
+        return this.test({
             type: "string",
             name: "matches",
             params: {
@@ -107,12 +103,10 @@ export class StringType extends Type<string> {
                 return object.search(re) !== -1
             },
         })
-
-        return this
     }
 
     format(format: string, info?: ConstraintInfo): StringType {
-        this.test({
+        return this.test({
             type: "string",
             name: "format",
             params: {
@@ -123,9 +117,7 @@ export class StringType extends Type<string> {
                 return true // TODO add...
             },
         })
-
-        return this
     }
 }
 
-export const string = (name?: string) => new StringType(name)
+export const string = (name?: string) => name ? new StringType(name) : StringType.SINGLETON

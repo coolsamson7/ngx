@@ -5,10 +5,10 @@ import { Type, ConstraintInfo } from "./type"
 /**
  * this constraint class adds specific checks for arrays.
  */
-export class ArrayType<T extends Array<any>> extends Type<T> {
+export class ArrayType<T> extends Type<ArrayType<T>, T[]> {
     // constructor
 
-    constructor(public element: Type<any>) {
+    constructor(public element: Type<any, T>) {
         super()
 
         this.test({
@@ -18,7 +18,7 @@ export class ArrayType<T extends Array<any>> extends Type<T> {
                 type: "array",
             },
             break: true,
-            check(object: T): boolean {
+            check(object: T[]): boolean {
                 return Array.isArray(object)
             },
         })
@@ -50,7 +50,7 @@ export class ArrayType<T extends Array<any>> extends Type<T> {
                 max: max,
             },
             ...info,
-            check(object: Array<T>): boolean {
+            check(object: T[]): boolean {
                 return object.length <= max
             },
         })
@@ -60,7 +60,7 @@ export class ArrayType<T extends Array<any>> extends Type<T> {
 
     // override constraint
 
-    override check(object: T, context: ValidationContext) {
+    override check(object: T[], context: ValidationContext) {
         // super will check the object
 
         super.check(object, context)
@@ -86,4 +86,4 @@ export class ArrayType<T extends Array<any>> extends Type<T> {
     }
 }
 
-export const array = <T>(constraint: Type<T>) => new ArrayType(constraint)
+export const array = <T>(constraint: Type<any, T>) => new ArrayType<T>(constraint)

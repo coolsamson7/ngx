@@ -5,7 +5,7 @@ import { ObjectType } from "./object-type"
 /**
  * this constraint relates to referenced object schema
  */
-export class ReferenceType<T> extends Type<T> {
+export class ReferenceType<T> extends Type<ReferenceType<T>, T> {
     // instance data
 
     private schema: ObjectType<T>
