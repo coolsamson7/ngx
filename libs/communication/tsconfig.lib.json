@@ -12,6 +12,7 @@
   "exclude": ["**/*.spec.ts", "jest.config.ts", "src/test-setup.ts"],
   "include": ["**/*.ts"],
   "references": [
-    { "path": "../common" }
+    { "path": "../common" },
+    { "path": "../validation" }
   ]
 }

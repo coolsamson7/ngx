@@ -8,6 +8,7 @@
   },
   "peerDependencies": {
     "@ngx/common": "workspace:*",
+    "@ngx/validation": "workspace:*",
 
     "@angular/common": "^19.0.0",
     "@angular/core": "^19.0.0",

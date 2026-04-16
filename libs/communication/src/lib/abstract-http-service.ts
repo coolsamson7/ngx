@@ -3,6 +3,7 @@ import { EndpointLocator } from "./endpoint-locator";
 import { Injector } from "@angular/core";
 import { Observable } from "rxjs";
 import { ServiceConfig } from "./register-service.decorator";
+import { Serialization } from "./serialization";
 
 export class AbstractHTTPService {
     // instance data
@@ -107,6 +108,14 @@ export class AbstractHTTPService {
     }
 
     // protected
+
+    serialize<T>(type: string, format: string, value: T): any {
+      return Serialization.serialization(type).serialize(format, value)
+    }
+
+    deserialize<T>(type: string, format: string, value: any): T {
+        return Serialization.serialization(type).deserialize(format, value) as T
+    }
 
     protected getConfig() : ServiceConfig {
         return (this.constructor as any)["$$config"] || {domain: "", prefix: ""}; // see @Service
