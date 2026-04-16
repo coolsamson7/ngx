@@ -85,7 +85,7 @@ public class ServiceParser {
         }
 
         return new ServiceOp(
-                op.getOperationId(), path, method.toUpperCase(), tsReturnType, dsTypeString,
+                op.getOperationId(), path, method.toLowerCase(), tsReturnType, dsTypeString,
                 all, paths, body, bodyType, "void".equals(tsReturnType), op.getSummary()
         );
     }

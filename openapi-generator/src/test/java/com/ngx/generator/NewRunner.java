@@ -1,10 +1,5 @@
 package com.ngx.generator;
 
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.parser.OpenAPIV3Parser;
-
-import java.util.List;
-
 public class NewRunner {
 
     public static void main(String[] args) {
@@ -14,6 +9,7 @@ public class NewRunner {
                 .modelDir("models")
                 .serviceDir("services")
                 .generateIndex(true)
+                .domain("foo")
                 .filenameStyle(FileNameStyle.KEBAB_CASE)
                 .run();
     }

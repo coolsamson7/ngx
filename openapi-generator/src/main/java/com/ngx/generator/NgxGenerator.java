@@ -23,6 +23,8 @@ public class NgxGenerator {
 
         boolean _generateIndex = true;
 
+        String _domain = "";
+
         FileNameStyle _filenameStyle = KEBAB_CASE;
 
         // fluent
@@ -45,6 +47,12 @@ public class NgxGenerator {
             return this;
         }
 
+        Runner domain(String domain) {
+            this._domain = domain;
+
+            return this;
+        }
+
         Runner modelDir(String modelDir) {
             this._modelDir = modelDir;
 
@@ -57,8 +65,8 @@ public class NgxGenerator {
             return this;
         }
 
-        Runner outputDir(String outputDir) {
-            this._outputDir = outputDir;
+        Runner outputDir(String o) {
+            this._outputDir = o;
 
             return this;
         }
@@ -93,6 +101,7 @@ public class NgxGenerator {
             generator.modelDir = this._modelDir;
             generator.serviceDir = this._serviceDir;
             generator.generateIndex = this._generateIndex;
+            generator.domain = this._domain;
 
             if ( this._generateModels)
                 generator.generateModels(openApi);
@@ -112,6 +121,7 @@ public class NgxGenerator {
     FileNameStyle filenameStyle = KEBAB_CASE;
     String modelDir = "model";
     String serviceDir = "service";
+    String domain = "";
     boolean generateIndex = true;
 
     public NgxGenerator() {
@@ -131,8 +141,6 @@ public class NgxGenerator {
                 .replaceAll("_", "-")
                 .toLowerCase();
     }
-
-    public void setOutputDir(String outputDir) { this.outputDir = outputDir; }
 
     public String generateIndex(List<String> exportedFiles) {
         StringBuilder sb = new StringBuilder();
@@ -172,6 +180,7 @@ public class NgxGenerator {
                             "importFile", toFileName(name)))
                     .toList();
             context.put("tsImports", tsImports);
+            context.put("domain", domain);
 
             List<Map<String, Object>> vars = new ArrayList<>();
             for (ModelParser.Property prop : clazz.properties) {
@@ -208,12 +217,13 @@ public class NgxGenerator {
         for (var group : groups) {
             Map<String, Object> context = new HashMap<>();
             context.put("classname", group.name());
+            context.put("domain", this.domain);
             context.put("operations", group.operations());
             context.put("tsImports",
                     group.imports().stream()
                             .map(name -> Map.of(
                                     "importClass", name,
-                                    "importFile", toFileName(name)))
+                                    "importFile", "../" + this.modelDir + "/" + toFileName(name)))
                             .toList());
 
             String output = renderer.render("service.mustache", context);
