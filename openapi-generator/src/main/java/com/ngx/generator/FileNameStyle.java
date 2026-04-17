@@ -1,4 +1,5 @@
-package com.ngx.generator;/*
+package com.ngx.generator;
+/*
  * @COPYRIGHT (C) 2023 Andreas Ernst
  *
  * All rights reserved

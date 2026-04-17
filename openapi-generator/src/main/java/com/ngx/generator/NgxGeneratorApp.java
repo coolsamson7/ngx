@@ -30,7 +30,11 @@ public class NgxGeneratorApp implements Runnable {
     @Option(names = {"-index"}, description = "Generate index.ts", defaultValue = "true")
     boolean index;
 
-    // implement Runnbale
+
+    @Option(names = "--naming", description = "Mode: ${COMPLETION-CANDIDATES}", defaultValue = "KEBAB_CASE")
+    FileNameStyle naming;
+
+    // implement Runnable
 
     @Override
     public void run() {
@@ -39,9 +43,9 @@ public class NgxGeneratorApp implements Runnable {
                 .outputDir(output)
                 .modelDir(modelDir)
                 .serviceDir(serviceDir)
-                .generateIndex(true)
+                .generateIndex(index)
                 .domain(domain)
-                .filenameStyle(FileNameStyle.KEBAB_CASE)
+                .filenameStyle(naming)
                 .run();
     }
 
