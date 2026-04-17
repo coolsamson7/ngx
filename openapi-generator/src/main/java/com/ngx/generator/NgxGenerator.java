@@ -9,6 +9,7 @@ import java.util.*;
 import static com.ngx.generator.FileNameStyle.KEBAB_CASE;
 
 public class NgxGenerator {
+    static final String VERSION = "1.0";
     static class Runner {
 
         String _input = "";
@@ -190,6 +191,7 @@ public class NgxGenerator {
                     .toList();
             context.put("tsImports", tsImports);
             context.put("domain", domain);
+            context.put("version", VERSION);
 
             List<Map<String, Object>> vars = new ArrayList<>();
             for (ModelParser.Property prop : clazz.properties) {
@@ -227,6 +229,7 @@ public class NgxGenerator {
             Map<String, Object> context = new HashMap<>();
             context.put("classname", group.name());
             context.put("domain", this.domain);
+            context.put("version", VERSION);
             context.put("operations", group.operations());
             context.put("tsImports",
                     group.imports().stream()
