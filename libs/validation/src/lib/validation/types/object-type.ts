@@ -1,5 +1,4 @@
-import { Type } from "./type"
-import { ValidationContext } from "../validation-context"
+import { Type, ValidationContext} from "../type"
 import { OptionalType } from "./optional-type"
 
 export type PropertyConstraints = { [property: string]: Type<any> | string }

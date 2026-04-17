@@ -1,4 +1,4 @@
-import { Type, ConstraintInfo } from "./type"
+import { Type, TypeInfo } from "../type"
 
 /**
  * this constraint class adds specific checks for booleans.
@@ -18,7 +18,7 @@ export class BooleanType extends Type<BooleanType, boolean> {
 
     // fluent
 
-    isTrue(info?: ConstraintInfo): BooleanType {
+    isTrue(info?: TypeInfo): BooleanType {
         return this.test({
             type: "boolean",
             name: "isTrue",
@@ -30,7 +30,7 @@ export class BooleanType extends Type<BooleanType, boolean> {
         })
     }
 
-    isFalse(info?: ConstraintInfo): BooleanType {
+    isFalse(info?: TypeInfo): BooleanType {
         return this.test({
             type: "boolean",
             name: "isFalse",

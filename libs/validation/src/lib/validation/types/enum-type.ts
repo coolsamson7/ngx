@@ -1,4 +1,4 @@
-import { Type } from "./type"
+import { Type } from "../type"
 
 type EnumKeys<Enum> = Exclude<keyof Enum, number>
 

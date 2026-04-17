@@ -1,4 +1,4 @@
-import { TypeViolation } from "../type-violation"
+import { TypeViolation } from "../type"
 
 export interface ViolationContext {
     label: string

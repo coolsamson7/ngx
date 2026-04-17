@@ -1,4 +1,4 @@
-import { Type } from "./type"
+import { Type } from "../type"
 
 /**
  * Validation type for literal union types (e.g., 'value1' | 'value2' | 'value3')

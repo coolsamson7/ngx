@@ -1,5 +1,5 @@
 import "reflect-metadata"
-import { array, boolean, date, enumeration, number, object, optional, reference, string } from "./type"
+import { array, boolean, date, enumeration, number, object, optional, reference, string } from "./types"
 
 enum Color {
     RED = 1,
@@ -14,6 +14,18 @@ enum StringColor {
 }
 
 describe("validation", () => {
+      it("should validate numbers", async () => {
+        let constraint = number()//.min(0).max(10)
+
+        constraint = constraint.min(0)
+        constraint = constraint.max(10)
+
+        expect(constraint.isValid(1)).toBe(true)
+        expect(constraint.isValid(-1)).toBe(false)
+
+       
+    })
+
     it("should validate numbers", async () => {
         const constraint = number().min(0).max(10)
 

@@ -1,10 +1,10 @@
-import { Type } from "./type"
+import { Type } from "../type"
 
 /**
  * Union of multiple Type<T> validators.
  * Example: typeUnion(string(), number())
  */
-export class TypeUnion<T> extends Type<T> {
+export class TypeUnion<T> extends Type<any, T> {
     constructor(private readonly types: readonly Type<any>[], name?: string) {
         super(name)
 

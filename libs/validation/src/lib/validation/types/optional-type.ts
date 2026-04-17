@@ -1,5 +1,4 @@
-import { Type } from "./type"
-import { ValidationContext } from "../validation-context"
+import { Type, ValidationContext} from "../type"
 
 export class OptionalType<T> extends Type<OptionalType<T>, T | undefined> {
     constructor(public inner: Type<OptionalType<T>, T>, name?: string) {

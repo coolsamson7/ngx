@@ -12,4 +12,4 @@ export * from "./one-of-type"
 export * from "./optional-type"
 export * from "./union-type"
 
-export * from "./type"
+import "./init"

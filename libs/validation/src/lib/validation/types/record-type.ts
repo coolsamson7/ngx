@@ -1,6 +1,4 @@
-import { ValidationContext } from "../validation-context"
-
-import { Type } from "./type"
+import { Type, ValidationContext } from "../type"
 
 /**
  * this constraint class adds specific checks for records ( e.g. mappings of string properties to value types ) .

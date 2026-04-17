@@ -1,4 +1,4 @@
-import { Type, ConstraintInfo } from "./type"
+import { Type, TypeInfo } from "../type"
 
 /**
  * this constraint class adds specific checks for dates.
@@ -24,7 +24,7 @@ export class DateType extends Type<DateType, Date> {
 
     // fluent
 
-    min(min: Date, info?: ConstraintInfo): DateType {
+    min(min: Date, info?: TypeInfo): DateType {
         this.test({
             type: "number",
             name: "min",
@@ -40,7 +40,7 @@ export class DateType extends Type<DateType, Date> {
         return this
     }
 
-    max(max: Date, info?: ConstraintInfo): DateType {
+    max(max: Date, info?: TypeInfo): DateType {
         this.test({
             type: "number",
             name: "max",
@@ -56,7 +56,7 @@ export class DateType extends Type<DateType, Date> {
         return this
     }
 
-    format(format: string, info?: ConstraintInfo): DateType {
+    format(format: string, info?: TypeInfo): DateType {
         this.test({
             type: "date",
             name: "format",
