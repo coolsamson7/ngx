@@ -227,23 +227,20 @@ export class ObjectSerialization extends AbstractTypeSerialization<any, any> {
     constructor(schema: ObjectType<any>) {
         super()
 
-        this.types = this.fromConstraint(schema)
+        this.types = this.fromType(schema)
     }
 
     // private
 
-    private fromConstraint(constraint: ObjectType<any>) {
+    private fromType(constraint: ObjectType<any>) {
         for (const property in constraint.shape) {
             const type = constraint.shape[property] as Type<any>
-
-            const format = ""
-            //TODO if (propertyConstraint.params4("format")) format = propertyConstraint.params4("format")?.format
-
-            this.format.push(format)
+  
+            this.format.push(constraint._format)
             this.types.push(type) 
             this.properties.push(property)
            
-            this.operations.push(Serialization.fromConstraint(type))
+            this.operations.push(Serialization.fromType(type))
         } // for
 
         return this.types
@@ -252,21 +249,21 @@ export class ObjectSerialization extends AbstractTypeSerialization<any, any> {
     // implement TypeSerialization
 
     override deserialize(format: string, object: any): any {
-        const result = object //{}
+        const result = object // in place!
 
         for (let i = 0; i < this.types.length; i++) {
             const type = this.types[i]
             const property = this.properties[i]
-            format = this.format[i]
             const operation = this.operations[i]
+
             let value = object[property]
 
             if (operation && value)
-                result[property] = value = operation.deserialize(format, value)
+                result[property] = value = operation.deserialize(this.format[i], value)
             else
                 result[property] = value
 
-            //type.validate(value) TOOD?
+            //type.validate(value) TODO?
         }
 
         return result
@@ -328,8 +325,8 @@ export class Serialization {
         return this.serializationCache[type] = serialization
     }
 
-    public static fromConstraint(constraint: Type<any>): TypeSerialization<any, any> {
-        if ((constraint as any)["$serialization"]) 
+    public static fromType(constraint: Type<any>): TypeSerialization<any, any> {
+        if ((constraint as any)["$serialization"])
             return (constraint as any)["$serialization"] as TypeSerialization<any, any>
 
         let serialization: TypeSerialization<any, any> | undefined = undefined
@@ -349,13 +346,13 @@ export class Serialization {
         else if (constraint instanceof OneOfType) serialization = Serialization.NOOP
         // array
         else if (constraint instanceof ArrayType)
-            serialization = new ArraySerialization(this.fromConstraint(constraint.element))
+            serialization = new ArraySerialization(this.fromType(constraint.element))
         // record
         else if (constraint instanceof RecordType)
-            serialization = new MapSerialization(this.fromConstraint(constraint.value))
+            serialization = new MapSerialization(this.fromType(constraint.value))
         // ref
 
-        else if (constraint instanceof ReferenceType) serialization = this.fromConstraint(constraint.type)
+        else if (constraint instanceof ReferenceType) serialization = this.fromType(constraint.type)
 
         // object
         else if (constraint instanceof ObjectType) serialization = new ObjectSerialization(constraint)
@@ -365,7 +362,7 @@ export class Serialization {
 
             return serialization
         }
-        else throw new Error(`unsupported constraint `)
+        else throw new Error(`unsupported type `)
     }
 
     static {
@@ -387,7 +384,7 @@ export class Serialization {
 
         const constraint = Type.get(type)
         if (constraint) {
-            const serialization = this.fromConstraint(constraint)
+            const serialization = this.fromType(constraint)
 
             return this.cache(type, serialization)
         }

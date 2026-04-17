@@ -58,10 +58,10 @@ describe("serialization", () => {
 
       it("should serialize date types", () => {
         const literal = new Date()
-        const serializedLiteral = Serialization.serialize("date", "format", literal)
-        const deserializedLiteral = Serialization.deserialize<Date>("date", "format", serializedLiteral)
+        const serializedLiteral = Serialization.serialize("date", "date-time", literal)
+        const deserializedLiteral = Serialization.deserialize<Date>("date", "date-time", serializedLiteral)
 
-        expect(deserializedLiteral).toBe(literal)
+        expect(deserializedLiteral).toEqual(literal)
     })
 
     it("should serialize enums", () => {
@@ -104,7 +104,7 @@ describe("serialization", () => {
         const deserialized = Serialization.deserialize("{ [key: string]: number; }", "", serialized)
 
         expect(deserialized).toBeDefined()
-        //expect(deserialized["a"]).toBe(original["a"])
+        expect(deserialized["a"]).toBe(original["a"])
     })
 
     it("should serialize maps including arrays", () => {
@@ -113,7 +113,7 @@ describe("serialization", () => {
         const deserialized = Serialization.deserialize("{ [key: string]: Array<number>; }", "", serialized)
 
         expect(deserialized).toBeDefined()
-        //expect((deserialized["a"] as [])[0]).toBe(original["a"][0])
+        expect((deserialized["a"] as [])[0]).toBe(original["a"][0])
     })
 
     it("should serialize complex types", () => {
@@ -146,17 +146,20 @@ describe("serialization", () => {
 
         // expect..
 
-        expect(deserialized.name).toBe(foo.name)
-        expect(deserialized.color).toBe(foo.color)
-        expect(deserialized.stringColor).toBe(foo.stringColor)
-        //expect(deserialized.birthday).toBe(foo.birthday)
-        expect(deserialized.bar).toBeDefined()
-        expect(deserialized.bar.name).toBe(foo.bar.name)
-        expect(deserialized.bars.length).toBe(1)
-        expect(deserialized.bars[0].name).toBe(foo.bars[0].name)
-        //expect(deserialized.bars[0].properties.bla).toBe(foo.bars[0].properties.bla)
+        expect(deserialized.name).toEqual(foo.name)
+        expect(deserialized.color).toEqual(foo.color)
+        expect(deserialized.stringColor).toEqual(foo.stringColor)
 
-        // TEST
+        expect(deserialized.birthday).toEqual(foo.birthday)
+
+
+        expect(deserialized.bar).toBeDefined()
+        expect(deserialized.bar.name).toEqual(foo.bar.name)
+        expect(deserialized.bars.length).toEqual(1)
+        expect(deserialized.bars[0].name).toEqual(foo.bars[0].name)
+        expect(deserialized.bars[0].properties.bla).toEqual(foo.bars[0].properties.bla)
+
+        /* TEST
 
         const time = (func: () => void, loops: number) => {
             const start = new Date().getTime()
@@ -177,6 +180,6 @@ describe("serialization", () => {
             time(() => {
                 serialized = Serialization.serialize("Foo", "format", foo)
                 deserialized = Serialization.deserialize<Foo>("Foo", "format", serialized)
-            }, 100000)
+            }, 100000)*/
     })
 })
