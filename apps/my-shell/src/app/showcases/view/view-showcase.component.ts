@@ -7,7 +7,7 @@ import { CommandToolbarComponent, WithCommandToolbar } from '@ngx/component';
 import { Command, ViewComponent, WithCommands, WithView } from '@ngx/foundation';
 import { AbstractFeature, Feature } from '@ngx/portal';
 import { schema, object, string, boolean, number, optional, ShowErrorDirective, ValidateTypeDirective, RegisterValidationMessageHandler, AbstractValidationMessageHandler, Type, TypeViolation, ValidationError, ObjectType } from '@ngx/validation';
-import { AbstractControl, FormControlDirective, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { AbstractControl, FormControlDirective, FormControlName, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 import { FormBuilder, FormControl, FormGroup, NgControl, ReactiveFormsModule } from '@angular/forms';
 
@@ -99,13 +99,12 @@ export class TypeValidationMessageHandler extends AbstractValidationMessageHandl
 })
 export class BindingDirective {
   private engine = inject(FORM_ENGINE);
-
-  private _path!: string;
+  private fcn = inject(FormControlName, { self: true });
 
   @Input('binding')
   set path(value: string) {
-    this._path = value;
-    this.engine.register(value);
+    this.fcn.name = value;        // override before FormControlName.ngOnInit fires
+    this.engine.register(value);  // register control in the engine
   }
 }
 
