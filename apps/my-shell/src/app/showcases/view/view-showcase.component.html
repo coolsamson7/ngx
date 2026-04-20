@@ -1,3 +1,49 @@
 <view>
     <ngx-command-toolbar></ngx-command-toolbar>
+
+    <!-- #form="ngForm" --->
+    <form  [formGroup]="formEngine.form">
+        <mat-form-field>
+            <mat-label  label[for="surname"]>Name</mat-label>
+            <input
+                id="name"
+                matInput
+                name="name"
+                formControlName="name"
+                [binding]="'name'"
+                />
+             <mat-error *showErrors></mat-error>
+
+
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label label[for="surname"]>Surname</mat-label>
+
+            <input
+                id="surname"
+                matInput
+                formControlName="surname"
+                name="surname"
+                [binding]="'surname'"
+                />
+
+             <mat-error *showErrors></mat-error>
+        </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Age</mat-label>
+
+            <input
+                matInput
+                type="number"
+                name="age"
+                 formControlName="age"
+                [binding]="'age'"
+                />
+
+             <mat-error *showErrors></mat-error>
+        </mat-form-field>
+
+        </form>
 </view>
