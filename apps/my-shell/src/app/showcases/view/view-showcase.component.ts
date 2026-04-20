@@ -6,7 +6,7 @@ export const FORM_ENGINE = new InjectionToken<FormEngine<any>>('FORM_ENGINE');
 import { CommandToolbarComponent, WithCommandToolbar } from '@ngx/component';
 import { Command, ViewComponent, WithCommands, WithView } from '@ngx/foundation';
 import { AbstractFeature, Feature } from '@ngx/portal';
-import { schema, object, string, boolean, number, optional, ShowErrorDirective, ValidateTypeDirective, RegisterValidationMessageHandler, AbstractValidationMessageHandler, Type, TypeViolation, ValidationError, ObjectType, reference } from '@ngx/validation';
+import { schema, object, string, boolean, number, optional, ShowErrorDirective, ValidateTypeDirective, RegisterValidationMessageHandler, AbstractValidationMessageHandler, Type, TypeViolation, ValidationError, ObjectType, reference, ReferenceType } from '@ngx/validation';
 import { AbstractControl, FormControlDirective, FormControlName, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 import { FormBuilder, FormControl, FormGroup, NgControl, ReactiveFormsModule } from '@angular/forms';
@@ -58,8 +58,9 @@ export type PathOf<T> =
 export type BindingProxy<T> = {
   readonly __path: string
 } & {
-  [K in keyof T & string]: BindingProxy<any>
+  [K in keyof T & string]: T[K] extends object ? BindingProxy<T[K]> : BindingProxy<any>
 }
+
 export function createBindings<T extends object>(path = ''): BindingProxy<T> {
   return new Proxy({} as any, {
     get: (_target, prop: string) => {
@@ -174,23 +175,18 @@ export class FormEngine<T> {
     }
 
   register(path: string): FormControl {
-    if (this.controls.has(path)) {
-      return this.controls.get(path)!;
-    }
+  if (this.controls.has(path))
+    return this.controls.get(path)!;
 
-    const control = new FormControl(
-      get(this.model, path),
-      this.buildValidators(path)
-    );
+  const control = new FormControl(
+    get(this.model, path),
+    this.buildValidators(path)
+  );
 
-    this.controls.set(path, control);
-
-    const group = this.ensureGroup(path);
-    const key = path.split('.').pop()!;
-    group.addControl(key, control);
-
-    return control;
-  }
+  this.controls.set(path, control);
+  this.form.addControl(path, control); // flat key 'address.city' on root group
+  return control;
+}
 
   private createTypeValidator(type: Type<any,any>): ValidatorFn {
      return (control: AbstractControl): ValidationErrors | null => {
@@ -212,9 +208,22 @@ export class FormEngine<T> {
      };
    }
 
+   private resolveType(path: string): Type<any, any> {
+     const parts = path.split('.');
+     let type = this.type as ObjectType;
+
+     for (let i = 0; i < parts.length - 1; i++) {
+       type = type.shape[parts[i]] as ObjectType;
+       if ( type instanceof ReferenceType)
+          type = (type as ReferenceType<any>).schema
+     }
+
+     return type.shape[parts[parts.length - 1]] as Type<any, any>;
+   }
+
   private buildValidators(path: string) {
     return [
-      this.createTypeValidator((this.type as ObjectType).shape[path] as Type<any, any>)
+      this.createTypeValidator(this.resolveType(path))
     ];
   }
 
