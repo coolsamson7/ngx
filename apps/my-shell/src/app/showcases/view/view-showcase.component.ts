@@ -22,34 +22,35 @@ interface User {
   age: number
 }
 
-schema("user", object({
-            name: string().max(10),
-            surname: string().max(10),
-            age: number().min(0).max(150),
-        })
+const UserSchema = schema("user", object({
+    name: string().max(10),
+    surname: string().max(10),
+    age: number().min(0).max(150),
+})
 )
 
+export type PathOf<T> =
+  T extends object
+    ? {
+        [K in keyof T & string]:
+          T[K] extends Array<any>
+            ? never
+            : T[K] extends object
+              ? `${K}` | `${K}.${PathOf<T[K]>}`
+              : `${K}`;
+      }[keyof T & string]
+    : never;
 
-export function createTypeValidator(type: Type<any,any>): ValidatorFn {
-
-  return (control: AbstractControl): ValidationErrors | null => {
-    const value = control.value
-
-    try {
-      type.validate(value)
-
-      return null
-    }
-    catch(error: any) {
-      return {
-        validateType: {
-          type,
-         violations: error.violations
-        }
-      }
-    }
-  };
-}
+ export function createBindings<T extends object>() {
+   return new Proxy(
+     {},
+     {
+       get: (_, key: string) => key
+     }
+   ) as {
+     [K in PathOf<T>]: K;
+   };
+ }
 
 /**
  * a handler for violations of type 'error' which will simply return the message property.
@@ -173,11 +174,29 @@ export class FormEngine {
     return control;
   }
 
+  private createTypeValidator(type: Type<any,any>): ValidatorFn {
+     return (control: AbstractControl): ValidationErrors | null => {
+       const value = control.value
+
+       try {
+         type.validate(value)
+
+         return null
+       }
+       catch(error: any) {
+         return {
+           validateType: {
+             type,
+            violations: error.violations
+           }
+         }
+       }
+     };
+   }
+
   private buildValidators(path: string) {
     return [
-      createTypeValidator(
-        (this.type as ObjectType).shape[path] as Type<any, any>
-      )
+      this.createTypeValidator((this.type as ObjectType).shape[path] as Type<any, any>)
     ];
   }
 
@@ -274,7 +293,7 @@ export class ViewShowcaseComponent extends WithView(WithCommandToolbar(WithComma
 
   formEngine! : FormEngine
 
-  user: User = {
+  model: User = {
     name: "Andreas",
     surname: "Ernst",
     age: 42,
@@ -282,12 +301,14 @@ export class ViewShowcaseComponent extends WithView(WithCommandToolbar(WithComma
 
   formState!: FormState<any>
 
+  user = createBindings<User>();
+
   // constructor
 
   constructor(injector: Injector, public fb: FormBuilder) {
     super(injector);
     
-    this.formEngine = new FormEngine(fb, Type.get("user")!, this.user)
+    this.formEngine = new FormEngine(fb, UserSchema, this.model)
 
     this.formEngine.hydrate()
 
