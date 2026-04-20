@@ -14,6 +14,7 @@ import { FormBuilder, FormControl, FormGroup, NgControl, ReactiveFormsModule } f
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { get, set, StringBuilder } from '@ngx/common';
+import { BehaviorSubject, combineLatest, map } from 'rxjs';
 
 interface User {
   name: string
@@ -108,10 +109,24 @@ export class BindingDirective {
   }
 }
 
+export interface FormState<T = any> {
+  value: T;
+  dirty: boolean;
+  valid: boolean;
+}
+
 export class FormEngine {
   form: FormGroup;
 
   private controls = new Map<string, FormControl>();
+
+  private stateSubject = new BehaviorSubject<FormState>({
+      value: {},
+      dirty: false,
+      valid: false
+    });
+
+    state$ = this.stateSubject.asObservable();
 
   constructor(
     private fb: FormBuilder,
@@ -119,7 +134,26 @@ export class FormEngine {
     private model: any
   ) {
     this.form = this.fb.group({});
+
+    this.bindState();
   }
+
+  private bindState() {
+      combineLatest([
+        this.form.valueChanges,
+        this.form.statusChanges
+      ])
+      .pipe(
+        map(() => ({
+          value: this.form.getRawValue(),
+          dirty: this.isDirty(),
+          valid: this.form.valid
+        }))
+      )
+      .subscribe(state => {
+        this.stateSubject.next(state);
+      });
+    }
 
   register(path: string): FormControl {
     if (this.controls.has(path)) {
@@ -247,15 +281,8 @@ export class ViewShowcaseComponent extends WithView(WithCommandToolbar(WithComma
     age: 42,
   }
 
-  //@ViewChild('form') form!: NgForm;
+  formState!: FormState<any>
 
-   formState = {
-    value: {},
-    dirty: false,
-    valid: false,
-    errors: {} as Record<string, any>,
-  };
-  
   // constructor
 
   constructor(injector: Injector, public fb: FormBuilder) {
@@ -265,28 +292,20 @@ export class ViewShowcaseComponent extends WithView(WithCommandToolbar(WithComma
 
     this.formEngine.hydrate()
 
-    this.afterViewInit(() => {
-      this.formEngine.hydrate()
+    this.formEngine.state$.subscribe(state => {
+      this.formState = state;
 
-        this.formEngine.form.valueChanges?.subscribe(value => {
-          this.formState.value = value;
-          this.formState.dirty = this.formEngine.isDirty()//this.form.dirty ?? false;
-          this.formState.valid = this.formEngine.form.valid ?? false;
-
-          console.log(this.formState.dirty )
-
-          this.updateCommandState()
+      console.log(state)
+      this.updateCommandState();
     });
-
-    })
   }
 
   // override WithCommandToolbar
 
   updateCommandState() :void{
-    this
+    /*this
       .setCommandEnabled("save", this.formState.dirty)
-      .setCommandEnabled("revert", this.formState.dirty)
+      .setCommandEnabled("revert", this.formState.dirty)*/
   }
 
   override buildToolbar() {
