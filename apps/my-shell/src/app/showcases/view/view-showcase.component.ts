@@ -1,12 +1,12 @@
 import { Component, Directive, ElementRef, inject, Injectable, Injector, Input, OnInit, Self, ViewChild } from '@angular/core';
 import { InjectionToken } from '@angular/core';
 
-export const FORM_ENGINE = new InjectionToken<FormEngine>('FORM_ENGINE');
+export const FORM_ENGINE = new InjectionToken<FormEngine<any>>('FORM_ENGINE');
 
 import { CommandToolbarComponent, WithCommandToolbar } from '@ngx/component';
 import { Command, ViewComponent, WithCommands, WithView } from '@ngx/foundation';
 import { AbstractFeature, Feature } from '@ngx/portal';
-import { schema, object, string, boolean, number, optional, ShowErrorDirective, ValidateTypeDirective, RegisterValidationMessageHandler, AbstractValidationMessageHandler, Type, TypeViolation, ValidationError, ObjectType } from '@ngx/validation';
+import { schema, object, string, boolean, number, optional, ShowErrorDirective, ValidateTypeDirective, RegisterValidationMessageHandler, AbstractValidationMessageHandler, Type, TypeViolation, ValidationError, ObjectType, reference } from '@ngx/validation';
 import { AbstractControl, FormControlDirective, FormControlName, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 import { FormBuilder, FormControl, FormGroup, NgControl, ReactiveFormsModule } from '@angular/forms';
@@ -16,16 +16,30 @@ import { MatInputModule } from '@angular/material/input';
 import { get, set, StringBuilder } from '@ngx/common';
 import { BehaviorSubject, combineLatest, map } from 'rxjs';
 
+interface Address {
+    street: string
+    city: string
+}
+
 interface User {
   name: string
   surname: string
   age: number
+  address: Address
 }
+
+const AddressSchema = schema("address", object({
+    city: string().max(10),
+    street: string().max(10),
+})
+)
+
 
 const UserSchema = schema("user", object({
     name: string().max(10),
     surname: string().max(10),
     age: number().min(0).max(150),
+    address: reference(AddressSchema)
 })
 )
 
@@ -33,7 +47,7 @@ export type PathOf<T> =
   T extends object
     ? {
         [K in keyof T & string]:
-          T[K] extends Array<any>
+          T[K] extends readonly any[]
             ? never
             : T[K] extends object
               ? `${K}` | `${K}.${PathOf<T[K]>}`
@@ -41,16 +55,20 @@ export type PathOf<T> =
       }[keyof T & string]
     : never;
 
- export function createBindings<T extends object>() {
-   return new Proxy(
-     {},
-     {
-       get: (_, key: string) => key
-     }
-   ) as {
-     [K in PathOf<T>]: K;
-   };
- }
+export type BindingProxy<T> = {
+  readonly __path: string
+} & {
+  [K in keyof T & string]: BindingProxy<any>
+}
+export function createBindings<T extends object>(path = ''): BindingProxy<T> {
+  return new Proxy({} as any, {
+    get: (_target, prop: string) => {
+      if (prop === '__path') return path;
+      const next = path ? `${path}.${prop}` : prop;
+      return createBindings(next);
+    }
+  }) as BindingProxy<T>;
+}
 
 /**
  * a handler for violations of type 'error' which will simply return the message property.
@@ -94,33 +112,33 @@ export class TypeValidationMessageHandler extends AbstractValidationMessageHandl
   }
 }
 
-@Directive({
-  selector: '[binding]',
-  standalone: true
-})
+export type BindingValue = BindingProxy<any> | string;
+
+@Directive({ selector: '[binding]', standalone: true })
 export class BindingDirective {
   private engine = inject(FORM_ENGINE);
   private fcn = inject(FormControlName, { self: true });
 
   @Input('binding')
-  set path(value: string) {
-    this.fcn.name = value;        // override before FormControlName.ngOnInit fires
-    this.engine.register(value);  // register control in the engine
+  set binding(value: BindingValue) {
+    const path = typeof value === 'string' ? value : value.__path;
+    this.fcn.name = path;
+    this.engine.register(path);
   }
 }
 
 export interface FormState<T = any> {
-  value: T;
+  value: Partial<T>;
   dirty: boolean;
   valid: boolean;
 }
 
-export class FormEngine {
+export class FormEngine<T> {
   form: FormGroup;
 
   private controls = new Map<string, FormControl>();
 
-  private stateSubject = new BehaviorSubject<FormState>({
+  private stateSubject = new BehaviorSubject<FormState<T>>({
       value: {},
       dirty: false,
       valid: false
@@ -291,12 +309,16 @@ export class FormEngine {
 export class ViewShowcaseComponent extends WithView(WithCommandToolbar(WithCommands(AbstractFeature))) {
   // instance data
 
-  formEngine! : FormEngine
+  formEngine! : FormEngine<User>
 
   model: User = {
     name: "Andreas",
     surname: "Ernst",
     age: 42,
+    address: {
+      city: "Cologne",
+      street: "Neumarkt"
+    }
   }
 
   formState!: FormState<any>
@@ -308,7 +330,7 @@ export class ViewShowcaseComponent extends WithView(WithCommandToolbar(WithComma
   constructor(injector: Injector, public fb: FormBuilder) {
     super(injector);
     
-    this.formEngine = new FormEngine(fb, UserSchema, this.model)
+    this.formEngine = new FormEngine<User>(fb, UserSchema, this.model)
 
     this.formEngine.hydrate()
 
